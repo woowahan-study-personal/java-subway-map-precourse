@@ -4,12 +4,19 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class StationRepository {
+
     private final List<Station> stations = new ArrayList<>();
 
     public List<Station> stations() {
         return Collections.unmodifiableList(stations);
+    }
+
+    public List<Station> searchStation(String stationName) {
+        return stations.stream().filter(station -> station.getName().equals(stationName))
+            .collect(Collectors.toList());
     }
 
     public void addStation(Station station) {
