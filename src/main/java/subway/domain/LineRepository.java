@@ -4,19 +4,50 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class LineRepository {
-    private static final List<Line> lines = new ArrayList<>();
 
-    public static List<Line> lines() {
+    private final List<Line> lines = new ArrayList<>();
+
+    public List<Line> lines() {
+        // 수정이 불가능한 상태의 lines를 반환해야 한다. 노선 리스트 출력에 사용될 예정이다.
         return Collections.unmodifiableList(lines);
     }
 
-    public static void addLine(Line line) {
-        lines.add(line);
+    private List<Line> searchLine(String lineName) {
+        return lines.stream().filter(line -> line.getName().equals(lineName))
+            .collect(Collectors.toList());
     }
 
-    public static boolean deleteLineByName(String name) {
+    public void addLine(String lineName) {
+        List<Line> line = searchLine(lineName);
+
+        if (line.size() > 0) {
+            throw new IllegalArgumentException("[ERROR]: 해당 노선은 이미 등록되었습니다.");
+        }
+
+        lines.add(line.get(0));
+    }
+
+    public boolean isLineExists(String lineName) {
+        return searchLine(lineName).size() > 0;
+    }
+
+    public void addStationToLine(Line line, Station station, int pathIndex) {
+
+    }
+
+    public Line getUnModifiableLine(String name) {
+        // TO-DO: 출력에 사용할 Line에 대한 것으로, 수정이 불가능한 객체가 되어야 한다.
+        return null;
+    }
+
+    public Line getModifiableLine(String name) {
+        return searchLine(name).get(0);
+    }
+
+    public boolean deleteLineByName(String name) {
         return lines.removeIf(line -> Objects.equals(line.getName(), name));
     }
 }
