@@ -14,9 +14,18 @@ public class StationRepository {
         return Collections.unmodifiableList(stations);
     }
 
-    public List<Station> searchStation(String stationName) {
+    private List<Station> searchStation(String stationName) {
         return stations.stream().filter(station -> station.getName().equals(stationName))
             .collect(Collectors.toList());
+    }
+
+    public boolean isStationExists(String stationName) {
+        return searchStation(stationName).size() > 0;
+    }
+
+    public Station getStation(String stationName) {
+        List<Station> searchResult = searchStation(stationName);
+        return searchResult.get(0);
     }
 
     public void addStation(Station station) {
