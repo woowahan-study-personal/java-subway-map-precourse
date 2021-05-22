@@ -28,12 +28,12 @@ public class StationRepository {
         return searchResult.get(0);
     }
 
-    public void addStation(String stationName) {
-        if (isStationExists(stationName)) {
+    public void addStation(Station station) {
+        if (isStationExists(station.getName())) {
             throw new IllegalArgumentException("[ERROR]: 해당 역은 이미 등록되었습니다.");
         }
 
-        stations.add(new Station(stationName));
+        stations.add(station);
     }
 
     public boolean deleteStation(String stationName) {
