@@ -8,22 +8,23 @@ public class Subway {
     public Subway() {
     }
 
+    private boolean isOkayToAddStation(String lineName, String stationName) {
+        return lineRepository.isLineExists(lineName) && stationRepository
+            .isStationExists(stationName);
+    }
+
+    private void unLinkStationInLine(Station station) {
+        lineRepository.deleteStationInAllLines(station);
+    }
+
     public void addStation(String stationName) {
-        Station station = new Station(stationName);
-        stationRepository.addStation(station);
+        stationRepository.addStation(new Station(stationName));
     }
 
     public void addLine(String name, String from, String to) {
         Station fromStation = stationRepository.getStation(from);
         Station toStation = stationRepository.getStation(to);
-        Line line = new Line(name, fromStation, toStation);
-
-        lineRepository.addLine(line);
-    }
-
-    private boolean isOkayToAddStation(String lineName, String stationName) {
-        return lineRepository.isLineExists(lineName) && stationRepository
-            .isStationExists(stationName);
+        lineRepository.addLine(new Line(name, fromStation, toStation));
     }
 
     public void addStationToLine(String lineName, String stationName, int pathIndex) {
@@ -31,6 +32,13 @@ public class Subway {
             lineRepository.addStationToLine(lineRepository.getModifiableLine(lineName),
                 stationRepository.getStation(stationName), pathIndex);
         }
+    }
+
+    public void deleteStation(String stationName) {
+        Station station = stationRepository.getStation(stationName);
+        unLinkStationInLine(station);
+
+        stationRepository.deleteStation(station.getName());
     }
 }
 
