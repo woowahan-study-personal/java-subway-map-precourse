@@ -28,12 +28,18 @@ public class StationRepository {
         return searchResult.get(0);
     }
 
-    public void addStation(Station station) {
-        // TO-DO: 만약에 같은 이름을 가진 station이 있다면 [ERROR]를 낸다.
-        stations.add(station);
+    public void addStation(String stationName) {
+        if (isStationExists(stationName)) {
+            throw new IllegalArgumentException("[ERROR]: 해당 역은 이미 등록되었습니다.");
+        }
+
+        stations.add(new Station(stationName));
     }
 
-    public boolean deleteStation(String name) {
-        return stations.removeIf(station -> Objects.equals(station.getName(), name));
+    public boolean deleteStation(String stationName) {
+        // TO-DO: 역이 삭제되면, 역과 연결된 노선들은 전부 위치를 조정해야 한다. 해당 로직이 동작되도록 작업이 필요하다.
+        // 역을 삭제하는 로직이 Subway 클래스를 통해 불러들여져야 할 것으로 보인다.
+
+        return stations.removeIf(station -> Objects.equals(station.getName(), stationName));
     }
 }

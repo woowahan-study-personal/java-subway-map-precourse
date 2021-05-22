@@ -8,8 +8,8 @@ public class Subway {
     public Subway() {
     }
 
-    public void addStation(String name) {
-        stationRepository.addStation(new Station(name));
+    public void addStation(String stationName) {
+        stationRepository.addStation(stationName);
     }
 
     public void addLine(String name, String from, String to) {
