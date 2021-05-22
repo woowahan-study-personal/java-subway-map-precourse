@@ -10,7 +10,7 @@ public class LineRepository {
 
     private final List<Line> lines = new ArrayList<>();
 
-    public List<Line> lines() {
+    public List<Line> unmodifiableLines() {
         // 수정이 불가능한 상태의 lines를 반환해야 한다. 노선 리스트 출력에 사용될 예정이다.
         return Collections.unmodifiableList(lines);
     }
@@ -43,6 +43,12 @@ public class LineRepository {
 
     public Line getModifiableLine(String name) {
         return searchLine(name).get(0);
+    }
+
+    public void deleteStationInAllLines(Station station) {
+        for (Line line: lines) {
+            line.removeStation(station);
+        }
     }
 
     public boolean deleteLineByName(String name) {
