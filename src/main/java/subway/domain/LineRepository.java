@@ -20,14 +20,12 @@ public class LineRepository {
             .collect(Collectors.toList());
     }
 
-    public void addLine(String lineName) {
-        List<Line> line = searchLine(lineName);
-
-        if (line.size() > 0) {
+    public void addLine(Line line) {
+        if (isLineExists(line.getName())) {
             throw new IllegalArgumentException("[ERROR]: 해당 노선은 이미 등록되었습니다.");
         }
 
-        lines.add(line.get(0));
+        lines.add(line);
     }
 
     public boolean isLineExists(String lineName) {
@@ -35,7 +33,7 @@ public class LineRepository {
     }
 
     public void addStationToLine(Line line, Station station, int pathIndex) {
-
+        line.addStation(pathIndex, station);
     }
 
     public Line getUnModifiableLine(String name) {
