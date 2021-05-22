@@ -39,6 +39,6 @@ public class Line {
 
     public void addStation(int pathIndex, Station station) {
         isAlreadyInListValidation(station);
-        this.stations.add(station);
+        this.stations.add(pathIndex, station);
     }
 }
