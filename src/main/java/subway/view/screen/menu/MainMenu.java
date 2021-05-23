@@ -24,7 +24,7 @@ public class MainMenu implements MenuUI {
     public MainMenu(Subway subway) {
         super();
         stationMenu = new StationMenu(this);
-        lineMenu = new LineMenu();
+        lineMenu = new LineMenu(this);
         pathMenu = new PathMenu();
     }
 

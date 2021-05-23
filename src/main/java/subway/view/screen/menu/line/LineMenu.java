@@ -1,16 +1,30 @@
 package subway.view.screen.menu.line;
 
 import java.util.Scanner;
-import subway.SubwayManager;
 import subway.domain.Subway;
 import subway.view.message.ErrorMessage;
 import subway.view.message.InputMessage;
 import subway.view.message.MenuMessage;
 import subway.view.screen.MenuUI;
+import subway.view.screen.manage.line.AddLine;
+import subway.view.screen.manage.line.DeleteLine;
+import subway.view.screen.manage.line.ViewLine;
 import subway.view.tools.InputTool;
 import subway.view.tools.OutputTool;
 
 public class LineMenu implements MenuUI {
+
+    private AddLine addLine;
+    private DeleteLine deleteLine;
+    private ViewLine viewLine;
+    private MenuUI nextMenu;
+
+    public LineMenu(MenuUI mainMenu) {
+        addLine = new AddLine();
+        deleteLine = new DeleteLine();
+        viewLine = new ViewLine();
+        nextMenu = mainMenu;
+    }
 
     @Override
     public void show() {
@@ -20,26 +34,29 @@ public class LineMenu implements MenuUI {
 
     @Override
     public MenuUI commands(Scanner sc, Subway subway) {
-        MenuUI targetUI = this;
+        MenuUI nextUI = this;
         String command = InputTool.inputString(sc, InputMessage.askFunctionInputMessage(),
             ErrorMessage.failedRequestErrorMessage());
 
         if (command.equals("1")) {
-            return this;
+            addLine.commands(sc, subway);
+            nextUI = nextMenu;
         }
 
         if (command.equals("2")) {
-            return this;
+            deleteLine.commands(sc, subway);
+            nextUI = nextMenu;
         }
 
         if (command.equals("3")) {
-            return this;
+            viewLine.commands(sc, subway);
+            nextUI = nextMenu;
         }
 
         if (command.equals("B")) {
-            return SubwayManager.mainMenu;
+            nextUI = nextMenu;
         }
 
-        return this;
+        return nextUI;
     }
 }

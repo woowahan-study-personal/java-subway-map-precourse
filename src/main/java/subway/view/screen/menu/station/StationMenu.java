@@ -23,7 +23,7 @@ public class StationMenu implements MenuUI {
         addStation = new AddStation();
         deleteStation = new DeleteStation();
         viewStation = new ViewStation();
-        this.nextMenu = mainMenu;
+        nextMenu = mainMenu;
     }
 
     @Override
@@ -34,7 +34,7 @@ public class StationMenu implements MenuUI {
 
     @Override
     public MenuUI commands(Scanner sc, Subway subway) {
-        MenuUI nextUI = null;
+        MenuUI nextUI = this;
         String command = InputTool.inputString(sc, InputMessage.askFunctionInputMessage(),
             ErrorMessage.failedRequestErrorMessage());
 
