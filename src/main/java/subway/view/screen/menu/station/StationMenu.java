@@ -40,21 +40,21 @@ public class StationMenu implements MenuUI {
 
         if (command.equals("1")) {
             addStation.commands(sc, subway);
-            nextUI = this.nextMenu;
+            nextUI = nextMenu;
         }
 
         if (command.equals("2")) {
             deleteStation.commands(sc, subway);
-            nextUI = this.nextMenu;
+            nextUI = nextMenu;
         }
 
         if (command.equals("3")) {
             viewStation.commands(sc, subway);
-            nextUI = this.nextMenu;
+            nextUI = nextMenu;
         }
 
         if (command.equals("B")) {
-            nextUI = this.nextMenu;
+            nextUI = nextMenu;
         }
 
         return nextUI;
