@@ -28,18 +28,16 @@ public class StationRepository {
         return searchResult.get(0);
     }
 
-    public void addStation(Station station) {
+    public boolean addStation(Station station) {
         if (isStationExists(station.getName())) {
-            throw new IllegalArgumentException("[ERROR]: 해당 역은 이미 등록되었습니다.");
+            return false;
         }
 
         stations.add(station);
+        return true;
     }
 
     public boolean deleteStation(String stationName) {
-        // TO-DO: 역이 삭제되면, 역과 연결된 노선들은 전부 위치를 조정해야 한다. 해당 로직이 동작되도록 작업이 필요하다.
-        // 역을 삭제하는 로직이 Subway 클래스를 통해 불러들여져야 할 것으로 보인다.
-
         return stations.removeIf(station -> Objects.equals(station.getName(), stationName));
     }
 }

@@ -17,15 +17,15 @@ public class Subway {
         lineRepository.deleteStationInAllLines(station);
     }
 
-    public void addStation(String stationName) {
-        stationRepository.addStation(new Station(stationName));
+    public boolean addStation(String stationName) {
+        return stationRepository.addStation(new Station(stationName));
     }
 
-    public void deleteStation(String stationName) {
+    public boolean deleteStation(String stationName) {
         Station station = stationRepository.getStation(stationName);
         unLinkStationInLine(station);
 
-        stationRepository.deleteStation(station.getName());
+        return stationRepository.deleteStation(station.getName());
     }
 
     public void addLine(String name, String from, String to) {
