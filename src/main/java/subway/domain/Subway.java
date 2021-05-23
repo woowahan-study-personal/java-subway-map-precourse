@@ -2,8 +2,8 @@ package subway.domain;
 
 public class Subway {
 
-    StationRepository stationRepository = new StationRepository();
-    LineRepository lineRepository = new LineRepository();
+    private StationRepository stationRepository = new StationRepository();
+    private LineRepository lineRepository = new LineRepository();
 
     public Subway() {
     }
@@ -21,6 +21,13 @@ public class Subway {
         stationRepository.addStation(new Station(stationName));
     }
 
+    public void deleteStation(String stationName) {
+        Station station = stationRepository.getStation(stationName);
+        unLinkStationInLine(station);
+
+        stationRepository.deleteStation(station.getName());
+    }
+
     public void addLine(String name, String from, String to) {
         Station fromStation = stationRepository.getStation(from);
         Station toStation = stationRepository.getStation(to);
@@ -34,11 +41,8 @@ public class Subway {
         }
     }
 
-    public void deleteStation(String stationName) {
-        Station station = stationRepository.getStation(stationName);
-        unLinkStationInLine(station);
-
-        stationRepository.deleteStation(station.getName());
+    public void deleteLine(String lineName) {
+        lineRepository.deleteLineByName(lineName);
     }
 }
 
