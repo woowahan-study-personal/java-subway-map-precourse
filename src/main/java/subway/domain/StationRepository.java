@@ -25,6 +25,11 @@ public class StationRepository {
 
     public Station getStation(String stationName) {
         List<Station> searchResult = searchStation(stationName);
+
+        if (searchResult.size() == 0) {
+            return null;
+        }
+
         return searchResult.get(0);
     }
 

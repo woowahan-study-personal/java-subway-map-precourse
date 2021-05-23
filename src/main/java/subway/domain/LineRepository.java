@@ -24,12 +24,14 @@ public class LineRepository {
         return searchLine(lineName).size() > 0;
     }
 
-    public void addLine(Line line) {
+    public boolean addLine(Line line) {
         if (isLineExists(line.getName())) {
-            throw new IllegalArgumentException("[ERROR]: 해당 노선은 이미 등록되었습니다.");
+            return false;
         }
 
         lines.add(line);
+
+        return true;
     }
 
     public void addStationToLine(Line line, Station station, int pathIndex) {

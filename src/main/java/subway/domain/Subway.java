@@ -28,10 +28,19 @@ public class Subway {
         return stationRepository.deleteStation(station.getName());
     }
 
-    public void addLine(String name, String from, String to) {
+    public boolean addLine(String name, String from, String to) {
         Station fromStation = stationRepository.getStation(from);
         Station toStation = stationRepository.getStation(to);
-        lineRepository.addLine(new Line(name, fromStation, toStation));
+
+        if (fromStation == null || toStation == null) {
+            return false;
+        }
+
+        return lineRepository.addLine(new Line(name, fromStation, toStation));
+    }
+
+    public boolean deleteLine(String lineName) {
+        return lineRepository.deleteLineByName(lineName);
     }
 
     public void addStationToLine(String lineName, String stationName, int pathIndex) {
@@ -41,9 +50,7 @@ public class Subway {
         }
     }
 
-    public void deleteLine(String lineName) {
-        lineRepository.deleteLineByName(lineName);
-    }
+
 }
 
 /*
