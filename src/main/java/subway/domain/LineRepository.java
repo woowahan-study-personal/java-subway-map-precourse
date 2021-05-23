@@ -20,16 +20,16 @@ public class LineRepository {
             .collect(Collectors.toList());
     }
 
+    public boolean isLineExists(String lineName) {
+        return searchLine(lineName).size() > 0;
+    }
+
     public void addLine(Line line) {
         if (isLineExists(line.getName())) {
             throw new IllegalArgumentException("[ERROR]: 해당 노선은 이미 등록되었습니다.");
         }
 
         lines.add(line);
-    }
-
-    public boolean isLineExists(String lineName) {
-        return searchLine(lineName).size() > 0;
     }
 
     public void addStationToLine(Line line, Station station, int pathIndex) {
