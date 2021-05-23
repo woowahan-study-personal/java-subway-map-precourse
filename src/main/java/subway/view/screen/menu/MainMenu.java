@@ -1,12 +1,13 @@
 package subway.view.screen.menu;
 
+import subway.view.message.MenuMessage;
 import subway.view.screen.MenuUI;
 
 public class MainMenu implements MenuUI {
 
     @Override
     public void show() {
-        System.out.println("Hello from MainMenu");
+        System.out.println(MenuMessage.mainMenuPageMessage());
     }
 
     @Override
