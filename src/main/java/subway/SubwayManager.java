@@ -7,14 +7,11 @@ import subway.view.screen.menu.*;
 
 public class SubwayManager {
 
+    public static MainMenu mainMenu;
+
     private Scanner sc = null;
     private Subway subway = null;
     private MenuUI currentMenu = null;
-
-    private MainMenu mainMenu = new MainMenu();
-    private StationMenu stationMenu = new StationMenu();
-    private LineMenu lineMenu = new LineMenu();
-    private PathMenu pathMenu = new PathMenu();
 
     private SubwayManager() {
     }
@@ -22,10 +19,14 @@ public class SubwayManager {
     public SubwayManager(Scanner scanner, Subway subway) {
         this.sc = scanner;
         this.subway = subway;
+        mainMenu = new MainMenu(this.subway);
         currentMenu = mainMenu;
     }
 
     public void run() {
-        currentMenu.show();
+        while (currentMenu != null) {
+            currentMenu.show();
+            currentMenu = currentMenu.commands(sc, this.subway);
+        }
     }
 }

@@ -20,6 +20,7 @@ public class Application {
         Subway subway = AppInitializer.appInitializer();
         SubwayManager subwayManager = new SubwayManager(sc, subway);
         subwayManager.run();
+        System.out.println("DEBUG BIT");
     }
 
     public static void main(String[] args) {
