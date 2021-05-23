@@ -2,6 +2,9 @@ package subway.view.message;
 
 public class InfoMessage {
 
+    private InfoMessage() {
+    }
+
     private static final String infoHeader = "[INFO] ";
 
     private static final String submittedStation = "지하철 역이 등록되었습니다.";
@@ -13,27 +16,27 @@ public class InfoMessage {
     private static final String submittedPath = "구간이 등록되었습니다.";
     private static final String deletedPath = "구간이 삭제되었습니다.";
 
-    public String SubmittedStationInfoMessage() {
+    public static String SubmittedStationInfoMessage() {
         return infoHeader + submittedStation;
     }
 
-    public String DeletedStationInfoMessage() {
+    public static String DeletedStationInfoMessage() {
         return infoHeader + deletedStation;
     }
 
-    public String SubmittedLineInfoMessage() {
+    public static String SubmittedLineInfoMessage() {
         return infoHeader + submittedLine;
     }
 
-    public String DeletedLineInfoMessage() {
+    public static String DeletedLineInfoMessage() {
         return infoHeader + deletedLine;
     }
 
-    public String SubmittedPathInfoMessage() {
+    public static String SubmittedPathInfoMessage() {
         return infoHeader + submittedPath;
     }
 
-    public String DeletedPathInfoMessage() {
+    public static String DeletedPathInfoMessage() {
         return infoHeader + deletedPath;
     }
 }

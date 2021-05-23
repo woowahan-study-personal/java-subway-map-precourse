@@ -5,6 +5,9 @@ import java.util.List;
 
 public class MenuMessage {
 
+    private MenuMessage() {
+    }
+
     private static final String menuHeader = "## ";
 
     private static final String mainMenuPage = "메인 화면";
@@ -25,47 +28,47 @@ public class MenuMessage {
     private static final List<String> pathManagementCommandsList = Arrays
         .asList("1. 구간 등록", "2. 구간 삭제", "B. 돌아가기");
 
-    public String mainMenuPageMessage() {
+    public static String mainMenuPageMessage() {
         return menuHeader + mainMenuPage;
     }
 
-    public String stationManagementPageMessage() {
+    public static String stationManagementPageMessage() {
         return menuHeader + stationManagementPage;
     }
 
-    public String lineManagementPageMessage() {
+    public static String lineManagementPageMessage() {
         return menuHeader + lineManagementPage;
     }
 
-    public String pathManagementPageMessage() {
+    public static String pathManagementPageMessage() {
         return menuHeader + pathManagementPage;
     }
 
-    public String stationListPageMessage() {
+    public static String stationListPageMessage() {
         return menuHeader + stationListPage;
     }
 
-    public String lineListPageMessage() {
+    public static String lineListPageMessage() {
         return menuHeader + lineListPage;
     }
 
-    public String subwayListPageMessage() {
+    public static String subwayListPageMessage() {
         return menuHeader + subwayListPage;
     }
 
-    public List<String> mainMenuCommandsMessageList() {
+    public static List<String> mainMenuCommandsMessageList() {
         return mainMenuCommandsList;
     }
 
-    public List<String> stationManagementCommandsMessageList() {
+    public static List<String> stationManagementCommandsMessageList() {
         return stationManagementCommandsList;
     }
 
-    public List<String> lineManagementCommandsMessageList() {
+    public static List<String> lineManagementCommandsMessageList() {
         return lineManagementCommandsList;
     }
 
-    public List<String> pathManagementCommandsMessageList() {
+    public static List<String> pathManagementCommandsMessageList() {
         return pathManagementCommandsList;
     }
 }
