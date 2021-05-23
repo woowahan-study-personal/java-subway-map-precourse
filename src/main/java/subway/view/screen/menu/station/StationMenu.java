@@ -1,15 +1,30 @@
-package subway.view.screen.menu;
+package subway.view.screen.menu.station;
 
 import java.util.Scanner;
-import subway.SubwayManager;
+import subway.domain.Subway;
 import subway.view.message.ErrorMessage;
 import subway.view.message.InputMessage;
 import subway.view.message.MenuMessage;
 import subway.view.screen.MenuUI;
+import subway.view.screen.manage.station.AddStation;
+import subway.view.screen.manage.station.DeleteStation;
+import subway.view.screen.manage.station.ViewStation;
 import subway.view.tools.InputTool;
 import subway.view.tools.OutputTool;
 
 public class StationMenu implements MenuUI {
+
+    private AddStation addStation;
+    private DeleteStation deleteStation;
+    private ViewStation viewStation;
+    private MenuUI nextMenu;
+
+    public StationMenu(MenuUI mainMenu) {
+        addStation = new AddStation();
+        deleteStation = new DeleteStation();
+        viewStation = new ViewStation();
+        this.nextMenu = mainMenu;
+    }
 
     @Override
     public void show() {
@@ -18,26 +33,30 @@ public class StationMenu implements MenuUI {
     }
 
     @Override
-    public MenuUI input(Scanner sc) {
+    public MenuUI commands(Scanner sc, Subway subway) {
+        MenuUI nextUI = null;
         String command = InputTool.inputString(sc, InputMessage.askFunctionInputMessage(),
             ErrorMessage.failedRequestErrorMessage());
 
         if (command.equals("1")) {
-            return this;
+            addStation.commands(sc, subway);
+            nextUI = this.nextMenu;
         }
 
         if (command.equals("2")) {
-            return this;
+            deleteStation.commands(sc, subway);
+            nextUI = this.nextMenu;
         }
 
         if (command.equals("3")) {
-            return this;
+            viewStation.commands(sc, subway);
+            nextUI = this.nextMenu;
         }
 
         if (command.equals("B")) {
-            return SubwayManager.mainMenu;
+            nextUI = this.nextMenu;
         }
 
-        return this;
+        return nextUI;
     }
 }

@@ -11,5 +11,7 @@ public class OutputTool {
         for (String string: stringList) {
             System.out.println(string);
         }
+
+        System.out.println();
     }
 }

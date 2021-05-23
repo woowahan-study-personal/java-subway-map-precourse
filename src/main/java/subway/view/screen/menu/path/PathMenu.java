@@ -1,7 +1,8 @@
-package subway.view.screen.menu;
+package subway.view.screen.menu.path;
 
 import java.util.Scanner;
 import subway.SubwayManager;
+import subway.domain.Subway;
 import subway.view.message.ErrorMessage;
 import subway.view.message.InputMessage;
 import subway.view.message.MenuMessage;
@@ -18,7 +19,7 @@ public class PathMenu implements MenuUI {
     }
 
     @Override
-    public MenuUI input(Scanner sc) {
+    public MenuUI commands(Scanner sc, Subway subway) {
         String command = InputTool.inputString(sc, InputMessage.askFunctionInputMessage(),
             ErrorMessage.failedRequestErrorMessage());
 
