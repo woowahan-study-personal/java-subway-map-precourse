@@ -2,6 +2,7 @@ package subway.view.message;
 
 public class InputMessage {
 
+    private static final String askFunctionInput = "원하는 기능을 선택하세요.";
     private static final String askStationNameInput = "역 이름을 입력하세요";
     private static final String askLineNameInput = "노선 이름을 입력하세요.";
 
@@ -27,5 +28,9 @@ public class InputMessage {
 
     public String askLineNameMessage() {
         return askLineNameInput;
+    }
+
+    public String askFunctionInputMessage() {
+        return askFunctionInput;
     }
 }
