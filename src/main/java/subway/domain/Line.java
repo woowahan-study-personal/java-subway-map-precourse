@@ -7,6 +7,9 @@ import java.util.Objects;
 
 public class Line {
 
+    private static final int minimumLength = 2;
+    private static final int maximumLength = 8;
+
     private String name;
     private List<Station> stations = new LinkedList<>();
 
@@ -22,9 +25,8 @@ public class Line {
     }
 
     private void nameValidation(String name) {
-        if (name.length() < 2 || name.length() > 8) {
-            // 현재 단계에서는 Exception을 던지는 것으로 진행함.
-            throw new IllegalArgumentException("[ERROR]: 이름의 범위가 2 ~ 8 이내인 경우만 허용합니다.");
+        if (name.length() < minimumLength || name.length() > maximumLength) {
+             throw new IllegalArgumentException("[ERROR]: 이름의 범위가 2 ~ 8 이내인 경우만 허용합니다.");
         }
     }
 
@@ -51,7 +53,7 @@ public class Line {
     public List<String> getLineStationNameList() {
         List<String> stationNameList = new LinkedList<>();
 
-        for (Station station: this.stations) {
+        for (Station station : this.stations) {
             stationNameList.add(station.getName());
         }
 

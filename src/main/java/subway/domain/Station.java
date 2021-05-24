@@ -2,6 +2,8 @@ package subway.domain;
 
 public class Station {
 
+    private static final int minimumLength = 2;
+    private static final int maximumLength = 8;
     private String name;
 
     public Station(String name) {
@@ -18,7 +20,7 @@ public class Station {
     }
 
     private void nameValidation(String name) {
-        if (name.length() < 2 || name.length() > 8) {
+        if (name.length() < minimumLength || name.length() > maximumLength) {
             throw new IllegalArgumentException("[ERROR]: 이름의 범위가 2 ~ 8 이내인 경우만 허용합니다.");
         }
     }
