@@ -16,9 +16,9 @@ import subway.domain.Subway;
 
 public class Application {
 
-    private static void runApplication(Scanner sc) {
+    private static void runApplication(Scanner scanner) {
         Subway subway = AppInitializer.appInitializer();
-        SubwayManager subwayManager = new SubwayManager(sc, subway);
+        SubwayManager subwayManager = new SubwayManager(scanner, subway);
         subwayManager.run();
         System.out.println("DEBUG BIT");
     }
