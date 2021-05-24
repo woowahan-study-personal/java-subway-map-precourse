@@ -15,6 +15,11 @@ public class LineRepository {
         return Collections.unmodifiableList(lines);
     }
 
+    public Line getUnModifiableLine(String name) {
+        // TO-DO: 출력에 사용할 Line에 대한 것으로, 수정이 불가능한 객체가 되어야 한다.
+        return null;
+    }
+
     private List<Line> searchLine(String lineName) {
         return lines.stream().filter(line -> line.getName().equals(lineName))
             .collect(Collectors.toList());
@@ -34,13 +39,8 @@ public class LineRepository {
         return true;
     }
 
-    public void addStationToLine(Line line, Station station, int pathIndex) {
-        line.addStation(pathIndex, station);
-    }
-
-    public Line getUnModifiableLine(String name) {
-        // TO-DO: 출력에 사용할 Line에 대한 것으로, 수정이 불가능한 객체가 되어야 한다.
-        return null;
+    public boolean addStationToLine(Line line, Station station, int pathIndex) {
+        return line.addStation(pathIndex, station);
     }
 
     public Line getModifiableLine(String name) {
@@ -55,5 +55,9 @@ public class LineRepository {
 
     public boolean deleteLineByName(String name) {
         return lines.removeIf(line -> Objects.equals(line.getName(), name));
+    }
+
+    public boolean deleteStationInLine(Line line, Station station) {
+        return line.removeStation(station);
     }
 }

@@ -43,14 +43,19 @@ public class Subway {
         return lineRepository.deleteLineByName(lineName);
     }
 
-    public void addStationToLine(String lineName, String stationName, int pathIndex) {
+    public boolean addStationToLine(String lineName, String stationName, int pathIndex) {
         if (isOkayToAddStation(lineName, stationName)) {
-            lineRepository.addStationToLine(lineRepository.getModifiableLine(lineName),
+            return lineRepository.addStationToLine(lineRepository.getModifiableLine(lineName),
                 stationRepository.getStation(stationName), pathIndex);
         }
+
+        return false;
     }
 
-
+    public boolean deleteStationInLine(String lineName, String stationName) {
+        return lineRepository.deleteStationInLine(lineRepository.getModifiableLine(lineName),
+            stationRepository.getStation(stationName));
+    }
 }
 
 /*

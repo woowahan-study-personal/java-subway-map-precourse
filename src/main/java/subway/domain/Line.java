@@ -27,23 +27,25 @@ public class Line {
         }
     }
 
-    private void isAlreadyInListValidation(Station station) {
-        if (this.stations.indexOf(station) != -1) {
-            // 현재 단계에서는 Exception을 던지는 것으로 진행함.
-            throw new IllegalArgumentException("[ERROR]: 해당 역이 이미 경로에 등록되었습니다.");
-        }
+    private boolean isAlreadyInListValidation(Station station) {
+        return this.stations.indexOf(station) != -1;
     }
 
     public String getName() {
         return name;
     }
 
-    public void addStation(int pathIndex, Station station) {
-        isAlreadyInListValidation(station);
+    public boolean addStation(int pathIndex, Station station) {
+        if (isAlreadyInListValidation(station)) {
+            return false;
+        }
+
         this.stations.add(pathIndex, station);
+        return true;
     }
 
-    public void removeStation(Station targetStation) {
-        stations.removeIf(station -> Objects.equals(station.getName(), targetStation.getName()));
+    public boolean removeStation(Station targetStation) {
+        return stations
+            .removeIf(station -> Objects.equals(station.getName(), targetStation.getName()));
     }
 }
