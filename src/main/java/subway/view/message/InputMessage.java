@@ -8,6 +8,7 @@ public class InputMessage {
     private static final String askLineNameInput = "노선 이름을 입력하세요.";
     private static final String askFromStationNameForAdd = "등록할 노선의 상행 종점역 이름을 입력하세요.";
     private static final String askToStationNameForAdd = "등록할 노선의 하행 종점역 이름을 입력하세요.";
+    private static final String askStationOrder = "순서를 입력하세요.";
 
     private InputMessage() {
     }
@@ -46,5 +47,9 @@ public class InputMessage {
 
     public static String askToStationNameForAddMessage() {
         return inputHeader + askToStationNameForAdd;
+    }
+
+    public static String askStationOrderMessage() {
+        return inputHeader + askStationOrder;
     }
 }
