@@ -1,7 +1,6 @@
 package subway.view.screen.menu.path;
 
 import java.util.Scanner;
-import subway.SubwayManager;
 import subway.domain.Subway;
 import subway.view.message.ErrorMessage;
 import subway.view.message.InputMessage;
