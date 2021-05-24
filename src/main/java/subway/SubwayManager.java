@@ -9,12 +9,9 @@ public class SubwayManager {
 
     public static MainMenu mainMenu;
 
-    private Scanner sc = null;
-    private Subway subway = null;
-    private MenuUI currentMenu = null;
-
-    private SubwayManager() {
-    }
+    private Scanner sc;
+    private Subway subway;
+    private MenuUI currentMenu;
 
     public SubwayManager(Scanner scanner, Subway subway) {
         this.sc = scanner;
