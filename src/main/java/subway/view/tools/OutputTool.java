@@ -14,4 +14,12 @@ public class OutputTool {
 
         System.out.println();
     }
+
+    public static void printStringListWithHeader(List<String> stringList, String header) {
+        for (String string: stringList) {
+            System.out.println(header + string);
+        }
+
+        System.out.println();
+    }
 }
