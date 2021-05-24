@@ -16,6 +16,10 @@ public class InfoMessage {
     private static final String submittedPath = "구간이 등록되었습니다.";
     private static final String deletedPath = "구간이 삭제되었습니다.";
 
+    public static String getInfoHeader() {
+        return infoHeader;
+    }
+
     public static String SubmittedStationInfoMessage() {
         return infoHeader + submittedStation;
     }
