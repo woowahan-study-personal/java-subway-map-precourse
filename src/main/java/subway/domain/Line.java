@@ -17,21 +17,17 @@ public class Line {
         this.name = name;
     }
 
-    public Line(String name, Station from, Station to) {
-        nameValidation(name);
-        this.name = name;
-        this.stations.add(from);
-        this.stations.add(to);
-    }
-
     private void nameValidation(String name) {
         if (name.length() < minimumLength || name.length() > maximumLength) {
             throw new IllegalArgumentException("[ERROR]: 이름의 범위가 2 ~ 8 이내인 경우만 허용합니다.");
         }
     }
 
-    private boolean isAlreadyInListValidation(Station station) {
-        return this.stations.indexOf(station) != -1;
+    public Line(String name, Station from, Station to) {
+        nameValidation(name);
+        this.name = name;
+        this.stations.add(from);
+        this.stations.add(to);
     }
 
     public Line clone() {
@@ -58,6 +54,10 @@ public class Line {
         }
 
         return stationNameList;
+    }
+
+    private boolean isAlreadyInListValidation(Station station) {
+        return this.stations.indexOf(station) != -1;
     }
 
     public boolean addStation(int pathIndex, Station station) {
