@@ -19,7 +19,7 @@ public class InputTool {
         System.out.println(message);
 
         try {
-            return sc.nextInt();
+            return Integer.parseInt(sc.nextLine());
         } catch (Exception e) {
             System.out.println(errorMessage);
             return -1;
