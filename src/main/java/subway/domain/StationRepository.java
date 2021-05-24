@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 public class StationRepository {
 
-    private final List<Station> stations = new ArrayList<>();
+    private final static List<Station> stations = new ArrayList<>();
 
     public List<Station> stations() {
         List<Station> stations =  new ArrayList<>();

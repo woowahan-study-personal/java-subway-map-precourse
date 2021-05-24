@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 public class LineRepository {
 
-    private final List<Line> lines = new ArrayList<>();
+    private final static List<Line> lines = new ArrayList<>();
 
     public List<Line> lines() {
         List<Line> lines =  new ArrayList<>();

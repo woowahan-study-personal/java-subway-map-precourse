@@ -1,6 +1,6 @@
 package subway.domain;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Objects;
@@ -11,7 +11,7 @@ public class Line {
     private static final int maximumLength = 8;
 
     private String name;
-    private List<Station> stations = new LinkedList<>();
+    private List<Station> stations = new ArrayList<>();
 
     private Line(String name) {
         this.name = name;
@@ -26,7 +26,7 @@ public class Line {
 
     private void nameValidation(String name) {
         if (name.length() < minimumLength || name.length() > maximumLength) {
-             throw new IllegalArgumentException("[ERROR]: 이름의 범위가 2 ~ 8 이내인 경우만 허용합니다.");
+            throw new IllegalArgumentException("[ERROR]: 이름의 범위가 2 ~ 8 이내인 경우만 허용합니다.");
         }
     }
 
@@ -51,7 +51,7 @@ public class Line {
     }
 
     public List<String> getLineStationNameList() {
-        List<String> stationNameList = new LinkedList<>();
+        List<String> stationNameList = new ArrayList<>();
 
         for (Station station : this.stations) {
             stationNameList.add(station.getName());
