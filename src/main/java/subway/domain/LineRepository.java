@@ -10,14 +10,14 @@ public class LineRepository {
 
     private final List<Line> lines = new ArrayList<>();
 
-    public List<Line> unmodifiableLines() {
-        // 수정이 불가능한 상태의 lines를 반환해야 한다. 노선 리스트 출력에 사용될 예정이다.
-        return Collections.unmodifiableList(lines);
-    }
+    public List<Line> lines() {
+        List<Line> lines =  new ArrayList<>();
 
-    public Line getUnModifiableLine(String name) {
-        // TO-DO: 출력에 사용할 Line에 대한 것으로, 수정이 불가능한 객체가 되어야 한다.
-        return null;
+        for (Line line : this.lines) {
+            lines.add(line.clone());
+        }
+
+        return Collections.unmodifiableList(lines);
     }
 
     private List<Line> searchLine(String lineName) {

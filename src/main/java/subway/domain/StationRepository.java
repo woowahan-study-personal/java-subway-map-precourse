@@ -11,6 +11,12 @@ public class StationRepository {
     private final List<Station> stations = new ArrayList<>();
 
     public List<Station> stations() {
+        List<Station> stations =  new ArrayList<>();
+
+        for (Station station : this.stations) {
+            stations.add(station.clone());
+        }
+
         return Collections.unmodifiableList(stations);
     }
 

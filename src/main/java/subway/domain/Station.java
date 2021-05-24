@@ -9,11 +9,13 @@ public class Station {
         this.name = name;
     }
 
+    public Station clone() {
+        return new Station(getName());
+    }
+
     public String getName() {
         return name;
     }
-
-    // 추가 기능 구현
 
     private void nameValidation(String name) {
         if (name.length() < 2 || name.length() > 8) {

@@ -1,5 +1,8 @@
 package subway.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Subway {
 
     private StationRepository stationRepository = new StationRepository();
@@ -15,6 +18,29 @@ public class Subway {
 
     private void unLinkStationInLine(Station station) {
         lineRepository.deleteStationInAllLines(station);
+    }
+
+    public List<String> getStationNameList() {
+        List<String> stationList =  new ArrayList<>();
+
+        for (Station station : stationRepository.stations()) {
+            stationList.add(station.getName());
+        }
+        return stationList;
+    }
+
+    public List<String> getLineNameList() {
+        List<String> lineList = new ArrayList<>();
+
+        for (Line line : lineRepository.lines()) {
+            lineList.add(line.getName());
+        }
+
+        return lineList;
+    }
+
+    public List<Line> getLineList() {
+        return lineRepository.lines();
     }
 
     public boolean addStation(String stationName) {
@@ -57,24 +83,3 @@ public class Subway {
             stationRepository.getStation(stationName));
     }
 }
-
-/*
-    ## 구간 관리 화면
-    1. 구간 등록
-    2. 구간 삭제
-    B. 돌아가기
-
-    ## 원하는 기능을 선택하세요.
-    1
-
-    ## 노선을 입력하세요.
-    2호선
-
-    ## 역이름을 입력하세요.
-    잠실역
-
-    ## 순서를 입력하세요.
-    2
-
-    [INFO] 구간이 등록되었습니다.
- */
