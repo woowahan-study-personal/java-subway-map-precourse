@@ -7,38 +7,49 @@ import subway.view.message.ErrorMessage;
 import subway.view.message.InputMessage;
 import subway.view.message.MenuMessage;
 import subway.view.screen.MenuUI;
+import subway.view.screen.manage.path.AddPath;
+import subway.view.screen.manage.path.DeletePath;
 import subway.view.tools.InputTool;
 import subway.view.tools.OutputTool;
 
 public class PathMenu implements MenuUI {
 
+    private AddPath addPath;
+    private DeletePath deletePath;
+    private MenuUI nextMenu;
+
+    public PathMenu(MenuUI mainMenu) {
+        addPath = new AddPath();
+        deletePath = new DeletePath();
+        nextMenu = mainMenu;
+    }
+
     @Override
     public void show() {
-        System.out.println(MenuMessage.mainMenuPageMessage());
-        OutputTool.printStringList(MenuMessage.mainMenuCommandsMessageList());
+        System.out.println(MenuMessage.pathManagementPageMessage());
+        OutputTool.printStringList(MenuMessage.pathManagementCommandsMessageList());
     }
 
     @Override
     public MenuUI commands(Scanner sc, Subway subway) {
+        MenuUI nextUI = this;
         String command = InputTool.inputString(sc, InputMessage.askFunctionInputMessage(),
             ErrorMessage.failedRequestErrorMessage());
 
         if (command.equals("1")) {
-            return this;
+            addPath.commands(sc, subway);
+            nextUI = nextMenu;
         }
 
         if (command.equals("2")) {
-            return this;
-        }
-
-        if (command.equals("3")) {
-            return this;
+            deletePath.commands(sc, subway);
+            nextUI = nextMenu;
         }
 
         if (command.equals("B")) {
-            return SubwayManager.mainMenu;
+            nextUI = nextMenu;
         }
 
-        return this;
+        return nextUI;
     }
 }

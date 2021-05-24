@@ -25,7 +25,7 @@ public class MainMenu implements MenuUI {
         super();
         stationMenu = new StationMenu(this);
         lineMenu = new LineMenu(this);
-        pathMenu = new PathMenu();
+        pathMenu = new PathMenu(this);
     }
 
     @Override
