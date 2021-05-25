@@ -9,8 +9,8 @@ public class SubwayManager {
 
     public static MainMenu mainMenu;
 
-    private Scanner sc;
-    private Subway subway;
+    private final Scanner sc;
+    private final Subway subway;
     private MenuUI currentMenu;
 
     public SubwayManager(Scanner scanner, Subway subway) {
