@@ -17,10 +17,6 @@ public class Station {
         this.name = name;
     }
 
-    public Station clone() {
-        return new Station(getName());
-    }
-
     public String getName() {
         return name;
     }

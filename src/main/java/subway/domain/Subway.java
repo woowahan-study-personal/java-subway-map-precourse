@@ -34,14 +34,14 @@ public class Subway {
     public List<String> getLineNameList() {
         List<String> lineList = new ArrayList<>();
 
-        for (Line line : lineRepository.lines()) {
+        for (ImmutableLine line : lineRepository.lines()) {
             lineList.add(line.getName());
         }
 
         return lineList;
     }
 
-    public List<Line> getLineList() {
+    public List<ImmutableLine> getLineList() {
         return lineRepository.lines();
     }
 

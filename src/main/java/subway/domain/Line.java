@@ -1,6 +1,7 @@
 package subway.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Objects;
@@ -31,31 +32,15 @@ public class Line {
         this.stations.add(to);
     }
 
-    // TO-DO: 현재 이 방식은 과다한 비용을 지출하고 있는 코드이다. 이를 수정해야 한다.
-    public Line clone() {
-        Line line = new Line(this.getName());
-
-        ListIterator<Station> it = stations.listIterator();
-
-        while (it.hasNext()) {
-            line.addStation(it.nextIndex(), it.next().clone());
-        }
+    public ImmutableLine clone() {
+        ImmutableLine line = new ImmutableLine(this.getName(),
+            Collections.unmodifiableList(this.stations));
 
         return line;
     }
 
     public String getName() {
         return name;
-    }
-
-    public List<String> getLineStationNameList() {
-        List<String> stationNameList = new ArrayList<>();
-
-        for (Station station : this.stations) {
-            stationNameList.add(station.getName());
-        }
-
-        return stationNameList;
     }
 
     private boolean isAlreadyInListValidation(Station station) {
