@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import subway.AppStatusCode;
 
 public class StationRepository {
 
@@ -25,10 +26,6 @@ public class StationRepository {
             .collect(Collectors.toList());
     }
 
-    public boolean isStationExists(String stationName) {
-        return searchStation(stationName).size() > 0;
-    }
-
     public Station getStation(String stationName) {
         List<Station> searchResult = searchStation(stationName);
 
@@ -39,16 +36,25 @@ public class StationRepository {
         return searchResult.get(0);
     }
 
-    public boolean addStation(Station station) {
+    public boolean isStationExists(String stationName) {
+        return searchStation(stationName).size() > 0;
+    }
+
+    public int addStation(Station station) throws IllegalArgumentException {
         if (isStationExists(station.getName())) {
-            return false;
+            return AppStatusCode.contentAlreadyExistsCode();
         }
 
         stations.add(station);
-        return true;
+
+        return AppStatusCode.requestApprovedCode();
     }
 
-    public boolean deleteStation(String stationName) {
-        return stations.removeIf(station -> Objects.equals(station.getName(), stationName));
+    public int deleteStation(String stationName) {
+        if (stations.removeIf(station -> Objects.equals(station.getName(), stationName))) {
+            return AppStatusCode.requestApprovedCode();
+        }
+
+        return AppStatusCode.notFoundCode();
     }
 }

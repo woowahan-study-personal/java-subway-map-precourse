@@ -2,6 +2,7 @@ package subway.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import subway.AppStatusCode;
 
 public class Subway {
 
@@ -26,6 +27,7 @@ public class Subway {
         for (Station station : stationRepository.stations()) {
             stationList.add(station.getName());
         }
+
         return stationList;
     }
 
@@ -43,43 +45,63 @@ public class Subway {
         return lineRepository.lines();
     }
 
-    public boolean addStation(String stationName) {
-        return stationRepository.addStation(new Station(stationName));
+    public int addStation(String stationName) throws IllegalArgumentException {
+        try {
+            return stationRepository.addStation(new Station(stationName));
+        } catch (IllegalArgumentException e) {
+            return AppStatusCode.contentRangeFailedCode();
+        }
     }
 
-    public boolean deleteStation(String stationName) {
+    public int deleteStation(String stationName) {
         Station station = stationRepository.getStation(stationName);
+
+        if (station == null) {
+            return AppStatusCode.notFoundCode();
+        }
+
         unLinkStationInLine(station);
 
         return stationRepository.deleteStation(station.getName());
     }
 
-    public boolean addLine(String name, String from, String to) {
+    public int addLine(String name, String from, String to) throws IllegalArgumentException {
         Station fromStation = stationRepository.getStation(from);
         Station toStation = stationRepository.getStation(to);
 
         if (fromStation == null || toStation == null) {
-            return false;
+            return AppStatusCode.notFoundCode();
         }
 
-        return lineRepository.addLine(new Line(name, fromStation, toStation));
+        try {
+            return lineRepository.addLine(new Line(name, fromStation, toStation));
+        } catch(IllegalArgumentException e) {
+            return AppStatusCode.contentRangeFailedCode();
+        }
     }
 
-    public boolean deleteLine(String lineName) {
+    public int deleteLine(String lineName) {
         return lineRepository.deleteLineByName(lineName);
     }
 
-    public boolean addStationToLine(String lineName, String stationName, int pathIndex) {
+    public int addStationToLine(String lineName, String stationName, int pathIndex) {
         if (isOkayToAddStation(lineName, stationName)) {
             return lineRepository.addStationToLine(lineRepository.getModifiableLine(lineName),
                 stationRepository.getStation(stationName), pathIndex);
         }
 
-        return false;
+        return AppStatusCode.notFoundCode();
     }
 
-    public boolean deleteStationInLine(String lineName, String stationName) {
-        return lineRepository.deleteStationInLine(lineRepository.getModifiableLine(lineName),
-            stationRepository.getStation(stationName));
+    public int deleteStationInLine(String lineName, String stationName) {
+
+        Line line = lineRepository.getModifiableLine(lineName);
+        Station station = stationRepository.getStation(stationName);
+
+        if (line == null || station == null) {
+            return AppStatusCode.notFoundCode();
+        }
+
+        return lineRepository.deleteStationInLine(line, station);
     }
 }

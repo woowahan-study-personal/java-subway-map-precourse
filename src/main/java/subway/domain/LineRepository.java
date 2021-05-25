@@ -5,13 +5,14 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import subway.AppStatusCode;
 
 public class LineRepository {
 
     private final static List<Line> lines = new ArrayList<>();
 
     public List<Line> lines() {
-        List<Line> lines =  new ArrayList<>();
+        List<Line> lines = new ArrayList<>();
 
         for (Line line : this.lines) {
             lines.add(line.clone());
@@ -29,18 +30,22 @@ public class LineRepository {
         return searchLine(lineName).size() > 0;
     }
 
-    public boolean addLine(Line line) {
+    public int addLine(Line line) throws IllegalArgumentException {
         if (isLineExists(line.getName())) {
-            return false;
+            return AppStatusCode.contentAlreadyExistsCode();
         }
 
         lines.add(line);
 
-        return true;
+        return AppStatusCode.requestApprovedCode();
     }
 
-    public boolean addStationToLine(Line line, Station station, int pathIndex) {
-        return line.addStation(pathIndex, station);
+    public int addStationToLine(Line line, Station station, int pathIndex)
+        throws IllegalArgumentException {
+
+        line.addStation(pathIndex, station);
+
+        return AppStatusCode.requestApprovedCode();
     }
 
     public Line getModifiableLine(String name) {
@@ -48,16 +53,20 @@ public class LineRepository {
     }
 
     public void deleteStationInAllLines(Station station) {
-        for (Line line: lines) {
+        for (Line line : lines) {
             line.removeStation(station);
         }
     }
 
-    public boolean deleteLineByName(String name) {
-        return lines.removeIf(line -> Objects.equals(line.getName(), name));
+    public int deleteLineByName(String name) {
+        if (lines.removeIf(line -> Objects.equals(line.getName(), name))) {
+            AppStatusCode.requestApprovedCode();
+        }
+
+        return AppStatusCode.notFoundCode();
     }
 
-    public boolean deleteStationInLine(Line line, Station station) {
+    public int deleteStationInLine(Line line, Station station) {
         return line.removeStation(station);
     }
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Objects;
+import subway.AppStatusCode;
 
 public class Line {
 
@@ -23,13 +24,14 @@ public class Line {
         }
     }
 
-    public Line(String name, Station from, Station to) {
+    public Line(String name, Station from, Station to) throws IllegalArgumentException {
         nameValidation(name);
         this.name = name;
         this.stations.add(from);
         this.stations.add(to);
     }
 
+    // TO-DO: 현재 이 방식은 과다한 비용을 지출하고 있는 코드이다. 이를 수정해야 한다.
     public Line clone() {
         Line line = new Line(this.getName());
 
@@ -60,17 +62,22 @@ public class Line {
         return this.stations.indexOf(station) != -1;
     }
 
-    public boolean addStation(int pathIndex, Station station) {
+    public int addStation(int pathIndex, Station station) {
         if (isAlreadyInListValidation(station)) {
-            return false;
+            return AppStatusCode.contentAlreadyExistsCode();
         }
 
         this.stations.add(pathIndex, station);
-        return true;
+
+        return AppStatusCode.requestApprovedCode();
     }
 
-    public boolean removeStation(Station targetStation) {
-        return stations
-            .removeIf(station -> Objects.equals(station.getName(), targetStation.getName()));
+    public int removeStation(Station targetStation) {
+        if (stations
+            .removeIf(station -> Objects.equals(station.getName(), targetStation.getName()))) {
+            return AppStatusCode.requestApprovedCode();
+        }
+
+        return AppStatusCode.notFoundCode();
     }
 }
