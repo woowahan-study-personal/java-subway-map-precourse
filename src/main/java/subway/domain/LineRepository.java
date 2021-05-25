@@ -27,7 +27,7 @@ public class LineRepository {
     }
 
     public boolean isLineExists(String lineName) {
-        return searchLine(lineName).size() > 0;
+        return lines.stream().anyMatch(line -> line.getName().equals(lineName));
     }
 
     public int addLine(Line line) throws IllegalArgumentException {
