@@ -1,6 +1,7 @@
 package subway.view.screen.manage.path;
 
 import java.util.Scanner;
+import subway.AppStatusCode;
 import subway.domain.Subway;
 import subway.view.message.ErrorMessage;
 import subway.view.message.InfoMessage;
@@ -19,12 +20,13 @@ public class AddPath implements ManageUI {
         int order = InputTool.inputInt(sc, InputMessage.askStationOrderMessage(),
             ErrorMessage.requiresIntegerOnlyMessage());
 
-        if (lineName == null || stationName == null || order < 0) {
+        if (lineName == null || stationName == null || order == AppStatusCode.outOfRangeCode()) {
             return;
         }
 
-        if (!subway.addStationToLine(lineName, stationName, order)) {
-            System.out.println(ErrorMessage.failedRequestErrorMessage());
+        if (subway.addStationToLine(lineName, stationName, order) == AppStatusCode
+            .contentAlreadyExistsCode()) {
+            System.out.println(ErrorMessage.stationAlreadyExistsInLineErrorMessage());
             return;
         }
 

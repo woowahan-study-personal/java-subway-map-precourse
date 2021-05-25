@@ -1,6 +1,7 @@
 package subway.view.screen.manage.station;
 
 import java.util.Scanner;
+import subway.AppStatusCode;
 import subway.domain.Subway;
 import subway.view.message.ErrorMessage;
 import subway.view.message.InfoMessage;
@@ -13,14 +14,21 @@ public class DeleteStation implements ManageUI {
 
     @Override
     public void commands(Scanner sc, Subway subway) {
-        String stationName = InputTool.inputString(sc, InputMessage.askStationNameMessageForDelete(),
+        String stationName = InputTool.inputString(sc, InputMessage.askLineNameMessage(),
             ErrorMessage.failedRequestErrorMessage());
 
         if (stationName == null) {
             return;
         }
 
-        if (!subway.deleteStation(stationName)) {
+        int executeCode = subway.deleteStation(stationName);
+
+        if (executeCode == AppStatusCode.notFoundCode()) {
+            System.out.println(ErrorMessage.cannotFoundMessage());
+            return;
+        }
+
+        if (executeCode == AppStatusCode.contentAlreadyExistsCode()) {
             System.out.println(ErrorMessage.stationAlreadyExistsErrorMessage());
             return;
         }

@@ -1,6 +1,7 @@
 package subway.view.screen.manage.line;
 
 import java.util.Scanner;
+import subway.AppStatusCode;
 import subway.domain.Subway;
 import subway.view.message.ErrorMessage;
 import subway.view.message.InfoMessage;
@@ -27,8 +28,15 @@ public class AddLine implements ManageUI {
             return;
         }
 
-        if (!subway.addLine(lineName, fromStationName, toStationName)) {
+        int executeCode = subway.addLine(lineName, fromStationName, toStationName);
+
+        if (executeCode == AppStatusCode.contentAlreadyExistsCode()) {
             System.out.println(ErrorMessage.lineAlreadyExistsErrorMessage());
+            return;
+        }
+
+        if (executeCode == AppStatusCode.contentRangeFailedCode()) {
+            System.out.println(ErrorMessage.contentLengthOutOfRangeMessage());
             return;
         }
 

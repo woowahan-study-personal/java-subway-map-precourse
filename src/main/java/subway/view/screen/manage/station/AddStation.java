@@ -1,6 +1,7 @@
 package subway.view.screen.manage.station;
 
 import java.util.Scanner;
+import subway.AppStatusCode;
 import subway.domain.Subway;
 import subway.view.message.ErrorMessage;
 import subway.view.message.InfoMessage;
@@ -19,8 +20,15 @@ public class AddStation implements ManageUI {
             return;
         }
 
-        if (!subway.addStation(stationName)) {
+        int executeCode = subway.addStation(stationName);
+
+        if (executeCode == AppStatusCode.contentAlreadyExistsCode()) {
             System.out.println(ErrorMessage.stationAlreadyExistsErrorMessage());
+            return;
+        }
+
+        if (executeCode == AppStatusCode.contentRangeFailedCode()) {
+            System.out.println(ErrorMessage.contentLengthOutOfRangeMessage());
             return;
         }
 

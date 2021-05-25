@@ -1,6 +1,7 @@
 package subway.view.screen.manage.path;
 
 import java.util.Scanner;
+import subway.AppStatusCode;
 import subway.domain.Subway;
 import subway.view.message.ErrorMessage;
 import subway.view.message.InfoMessage;
@@ -21,8 +22,8 @@ public class DeletePath implements ManageUI {
             return;
         }
 
-        if (!subway.deleteStationInLine(lineName, stationName)) {
-            System.out.println(ErrorMessage.failedRequestErrorMessage());
+        if (subway.deleteStationInLine(lineName, stationName) == AppStatusCode.notFoundCode()) {
+            System.out.println(ErrorMessage.cannotFoundMessage());
             return;
         }
 
