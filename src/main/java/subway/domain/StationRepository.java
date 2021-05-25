@@ -15,7 +15,7 @@ public class StationRepository {
         List<Station> stations =  new ArrayList<>();
 
         for (Station station : this.stations) {
-            stations.add(station.clone());
+            stations.add(station);
         }
 
         return Collections.unmodifiableList(stations);
@@ -27,13 +27,11 @@ public class StationRepository {
     }
 
     public Station getStation(String stationName) {
-        List<Station> searchResult = searchStation(stationName);
-
-        if (searchResult.size() == 0) {
+        if (!isStationExists(stationName)) {
             return null;
         }
 
-        return searchResult.get(0);
+        return searchStation(stationName).get(0);
     }
 
     public boolean isStationExists(String stationName) {
