@@ -37,7 +37,7 @@ public class StationRepository {
     }
 
     public boolean isStationExists(String stationName) {
-        return searchStation(stationName).size() > 0;
+        return stations.stream().anyMatch(station -> station.getName().equals(stationName));
     }
 
     public int addStation(Station station) throws IllegalArgumentException {
