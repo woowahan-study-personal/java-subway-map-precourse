@@ -11,7 +11,7 @@ public class Line {
     private static final int minimumLength = 2;
     private static final int maximumLength = 8;
 
-    private String name;
+    private final String name;
     private List<Station> stations = new ArrayList<>();
 
     private Line(String name) {
