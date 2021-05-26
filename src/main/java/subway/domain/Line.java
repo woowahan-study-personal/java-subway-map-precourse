@@ -36,4 +36,7 @@ public class Line {
         lineStations.add(index, name);
     }
 
+    public static boolean deleteLineStation(String name) {
+        return lineStations.removeIf(station -> Objects.equals(station, name));
+    }
 }
