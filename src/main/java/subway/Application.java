@@ -146,6 +146,13 @@ public class Application {
                 }
                 // A 메인화면 돌아가기
             }
+            // B -4. 지하철 노선도 출력
+            if (main_func == 4) {
+                System.out.println("## 지하철 노선도");
+                // 해당 노선 이름
+                System.out.println("[INFO] ---");
+                // 해당 노선의 역 이름 ...
+            }
 
             flag = false;
         }
