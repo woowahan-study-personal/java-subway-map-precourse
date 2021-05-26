@@ -86,15 +86,22 @@ public class Application {
                 int func = scanner.nextInt();
                 if (func == 1) {
                     System.out.println("## 등록할 노선 이름을 입력하세요.");
-                    lineRepository.addLine(new Line(scanner.next()));
+                    Line line = new Line(scanner.next());
+                    lineRepository.addLine(line);
                     // To DO !!!
                     System.out.println("## 등록할 노선의 상행 종점역 이름을 입력하세요.");
+                    line.addLineStation(scanner.next());
                     System.out.println("## 등록할 노선의 하행 종점역 이름을 입력하세요.");
+                    line.addLineStation(scanner.next());
                     System.out.println("[INFO] 지하철 노선이 등록되었습니다.");
-                    // 테스트 출력
+                    // 테스트 출력 1개
                     System.out.println(
                         lineRepository.lines().get(lineRepository.lines().size()-1)
                             .getName());
+                    for (int i = 0; i < line.getLineStations().size(); i++) {
+                        System.out
+                            .println("[노선의 역] " + line.getLineStations().get(i));
+                    }
                     // A 메인화면 돌아가기/재귀
                 }
                 if (func == 2) {
