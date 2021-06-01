@@ -6,8 +6,8 @@ import subway.AppStatusCode;
 
 public class Subway {
 
-    private StationRepository stationRepository = new StationRepository();
-    private LineRepository lineRepository = new LineRepository();
+    private final StationRepository stationRepository = new StationRepository();
+    private final LineRepository lineRepository = new LineRepository();
 
     public Subway() {
     }
