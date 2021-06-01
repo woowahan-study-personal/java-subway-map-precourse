@@ -8,7 +8,8 @@ public class AppStatusCode {
     private static final int contentRangeFailed = 2;
     private static final int contentAlreadyExists = 3;
 
-    private AppStatusCode() {};
+    private AppStatusCode() {
+    }
 
     public static int outOfRangeCode() {
         return outOfRange;
