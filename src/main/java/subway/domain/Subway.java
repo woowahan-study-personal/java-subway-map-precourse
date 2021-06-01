@@ -24,7 +24,7 @@ public class Subway {
     public List<String> getStationNameList() {
         List<String> stationList = new ArrayList<>();
 
-        for (Station station : stationRepository.stations()) {
+        for (Station station : stationRepository.getStations()) {
             stationList.add(station.getName());
         }
 

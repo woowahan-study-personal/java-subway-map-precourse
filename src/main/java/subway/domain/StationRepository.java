@@ -11,13 +11,7 @@ public class StationRepository {
 
     private final static List<Station> stations = new ArrayList<>();
 
-    public List<Station> stations() {
-        List<Station> stations =  new ArrayList<>();
-
-        for (Station station : this.stations) {
-            stations.add(station);
-        }
-
+    public List<Station> getStations() {
         return Collections.unmodifiableList(stations);
     }
 
