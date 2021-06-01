@@ -33,7 +33,7 @@ public class Line {
     public List<String> getLineStationNameList() {
         List<String> stationNameList = new ArrayList<>();
 
-        for (Station station : this.stations) {
+        for (Station station : stations) {
             stationNameList.add(station.getName());
         }
 
@@ -41,7 +41,7 @@ public class Line {
     }
 
     private boolean isAlreadyInListValidation(Station station) {
-        return this.stations.indexOf(station) != -1;
+        return stations.contains(station);
     }
 
     public int addStation(int pathIndex, Station station) {
@@ -49,7 +49,7 @@ public class Line {
             return AppStatusCode.contentAlreadyExistsCode();
         }
 
-        this.stations.add(pathIndex, station);
+        stations.add(pathIndex, station);
 
         return AppStatusCode.requestApprovedCode();
     }
