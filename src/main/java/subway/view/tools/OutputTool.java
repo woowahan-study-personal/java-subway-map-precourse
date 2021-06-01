@@ -8,7 +8,7 @@ public class OutputTool {
     }
 
     public static void printStringList(List<String> stringList) {
-        for (String string: stringList) {
+        for (String string : stringList) {
             System.out.println(string);
         }
 
@@ -16,7 +16,7 @@ public class OutputTool {
     }
 
     public static void printStringListWithHeader(List<String> stringList, String header) {
-        for (String string: stringList) {
+        for (String string : stringList) {
             System.out.println(header + string);
         }
 
