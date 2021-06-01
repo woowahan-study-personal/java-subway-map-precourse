@@ -13,7 +13,7 @@ public class Line {
     private static final int maximumLength = 8;
 
     private final String name;
-    private List<Station> stations = new ArrayList<>();
+    private final List<Station> stations = new ArrayList<>();
 
     private Line(String name) {
         this.name = name;
@@ -32,15 +32,18 @@ public class Line {
         this.stations.add(to);
     }
 
-    public ImmutableLine clone() {
-        ImmutableLine line = new ImmutableLine(this.getName(),
-            Collections.unmodifiableList(this.stations));
-
-        return line;
-    }
-
     public String getName() {
         return name;
+    }
+
+    public List<String> getLineStationNameList() {
+        List<String> stationNameList = new ArrayList<>();
+
+        for (Station station : this.stations) {
+            stationNameList.add(station.getName());
+        }
+
+        return stationNameList;
     }
 
     private boolean isAlreadyInListValidation(Station station) {

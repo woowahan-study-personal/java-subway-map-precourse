@@ -22,7 +22,7 @@ public class Subway {
     }
 
     public List<String> getStationNameList() {
-        List<String> stationList =  new ArrayList<>();
+        List<String> stationList = new ArrayList<>();
 
         for (Station station : stationRepository.stations()) {
             stationList.add(station.getName());
@@ -34,14 +34,14 @@ public class Subway {
     public List<String> getLineNameList() {
         List<String> lineList = new ArrayList<>();
 
-        for (ImmutableLine line : lineRepository.lines()) {
+        for (Line line : lineRepository.lines()) {
             lineList.add(line.getName());
         }
 
         return lineList;
     }
 
-    public List<ImmutableLine> getLineList() {
+    public List<Line> getLineList() {
         return lineRepository.lines();
     }
 
@@ -75,7 +75,7 @@ public class Subway {
 
         try {
             return lineRepository.addLine(new Line(name, fromStation, toStation));
-        } catch(IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             return AppStatusCode.contentRangeFailedCode();
         }
     }

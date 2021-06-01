@@ -11,13 +11,7 @@ public class LineRepository {
 
     private final static List<Line> lines = new ArrayList<>();
 
-    public List<ImmutableLine> lines() {
-        List<ImmutableLine> lines = new ArrayList<>();
-
-        for (Line line : this.lines) {
-            lines.add(line.clone());
-        }
-
+    public List<Line> lines() {
         return Collections.unmodifiableList(lines);
     }
 
