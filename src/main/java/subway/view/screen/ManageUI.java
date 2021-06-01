@@ -5,5 +5,5 @@ import subway.domain.Subway;
 
 public interface ManageUI {
 
-    public void commands(Scanner sc, Subway subway);
+    void commands(Scanner sc, Subway subway);
 }
