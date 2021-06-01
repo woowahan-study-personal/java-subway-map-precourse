@@ -3,7 +3,7 @@ package subway;
 import java.util.Scanner;
 import subway.domain.Subway;
 import subway.view.screen.MenuUI;
-import subway.view.screen.menu.*;
+import subway.view.screen.menu.MainMenu;
 
 public class SubwayManager {
 
