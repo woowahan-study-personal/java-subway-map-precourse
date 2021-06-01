@@ -11,7 +11,7 @@ public class LineRepository {
 
     private final static List<Line> lines = new ArrayList<>();
 
-    public List<Line> lines() {
+    public List<Line> getLines() {
         return Collections.unmodifiableList(lines);
     }
 

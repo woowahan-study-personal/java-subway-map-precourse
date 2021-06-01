@@ -1,9 +1,7 @@
 package subway.domain;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Objects;
 import subway.AppStatusCode;
 
@@ -14,10 +12,6 @@ public class Line {
 
     private final String name;
     private final List<Station> stations = new ArrayList<>();
-
-    private Line(String name) {
-        this.name = name;
-    }
 
     private void nameValidation(String name) {
         if (name.length() < minimumLength || name.length() > maximumLength) {

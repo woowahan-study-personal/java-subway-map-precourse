@@ -34,7 +34,7 @@ public class Subway {
     public List<String> getLineNameList() {
         List<String> lineList = new ArrayList<>();
 
-        for (Line line : lineRepository.lines()) {
+        for (Line line : lineRepository.getLines()) {
             lineList.add(line.getName());
         }
 
@@ -42,7 +42,7 @@ public class Subway {
     }
 
     public List<Line> getLineList() {
-        return lineRepository.lines();
+        return lineRepository.getLines();
     }
 
     public int addStation(String stationName) throws IllegalArgumentException {
