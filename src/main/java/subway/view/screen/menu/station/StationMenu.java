@@ -6,9 +6,9 @@ import subway.view.message.ErrorMessage;
 import subway.view.message.InputMessage;
 import subway.view.message.MenuMessage;
 import subway.view.screen.MenuUI;
+import subway.view.screen.info.station.ViewStation;
 import subway.view.screen.manage.station.AddStation;
 import subway.view.screen.manage.station.DeleteStation;
-import subway.view.screen.info.station.ViewStation;
 import subway.view.tools.InputTool;
 import subway.view.tools.OutputTool;
 
