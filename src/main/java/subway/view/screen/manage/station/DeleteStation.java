@@ -7,7 +7,6 @@ import subway.view.message.ErrorMessage;
 import subway.view.message.InfoMessage;
 import subway.view.message.InputMessage;
 import subway.view.screen.ManageUI;
-import subway.view.screen.MenuUI;
 import subway.view.tools.InputTool;
 
 public class DeleteStation implements ManageUI {
