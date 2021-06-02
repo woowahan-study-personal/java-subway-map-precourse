@@ -1,5 +1,6 @@
 package subway.view.screen.manage.station;
 
+import java.util.Objects;
 import java.util.Scanner;
 import subway.AppStatusCode;
 import subway.domain.Subway;
@@ -16,7 +17,7 @@ public class DeleteStation implements ManageUI {
         String stationName = InputTool.inputString(sc, InputMessage.askLineNameMessage(),
             ErrorMessage.failedRequestErrorMessage());
 
-        if (stationName == null) {
+        if (Objects.isNull(stationName)) {
             return;
         }
 
