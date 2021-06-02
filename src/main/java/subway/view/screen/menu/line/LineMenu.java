@@ -14,6 +14,11 @@ import subway.view.tools.OutputTool;
 
 public class LineMenu implements MenuUI {
 
+    private static final String ROUTE_TO_ADD_LINE = "1";
+    private static final String ROUTE_TO_DELETE_LINE = "2";
+    private static final String ROUTE_TO_VIEW_LINE = "3";
+    private static final String ROUTE_TO_NEXT_MENU = "B";
+
     private AddLine addLine;
     private DeleteLine deleteLine;
     private ViewLine viewLine;
@@ -38,22 +43,22 @@ public class LineMenu implements MenuUI {
         String command = InputTool.inputString(sc, InputMessage.askFunctionInputMessage(),
             ErrorMessage.failedRequestErrorMessage());
 
-        if (command.equals("1")) {
+        if (command.equals(ROUTE_TO_ADD_LINE)) {
             addLine.commands(sc, subway);
             nextUI = nextMenu;
         }
 
-        if (command.equals("2")) {
+        if (command.equals(ROUTE_TO_DELETE_LINE)) {
             deleteLine.commands(sc, subway);
             nextUI = nextMenu;
         }
 
-        if (command.equals("3")) {
+        if (command.equals(ROUTE_TO_VIEW_LINE)) {
             viewLine.commands(subway);
             nextUI = nextMenu;
         }
 
-        if (command.equals("B")) {
+        if (command.equals(ROUTE_TO_NEXT_MENU)) {
             nextUI = nextMenu;
         }
 
