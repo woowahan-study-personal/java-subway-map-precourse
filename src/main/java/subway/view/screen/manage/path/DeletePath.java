@@ -1,5 +1,6 @@
 package subway.view.screen.manage.path;
 
+import java.util.Objects;
 import java.util.Scanner;
 import subway.AppStatusCode;
 import subway.domain.Subway;
@@ -18,7 +19,7 @@ public class DeletePath implements ManageUI {
         String stationName = InputTool.inputString(sc, InputMessage.askStationNameMessage(),
             ErrorMessage.failedRequestErrorMessage());
 
-        if (lineName == null || stationName == null) {
+        if (Objects.isNull(lineName) || Objects.isNull(stationName)) {
             return;
         }
 
