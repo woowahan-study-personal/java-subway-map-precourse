@@ -15,6 +15,12 @@ import subway.view.tools.OutputTool;
 
 public class MainMenu implements MenuUI {
 
+    private static final String ROUTE_TO_STATION_MENU = "1";
+    private static final String ROUTE_TO_LINE_MENU = "2";
+    private static final String ROUTE_TO_PATH_MENU = "3";
+    private static final String ROUTE_TO_VIEW_SUBWAY = "4";
+    private static final String ROUTE_TO_QUIT = "Q";
+
     private StationMenu stationMenu;
     private LineMenu lineMenu;
     private PathMenu pathMenu;
@@ -42,24 +48,24 @@ public class MainMenu implements MenuUI {
         String command = InputTool.inputString(sc, InputMessage.askFunctionInputMessage(),
             ErrorMessage.failedRequestErrorMessage());
 
-        if (command.equals("1")) {
+        if (command.equals(ROUTE_TO_STATION_MENU)) {
             return stationMenu;
         }
 
-        if (command.equals("2")) {
+        if (command.equals(ROUTE_TO_LINE_MENU)) {
             return lineMenu;
         }
 
-        if (command.equals("3")) {
+        if (command.equals(ROUTE_TO_PATH_MENU)) {
             return pathMenu;
         }
 
-        if (command.equals("4")) {
+        if (command.equals(ROUTE_TO_VIEW_SUBWAY)) {
             viewSubway.commands(subway);
             return this;
         }
 
-        if (command.equals("Q")) {
+        if (command.equals(ROUTE_TO_QUIT)) {
             return null;
         }
 
