@@ -13,6 +13,10 @@ import subway.view.tools.OutputTool;
 
 public class PathMenu implements MenuUI {
 
+    private static final String ROUTE_TO_ADD_PATH = "1";
+    private static final String ROUTE_TO_DELETE_PATH = "2";
+    private static final String ROUTE_TO_NEXT_MENU = "B";
+
     private AddPath addPath;
     private DeletePath deletePath;
     private MenuUI nextMenu;
@@ -35,17 +39,17 @@ public class PathMenu implements MenuUI {
         String command = InputTool.inputString(sc, InputMessage.askFunctionInputMessage(),
             ErrorMessage.failedRequestErrorMessage());
 
-        if (command.equals("1")) {
+        if (command.equals(ROUTE_TO_ADD_PATH)) {
             addPath.commands(sc, subway);
             nextUI = nextMenu;
         }
 
-        if (command.equals("2")) {
+        if (command.equals(ROUTE_TO_DELETE_PATH)) {
             deletePath.commands(sc, subway);
             nextUI = nextMenu;
         }
 
-        if (command.equals("B")) {
+        if (command.equals(ROUTE_TO_NEXT_MENU)) {
             nextUI = nextMenu;
         }
 
