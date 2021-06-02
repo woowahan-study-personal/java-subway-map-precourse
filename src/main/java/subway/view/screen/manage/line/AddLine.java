@@ -1,5 +1,6 @@
 package subway.view.screen.manage.line;
 
+import java.util.Objects;
 import java.util.Scanner;
 import subway.AppStatusCode;
 import subway.domain.Subway;
@@ -24,7 +25,8 @@ public class AddLine implements ManageUI {
             .inputString(sc, InputMessage.askToStationNameForAddMessage(),
                 ErrorMessage.failedRequestErrorMessage());
 
-        if (lineName == null || fromStationName == null || toStationName == null) {
+        if (Objects.isNull(lineName) || Objects.isNull(fromStationName) || Objects
+            .isNull(toStationName)) {
             return;
         }
 
