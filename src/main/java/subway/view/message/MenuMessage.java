@@ -8,67 +8,67 @@ public class MenuMessage {
     private MenuMessage() {
     }
 
-    private static final String menuHeader = "## ";
+    private static final String MENU_HEADER = "## ";
 
-    private static final String mainMenuPage = "메인 화면";
-    private static final String stationManagementPage = "역 관리 화면";
-    private static final String lineManagementPage = "노선 관리 화면";
-    private static final String pathManagementPage = "구간 관리 화면";
+    private static final String MAIN_MENU_PAGE = "메인 화면";
+    private static final String STATION_MANAGEMENT_PAGE = "역 관리 화면";
+    private static final String LINE_MANAGEMENT_PAGE = "노선 관리 화면";
+    private static final String PATH_MANAGEMENT_PAGE = "구간 관리 화면";
 
-    private static final String stationListPage = "역 목록";
-    private static final String lineListPage = "노선 목록";
-    private static final String subwayListPage = "지하철 노선도";
+    private static final String STATION_LIST_PAGE = "역 목록";
+    private static final String LINE_LIST_PAGE = "노선 목록";
+    private static final String SUBWAY_LIST_PAGE = "지하철 노선도";
 
-    private static final List<String> mainMenuCommandsList = Arrays
+    private static final List<String> MAIN_MENU_COMMANDS_LIST = Arrays
         .asList("1. 역 관리", "2. 노선 관리", "3. 구간 관리", "4. 지하철 노선도 출력", "Q. 종료");
-    private static final List<String> stationManagementCommandsList = Arrays
+    private static final List<String> STATION_MANAGEMENT_COMMANDS_LIST = Arrays
         .asList("1. 역 등록", "2. 역 삭제", "3. 역 조회", "B. 돌아가기");
-    private static final List<String> lineManagementCommandsList = Arrays
+    private static final List<String> LINE_MANAGEMENT_COMMANDS_LIST = Arrays
         .asList("1. 노선 등록", "2. 노선 삭제", "3. 노선 조회", "B. 돌아가기");
-    private static final List<String> pathManagementCommandsList = Arrays
+    private static final List<String> PATH_MANAGEMENT_COMMANDS_LIST = Arrays
         .asList("1. 구간 등록", "2. 구간 삭제", "B. 돌아가기");
 
     public static String mainMenuPageMessage() {
-        return menuHeader + mainMenuPage;
+        return MENU_HEADER + MAIN_MENU_PAGE;
     }
 
     public static String stationManagementPageMessage() {
-        return menuHeader + stationManagementPage;
+        return MENU_HEADER + STATION_MANAGEMENT_PAGE;
     }
 
     public static String lineManagementPageMessage() {
-        return menuHeader + lineManagementPage;
+        return MENU_HEADER + LINE_MANAGEMENT_PAGE;
     }
 
     public static String pathManagementPageMessage() {
-        return menuHeader + pathManagementPage;
+        return MENU_HEADER + PATH_MANAGEMENT_PAGE;
     }
 
     public static String stationListPageMessage() {
-        return menuHeader + stationListPage;
+        return MENU_HEADER + STATION_LIST_PAGE;
     }
 
     public static String lineListPageMessage() {
-        return menuHeader + lineListPage;
+        return MENU_HEADER + LINE_LIST_PAGE;
     }
 
     public static String subwayListPageMessage() {
-        return menuHeader + subwayListPage;
+        return MENU_HEADER + SUBWAY_LIST_PAGE;
     }
 
     public static List<String> mainMenuCommandsMessageList() {
-        return mainMenuCommandsList;
+        return MAIN_MENU_COMMANDS_LIST;
     }
 
     public static List<String> stationManagementCommandsMessageList() {
-        return stationManagementCommandsList;
+        return STATION_MANAGEMENT_COMMANDS_LIST;
     }
 
     public static List<String> lineManagementCommandsMessageList() {
-        return lineManagementCommandsList;
+        return LINE_MANAGEMENT_COMMANDS_LIST;
     }
 
     public static List<String> pathManagementCommandsMessageList() {
-        return pathManagementCommandsList;
+        return PATH_MANAGEMENT_COMMANDS_LIST;
     }
 }
