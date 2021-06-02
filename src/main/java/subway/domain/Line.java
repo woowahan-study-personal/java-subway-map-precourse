@@ -2,7 +2,6 @@ package subway.domain;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import subway.AppStatusCode;
 
 public class Line {
@@ -56,7 +55,7 @@ public class Line {
 
     public int removeStation(Station targetStation) {
         if (stations
-            .removeIf(station -> Objects.equals(station.getName(), targetStation.getName()))) {
+            .removeIf(station -> station.equals(targetStation))) {
             return AppStatusCode.requestApprovedCode();
         }
 
