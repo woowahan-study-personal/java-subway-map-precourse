@@ -2,6 +2,7 @@ package subway.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import subway.AppStatusCode;
 
 public class Subway {
@@ -56,7 +57,7 @@ public class Subway {
     public int deleteStation(String stationName) {
         Station station = stationRepository.getStation(stationName);
 
-        if (station == null) {
+        if (Objects.isNull(station)) {
             return AppStatusCode.notFoundCode();
         }
 
@@ -69,7 +70,7 @@ public class Subway {
         Station fromStation = stationRepository.getStation(from);
         Station toStation = stationRepository.getStation(to);
 
-        if (fromStation == null || toStation == null) {
+        if (Objects.isNull(fromStation) || Objects.isNull(toStation)) {
             return AppStatusCode.notFoundCode();
         }
 
@@ -97,7 +98,7 @@ public class Subway {
         Line line = lineRepository.getModifiableLine(lineName);
         Station station = stationRepository.getStation(stationName);
 
-        if (line == null || station == null) {
+        if (Objects.isNull(line) || Objects.isNull(station)) {
             return AppStatusCode.notFoundCode();
         }
 
