@@ -14,6 +14,11 @@ import subway.view.tools.OutputTool;
 
 public class StationMenu implements MenuUI {
 
+    private static final String ROUTE_TO_ADD_STATION = "1";
+    private static final String ROUTE_TO_DELETE_STATION = "2";
+    private static final String ROUTE_TO_VIEW_STATION = "3";
+    private static final String ROUTE_TO_NEXT_MENU = "B";
+
     private AddStation addStation;
     private DeleteStation deleteStation;
     private ViewStation viewStation;
@@ -38,22 +43,22 @@ public class StationMenu implements MenuUI {
         String command = InputTool.inputString(sc, InputMessage.askFunctionInputMessage(),
             ErrorMessage.failedRequestErrorMessage());
 
-        if (command.equals("1")) {
+        if (command.equals(ROUTE_TO_ADD_STATION)) {
             addStation.commands(sc, subway);
             nextUI = nextMenu;
         }
 
-        if (command.equals("2")) {
+        if (command.equals(ROUTE_TO_DELETE_STATION)) {
             deleteStation.commands(sc, subway);
             nextUI = nextMenu;
         }
 
-        if (command.equals("3")) {
+        if (command.equals(ROUTE_TO_VIEW_STATION)) {
             viewStation.commands(subway);
             nextUI = nextMenu;
         }
 
-        if (command.equals("B")) {
+        if (command.equals(ROUTE_TO_NEXT_MENU)) {
             nextUI = nextMenu;
         }
 
