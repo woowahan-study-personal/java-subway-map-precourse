@@ -5,42 +5,42 @@ public class InfoMessage {
     private InfoMessage() {
     }
 
-    private static final String infoHeader = "[INFO] ";
+    private static final String INFO_HEADER = "[INFO] ";
 
-    private static final String submittedStation = "지하철 역이 등록되었습니다.";
-    private static final String deletedStation = "지하철 역이 삭제되었습니다.";
+    private static final String SUBMITTED_STATION = "지하철 역이 등록되었습니다.";
+    private static final String DELETED_STATION = "지하철 역이 삭제되었습니다.";
 
-    private static final String submittedLine = "지하철 노선이 등록되었습니다.";
-    private static final String deletedLine = "지하철 노선이 삭제되었습니다.";
+    private static final String SUBMITTED_LINE = "지하철 노선이 등록되었습니다.";
+    private static final String DELETED_LINE = "지하철 노선이 삭제되었습니다.";
 
-    private static final String submittedPath = "구간이 등록되었습니다.";
-    private static final String deletedPath = "구간이 삭제되었습니다.";
+    private static final String SUBMITTED_PATH = "구간이 등록되었습니다.";
+    private static final String DELETED_PATH = "구간이 삭제되었습니다.";
 
     public static String getInfoHeader() {
-        return infoHeader;
+        return INFO_HEADER;
     }
 
     public static String SubmittedStationInfoMessage() {
-        return infoHeader + submittedStation;
+        return INFO_HEADER + SUBMITTED_STATION;
     }
 
     public static String DeletedStationInfoMessage() {
-        return infoHeader + deletedStation;
+        return INFO_HEADER + DELETED_STATION;
     }
 
     public static String SubmittedLineInfoMessage() {
-        return infoHeader + submittedLine;
+        return INFO_HEADER + SUBMITTED_LINE;
     }
 
     public static String DeletedLineInfoMessage() {
-        return infoHeader + deletedLine;
+        return INFO_HEADER + DELETED_LINE;
     }
 
     public static String SubmittedPathInfoMessage() {
-        return infoHeader + submittedPath;
+        return INFO_HEADER + SUBMITTED_PATH;
     }
 
     public static String DeletedPathInfoMessage() {
-        return infoHeader + deletedPath;
+        return INFO_HEADER + DELETED_PATH;
     }
 }
