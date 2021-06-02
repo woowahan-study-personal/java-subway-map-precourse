@@ -4,6 +4,7 @@
 !gradle/wrapper/gradle-wrapper.jar
 /out/
 /target/
+/docs/DEBUG.md
 
 ### STS ###
 .apt_generated
