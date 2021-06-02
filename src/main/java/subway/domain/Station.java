@@ -4,6 +4,7 @@ public class Station {
 
     private static final int minimumLength = 2;
     private static final int maximumLength = 8;
+
     private final String name;
 
     private void nameValidation(String name) throws IllegalArgumentException {
