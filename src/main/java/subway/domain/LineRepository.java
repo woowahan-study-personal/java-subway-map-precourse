@@ -37,9 +37,7 @@ public class LineRepository {
     public int addStationToLine(Line line, Station station, int pathIndex)
         throws IllegalArgumentException {
 
-        line.addStation(pathIndex, station);
-
-        return AppStatusCode.requestApprovedCode();
+        return line.addStation(pathIndex, station);
     }
 
     public Line getModifiableLine(String name) {
