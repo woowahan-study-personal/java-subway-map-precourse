@@ -10,7 +10,6 @@ public class ViewStation implements ViewUI {
 
     @Override
     public void commands(Subway subway) {
-
         System.out.println(MenuMessage.stationListPageMessage());
 
         OutputTool
