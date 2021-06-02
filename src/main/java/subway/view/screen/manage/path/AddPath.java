@@ -1,5 +1,6 @@
 package subway.view.screen.manage.path;
 
+import java.util.Objects;
 import java.util.Scanner;
 import subway.AppStatusCode;
 import subway.domain.Subway;
@@ -20,7 +21,8 @@ public class AddPath implements ManageUI {
         int order = InputTool.inputInt(sc, InputMessage.askStationOrderMessage(),
             ErrorMessage.requiresIntegerOnlyMessage());
 
-        if (lineName == null || stationName == null || order == AppStatusCode.outOfRangeCode()) {
+        if (Objects.isNull(lineName) || Objects.isNull(stationName) || order == AppStatusCode
+            .outOfRangeCode()) {
             return;
         }
 
