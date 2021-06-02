@@ -1,5 +1,6 @@
 package subway.view.screen.manage.line;
 
+import java.util.Objects;
 import java.util.Scanner;
 import subway.AppStatusCode;
 import subway.domain.Subway;
@@ -16,7 +17,7 @@ public class DeleteLine implements ManageUI {
         String lineName = InputTool.inputString(sc, InputMessage.askStationNameMessageForDelete(),
             ErrorMessage.failedRequestErrorMessage());
 
-        if (lineName == null) {
+        if (Objects.isNull(lineName)) {
             return;
         }
 
