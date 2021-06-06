@@ -65,7 +65,7 @@ public class Application {
             }
             // B -3. 구간 관리
             if (main_func.equals("3")) {
-                lineSectionManagement(scanner, newLine);
+                lineSectionManagement(lineRepository, scanner, newLine);
             }
             // B -4. 지하철 노선도 출력
             if (main_func.equals("4")) {
@@ -195,7 +195,8 @@ public class Application {
     /**
      * 3번째 구간 관리 화면
      */
-    private static void lineSectionManagement(Scanner scanner, String newLine) {
+    private static void lineSectionManagement(LineRepository lineRepository, Scanner scanner,
+        String newLine) {
         System.out.println(newLine + "## 구간 관리 화면" + newLine
             + "1. 구간 등록" + newLine
             + "2. 구간 삭제" + newLine
@@ -204,10 +205,26 @@ public class Application {
         String func = scanner.nextLine();
         if (func.equals("1")) {
             System.out.println("## 노선을 입력하세요.");
+            String inputLineName = scanner.next();
             System.out.println("## 역이름을 입력하세요.");
-            // String st = scanner.next();
+            String inputStationName = scanner.next();
             System.out.println("## 순서를 입력하세요.");
-            // int idx = scanner.nextInt();
+            int inputIndex = scanner.nextInt();
+            /**
+             * repo 안 이름 == 객체.getName
+             * 객체의 순서와 역 이름 넣기
+             */
+            List<Line> lines = lineRepository.lines();
+            for (Line line : lines) {
+                if (line.getName().equals(inputLineName)) {
+                    line.addLineStation(inputIndex - 1, inputStationName);
+                    // 노선의 역 테스트 출력
+                    for (String station : line.getLineStations()) {
+                        System.out.println(station);
+                    }
+                }
+            }
+
             System.out.println("[INFO] 구간이 등록되었습니다.");
         }
         if (func.equals("2")) {
@@ -222,6 +239,7 @@ public class Application {
 
     /**
      * 4번째 지하철 노선도 출력
+     *
      * @param lineRepository
      */
     private static void printAllSubwayMap(LineRepository lineRepository) {
