@@ -9,7 +9,6 @@
 - 프로그램 시작 시 역, 노선 등 필요한 정보를 미리 셋팅할 수 있다.
 
 > 아래의 사전 등록 정보로 반드시 초기 설정을 하기
->
 ```
  1. 지하철역으로 교대역, 강남역, 역삼역, 남부터미널역, 양재역, 양재시민의숲역, 매봉역이 등록되어 있다.
  2. 지하철 노선으로 2호선, 3호선, 신분당선이 등록되어 있다.
@@ -17,10 +16,10 @@
    - 2호선: 교대역 - 강남역 - 역삼역
    - 3호선: 교대역 - 남부터미널역 - 양재역 - 매봉역
    - 신분당선: 강남역 - 양재역 - 양재시민의숲역
- ```
+```
 
 <img src="image/domain.png" width="500">
-  
+
 ### 지하철 역 관련 기능
 - 지하철 역을 등록하고 삭제할 수 있다. (단, 노선에 등록된 역은 삭제할 수 없다)
 - 중복된 지하철 역 이름이 등록될 수 없다.
@@ -410,7 +409,7 @@ public class Application {
 - 제공하는 각 클래스의 기본 생성자를 추가할 수 없다.
 - 필드(인스턴스 변수)인 name의 접근 제어자 private을 변경할 수 없다.
 - 가능하면 setter 메소드(ex. setXXX)를 추가하지 않고 구현한다.
- 
+
 ```java
 public class Station {
     private String name;
@@ -434,7 +433,7 @@ public class Station {
 - 추가로 생성되는 객체에 대해서 XXXRepository 네이밍으로 저장 클래스를 추가할 수 있다.
 - 객체들의 상태를 관리하기 위해서 XXXRepository 클래스를 활용해 저장 로직을 구현해야 한다.
 - 필요에 따라 자유롭게 수정이 가능하다.
- 
+
 ```java
 public class StationRepository {
     private static final List<Station> stations = new ArrayList<>();
@@ -462,8 +461,9 @@ public class StationRepository {
   - [AngularJS Commit Message Conventions](https://gist.github.com/stephenparish/9941e89d80e2bc58a153) 참고해 commit log를 남긴다.
 - [프리코스 과제 제출 문서](https://github.com/woowacourse/woowacourse-docs/tree/master/precourse) 절차를 따라 미션을 제출한다.
   - [프리코스 과제 FAQ](https://github.com/woowacourse/woowacourse-docs/tree/master/precourse/faq) 문서를 참고하여 진행할 수 있다.
-<br>
+  <br>
 
 ## 📝 License
 
 This project is [MIT](https://github.com/woowacourse/java-subway-map-precourse/blob/master/LICENSE.md) licensed.
+
