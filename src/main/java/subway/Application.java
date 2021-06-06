@@ -69,14 +69,7 @@ public class Application {
             }
             // B -4. 지하철 노선도 출력
             if (main_func.equals("4")) {
-                System.out.println("## 지하철 노선도");
-                // 해당 노선 이름
-                List<Line> lines = lineRepository.lines();
-                for (int i = 0; i < lines.size(); i++) {
-                    System.out.println("[INFO] " + lines.get(i).getName());
-                }
-                System.out.println("[INFO] ---");
-                // 해당 노선의 역 이름 ...
+                printAllSubwayMap(lineRepository);
             }
             if (main_func.equalsIgnoreCase("Q")) {
                 flag = false;
@@ -227,5 +220,22 @@ public class Application {
         }
     }
 
-
+    /**
+     * 4번째 지하철 노선도 출력
+     * @param lineRepository
+     */
+    private static void printAllSubwayMap(LineRepository lineRepository) {
+        System.out.println();
+        System.out.println("## 지하철 노선도");
+        List<Line> lines = lineRepository.lines();
+        for (int i = 0; i < lines.size(); i++) {
+            System.out.println("[INFO] " + lines.get(i).getName());
+            System.out.println("[INFO] ---");
+            List<String> lineStations = lines.get(i).getLineStations();
+            for (int j = 0; j < lineStations.size(); j++) {
+                System.out.println("[INFO] " + lineStations.get(j));
+            }
+            System.out.println();
+        }
+    }
 }
