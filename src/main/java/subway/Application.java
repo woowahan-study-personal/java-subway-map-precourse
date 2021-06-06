@@ -1,5 +1,6 @@
 package subway;
 
+import java.util.List;
 import java.util.Scanner;
 import subway.domain.Line;
 import subway.domain.LineRepository;
@@ -20,11 +21,28 @@ public class Application {
         stationRepository.addStation(new Station("교대역"));
         stationRepository.addStation(new Station("강남역"));
         stationRepository.addStation(new Station("역삼역"));
+        stationRepository.addStation(new Station("남부터미널역"));
+        stationRepository.addStation(new Station("양재역"));
+        stationRepository.addStation(new Station("양재시민의숲역"));
+        stationRepository.addStation(new Station("매봉역"));
         // stationRepository.stations().forEach(System.out::println);
-
-        lineRepository.addLine(new Line("2호선"));
-        lineRepository.addLine(new Line("3호선"));
-        lineRepository.addLine(new Line("신분당선"));
+        // TODO: str이 아닌 Station 객체로 더 잘 넣어보자
+        Line line_a = new Line("2호선");
+        line_a.addLineStation("교대역");
+        line_a.addLineStation("강남역");
+        line_a.addLineStation("역삼역");
+        lineRepository.addLine(line_a);
+        Line line_b = new Line("3호선");
+        line_b.addLineStation("교대역");
+        line_b.addLineStation("남부터미널역");
+        line_b.addLineStation("양재역");
+        line_b.addLineStation("매봉역");
+        lineRepository.addLine(line_b);
+        Line line_c = new Line("신분당선");
+        line_c.addLineStation("강남역");
+        line_c.addLineStation("양재역");
+        line_c.addLineStation("양재시민의숲역");
+        lineRepository.addLine(line_c);
 
         boolean flag = true;
         while (flag) {
@@ -53,6 +71,10 @@ public class Application {
             if (main_func.equals("4")) {
                 System.out.println("## 지하철 노선도");
                 // 해당 노선 이름
+                List<Line> lines = lineRepository.lines();
+                for (int i = 0; i < lines.size(); i++) {
+                    System.out.println("[INFO] " + lines.get(i).getName());
+                }
                 System.out.println("[INFO] ---");
                 // 해당 노선의 역 이름 ...
             }
@@ -90,16 +112,16 @@ public class Application {
             stationRepository.deleteStation(scanner.next());
             System.out.println("[INFO] 지하철 역이 삭제되었습니다.");
             // 테스트 출력
-            for (int i = 0; i < stationRepository.stations().size(); i++) {
-                System.out
-                    .println("[INFO] " + stationRepository.stations().get(i).getName());
+            List<Station> stations = stationRepository.stations();
+            for (int i = 0; i < stations.size(); i++) {
+                System.out.println("[INFO] " + stations.get(i).getName());
             }
         }
         if (func.equals("3")) {
             System.out.println("## 역 목록");
-            for (int i = 0; i < stationRepository.stations().size(); i++) {
-                System.out
-                    .println("[INFO] " + stationRepository.stations().get(i).getName());
+            List<Station> stations = stationRepository.stations();
+            for (int i = 0; i < stations.size(); i++) {
+                System.out.println("[INFO] " + stations.get(i).getName());
             }
         }
         if (func.equalsIgnoreCase("B")) {
@@ -124,9 +146,10 @@ public class Application {
         if (func.equals("1")) {
             System.out.println();
             System.out.println("## 등록할 노선 이름을 입력하세요.");
+            // TODO : 이미 등록된 노선이름 Err
             Line line = new Line(scanner.next());
             lineRepository.addLine(line);
-            // To DO !!!
+            // TODO : 등록된 역이름만 넣도록 점검
             System.out.println();
             System.out.println("## 등록할 노선의 상행 종점역 이름을 입력하세요.");
             line.addLineStation(scanner.next());
@@ -141,30 +164,35 @@ public class Application {
             System.out.println(
                 lineRepository.lines().get(lineRepository.lines().size() - 1)
                     .getName());
-            for (int i = 0; i < line.getLineStations().size(); i++) {
-                System.out
-                    .println("[노선의 역] " + line.getLineStations().get(i));
+            List<String> lineStations = line.getLineStations();
+            for (int i = 0; i < lineStations.size(); i++) {
+                System.out.println("[노선의 역] " + lineStations.get(i));
             }
+            return;
+            // ??? 메인두번반복???
         }
         if (func.equals("2")) {
             System.out.println();
             System.out.println("## 삭제할 노선 이름을 입력하세요.");
             lineRepository.deleteLineByName(scanner.next());
+            // ToDO : 삭제할 노선이 일치하지 않거나 없으면
             System.out.println();
             System.out.println("[INFO] 지하철 노선이 삭제되었습니다.");
             // 테스트 출력
-            for (int i = 0; i < lineRepository.lines().size(); i++) {
-                System.out
-                    .println("[INFO] " + lineRepository.lines().get(i).getName());
+            List<Line> lines = lineRepository.lines();
+            for (int i = 0; i < lines.size(); i++) {
+                System.out.println("[INFO] " + lines.get(i).getName());
             }
+            return;
         }
         if (func.equals("3")) {
             System.out.println();
             System.out.println("## 노선 목록");
-            for (int i = 0; i < lineRepository.lines().size(); i++) {
-                System.out
-                    .println("[INFO] " + lineRepository.lines().get(i).getName());
+            List<Line> lines = lineRepository.lines();
+            for (int i = 0; i < lines.size(); i++) {
+                System.out.println("[INFO] " + lines.get(i).getName());
             }
+            return;
         }
         if (func.equalsIgnoreCase("B")) {
             return;
