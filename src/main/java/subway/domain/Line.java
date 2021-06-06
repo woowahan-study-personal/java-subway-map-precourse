@@ -22,21 +22,21 @@ public class Line {
     /**
      * 노선의 역 TODO : Station of StationRepository 변경
      */
-    public static final List<String> lineStations = new ArrayList<>();
+     private List<String> lineStations = new ArrayList<>();
 
-    public static List<String> getLineStations() {
+    public List<String> getLineStations() {
         return Collections.unmodifiableList(lineStations);
     }
 
-    public static void addLineStation(String name) {
+    public void addLineStation(String name) {
         lineStations.add(name);
     }
 
-    public static void addLineStation(int index, String name) {
+    public void addLineStation(int index, String name) {
         lineStations.add(index, name);
     }
 
-    public static boolean deleteLineStation(String name) {
+    public boolean deleteLineStation(String name) {
         return lineStations.removeIf(station -> Objects.equals(station, name));
     }
 }
