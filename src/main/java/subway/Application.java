@@ -91,7 +91,25 @@ public class Application {
     }
 
     /**
-     * 초기 값으로 노선 구간에 역 추가하기 (초기는 StationRepository 에 등록 되지 않은 역은 자동으로 신규 추가)
+     * LineRepository 에서 노선 찾기
+     *
+     * @param lineRepository 노선저장소
+     * @param lineName       노선이름
+     * @return 찾는 노선 or null
+     */
+    private static Line findByLine(LineRepository lineRepository, String lineName) {
+        List<Line> lines = lineRepository.lines();
+        for (int i = 0; i < lines.size(); i++) {
+            if (lines.get(i).getName().equals(lineName)) {
+                return lines.get(i);
+            }
+        }
+        return null;
+
+    }
+
+    /**
+     * 초기 값으로 노선 구간에 역 추가하기 (StationRepository 에 등록 되지 않은 역은 자동으로 신규 추가)
      */
     private static void initLineStation(StationRepository stationRepository, Line line,
         String inputStation) {
@@ -179,80 +197,93 @@ public class Application {
     private static void lineManagement(StationRepository stationRepository,
         LineRepository lineRepository, Scanner scanner) {
         System.out.println(newLine + "## 노선 관리 화면" + newLine
-            + "1. 노선 등록" + newLine
-            + "2. 노선 삭제" + newLine
-            + "3. 노선 조회" + newLine
-            + "B. 돌아가기" + newLine);
+            + "1. 노선 등록" + newLine + "2. 노선 삭제" + newLine
+            + "3. 노선 조회" + newLine + "B. 돌아가기" + newLine);
         System.out.println("## 원하는 기능을 선택하세요.");
         String func = scanner.nextLine();
         if (func.equals("1")) {
-            System.out.println(newLine + "## 등록할 노선 이름을 입력하세요.");
-            String inputLineName = scanner.next();
-            for (Line originLine : lineRepository.lines()) {
-                if (originLine.getName().equals(inputLineName)) {
-                    System.out.println("[ERROR] 이미 등록된 노선 이름입니다.");
-                    return;
-                }
-            }
-            // TODO : 등록된 역이름만 넣도록
-            System.out.println(newLine + "## 등록할 노선의 상행 종점역 이름을 입력하세요.");
-            String firstStationName = scanner.next();
-            Station firstStation = findByStation(stationRepository, firstStationName);
-            if (firstStation == null) {
-                System.out.println("[ERROR] 등록된 역만 노선의 구간에 넣을 수 있습니다.");
-                return;
-            }
-            // line.addLineStation(new Station(scanner.next())); // Temp
-            System.out.println(newLine + "## 등록할 노선의 하행 종점역 이름을 입력하세요.");
-//            line.addLineStation(new Station(scanner.next())); // Temp
-            String lastStationName = scanner.next();
-            Station lastStation = findByStation(stationRepository, lastStationName);
-            if (lastStation == null) {
-                System.out.println("[ERROR] 등록된 역만 노선의 구간에 넣을 수 있습니다.");
-                return;
-            }
-            Line line = new Line(inputLineName);
-            line.addLineStation(firstStation);
-            line.addLineStation(lastStation);
-            lineRepository.addLine(line);
-            System.out.println(newLine + "[INFO] 지하철 노선이 등록되었습니다.");
-            // 테스트 출력 1개
-            System.out.println(
-                lineRepository.lines().get(lineRepository.lines().size() - 1)
-                    .getName());
-            List<Station> lineStations = line.getLineStations();
-            for (int i = 0; i < lineStations.size(); i++) {
-                System.out.println("[노선의 역] " + lineStations.get(i).getName());
-            }
-            return;
-            // ??? 메인두번반복???
+            addCheckLineAndInitStation(stationRepository, lineRepository, scanner);
         }
         if (func.equals("2")) {
-            System.out.println();
-            System.out.println("## 삭제할 노선 이름을 입력하세요.");
-            lineRepository.deleteLineByName(scanner.next());
-            // ToDO : 삭제할 노선이 일치하지 않거나 없으면 err
-            System.out.println();
-            System.out.println("[INFO] 지하철 노선이 삭제되었습니다.");
-            // 테스트 출력
-            List<Line> lines = lineRepository.lines();
-            for (int i = 0; i < lines.size(); i++) {
-                System.out.println("[INFO] " + lines.get(i).getName());
-            }
-            return;
+            deleteLine(lineRepository, scanner);
         }
         if (func.equals("3")) {
-            System.out.println();
-            System.out.println("## 노선 목록");
-            List<Line> lines = lineRepository.lines();
-            for (int i = 0; i < lines.size(); i++) {
-                System.out.println("[INFO] " + lines.get(i).getName());
-            }
-            return;
+            printAllLine(lineRepository);
         }
         if (func.equalsIgnoreCase("B")) {
             return;
         }
+    }
+
+    /**
+     * 2번째 노선 관리 화면 - 1 노선 등록 - 이름 입력과 점검 하기
+     */
+    private static void addCheckLineAndInitStation(StationRepository stationRepository,
+        LineRepository lineRepository, Scanner scanner) {
+        System.out.println(newLine + "## 등록할 노선 이름을 입력하세요.");
+        String inputLineName = scanner.next();
+        Line byLine = findByLine(lineRepository, inputLineName);
+        if (byLine != null) {
+            System.out.println("[ERROR] 이미 등록된 노선 이름입니다.");
+            return;
+        }
+        System.out.println(newLine + "## 등록할 노선의 상행 종점역 이름을 입력하세요.");
+        Station firstStation = findByStation(stationRepository, scanner.next());
+        System.out.println(newLine + "## 등록할 노선의 하행 종점역 이름을 입력하세요.");
+        Station lastStation = findByStation(stationRepository, scanner.next());
+        if (firstStation == null || lastStation == null) {
+            System.out.println("[ERROR] 등록된 역만 노선의 구간에 넣을 수 있습니다.");
+            return;
+        }
+        addLine(lineRepository, inputLineName, firstStation, lastStation);
+        System.out.println(newLine + "[INFO] 지하철 노선이 등록되었습니다.");
+        // 테스트 출력 1개
+//        Line line = addLine(lineRepository, inputLineName, firstStation, lastStation);
+//        System.out.println(lineRepository.lines().get(lineRepository.lines().size() - 1).getName());
+//        List<Station> lineStations = line.getLineStations();
+//        for (int i = 0; i < lineStations.size(); i++) {
+//            System.out.println("[노선의 역] " + lineStations.get(i).getName());
+//        }
+    }
+
+    /**
+     * 2번째 노선 관리 화면 - 1 노선 등록 - 최종 등록
+     */
+    private static Line addLine(LineRepository lineRepository, String inputLineName,
+        Station firstStation, Station lastStation) {
+        Line line = new Line(inputLineName);
+        line.addLineStation(firstStation);
+        line.addLineStation(lastStation);
+        lineRepository.addLine(line);
+        return line;
+    }
+
+    /**
+     * 2번째 노선 관리 화면 - 2 노선 삭제
+     */
+    private static void deleteLine(LineRepository lineRepository, Scanner scanner) {
+        System.out.println(newLine + "## 삭제할 노선 이름을 입력하세요.");
+        lineRepository.deleteLineByName(scanner.next());
+        // todo : 삭제할 노선이 일치하지 않거나 없으면 err
+        System.out.println(newLine + "[INFO] 지하철 노선이 삭제되었습니다.");
+        // 테스트 출력
+        List<Line> lines = lineRepository.lines();
+        for (int i = 0; i < lines.size(); i++) {
+            System.out.println("[INFO] " + lines.get(i).getName());
+        }
+        return;
+    }
+
+    /**
+     * 2번째 노선 관리 화면 - 3 노선 조회
+     */
+    private static void printAllLine(LineRepository lineRepository) {
+        System.out.println(newLine + "## 노선 목록");
+        List<Line> lines = lineRepository.lines();
+        for (int i = 0; i < lines.size(); i++) {
+            System.out.println("[INFO] " + lines.get(i).getName());
+        }
+        return;
     }
 
     /**
