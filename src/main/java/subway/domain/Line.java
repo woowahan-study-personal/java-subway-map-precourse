@@ -22,7 +22,7 @@ public class Line {
     /**
      * 노선의 역 TODO : Station of StationRepository 변경
      */
-     private List<String> lineStations = new ArrayList<>();
+    private List<String> lineStations = new ArrayList<>();
 
     public List<String> getLineStations() {
         return Collections.unmodifiableList(lineStations);

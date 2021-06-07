@@ -2,7 +2,6 @@ package subway;
 
 import java.util.List;
 import java.util.Scanner;
-
 import subway.domain.Line;
 import subway.domain.LineRepository;
 import subway.domain.Station;
@@ -10,10 +9,11 @@ import subway.domain.StationRepository;
 
 public class Application {
 
+    public static String newLine = System.lineSeparator();
+
     public static void main(String[] args) {
         final Scanner scanner = new Scanner(System.in);
         // TODO: 프로그램 구현
-        String newLine = System.lineSeparator();
         // 초기 데이터 입력
         StationRepository stationRepository = new StationRepository();
         LineRepository lineRepository = new LineRepository();
@@ -52,24 +52,24 @@ public class Application {
         while (flag) {
             // A 메인화면
             System.out.println(newLine + "## 메인 화면" + newLine
-                    + "1. 역 관리" + newLine
-                    + "2. 노선 관리" + newLine
-                    + "3. 구간 관리" + newLine
-                    + "4. 지하철 노선도 출력" + newLine
-                    + "Q. 종료" + newLine);
+                + "1. 역 관리" + newLine
+                + "2. 노선 관리" + newLine
+                + "3. 구간 관리" + newLine
+                + "4. 지하철 노선도 출력" + newLine
+                + "Q. 종료" + newLine);
             System.out.println("## 원하는 기능을 선택하세요.");
             String main_func = scanner.nextLine();
             // B -1. 역관리
             if (main_func.equals("1")) {
-                stationManagement(stationRepository, scanner, newLine);
+                stationManagement(stationRepository, scanner);
             }
             // B -2. 노선 관리
             if (main_func.equals("2")) {
-                lineManagement(lineRepository, scanner, newLine);
+                lineManagement(lineRepository, scanner);
             }
             // B -3. 구간 관리
             if (main_func.equals("3")) {
-                lineSectionManagement(lineRepository, scanner, newLine);
+                lineSectionManagement(lineRepository, scanner);
             }
             // B -4. 지하철 노선도 출력
             if (main_func.equals("4")) {
@@ -84,13 +84,12 @@ public class Application {
     /**
      * 1번째 역 관리 화면
      */
-    private static void stationManagement(StationRepository stationRepository, Scanner scanner,
-                                          String newLine) {
+    private static void stationManagement(StationRepository stationRepository, Scanner scanner) {
         System.out.println(newLine + "## 역 관리 화면" + newLine
-                + "1. 역 등록" + newLine
-                + "2. 역 삭제" + newLine
-                + "3. 역 조회" + newLine
-                + "B. 돌아가기" + newLine);
+            + "1. 역 등록" + newLine
+            + "2. 역 삭제" + newLine
+            + "3. 역 조회" + newLine
+            + "B. 돌아가기" + newLine);
         System.out.println("## 원하는 기능을 선택하세요.");
         String func = scanner.nextLine();
         if (func.equals("1")) {
@@ -126,10 +125,11 @@ public class Application {
     private static void deleteStation(StationRepository stationRepository, Scanner scanner) {
         System.out.println("## 삭제할 역 이름을 입력하세요.");
         stationRepository.deleteStation(scanner.next());
-        System.out.println( "[INFO] 지하철 역이 삭제되었습니다.");
+        System.out.println("[INFO] 지하철 역이 삭제되었습니다.");
         // 테스트 출력
         printAllStation(stationRepository);
     }
+
     /**
      * 1번째 역 관리 화면 - 3 역 조회
      */
@@ -146,13 +146,12 @@ public class Application {
      *
      * @param lineRepository
      */
-    private static void lineManagement(LineRepository lineRepository, Scanner scanner,
-                                       String newLine) {
+    private static void lineManagement(LineRepository lineRepository, Scanner scanner) {
         System.out.println(newLine + "## 노선 관리 화면" + newLine
-                + "1. 노선 등록" + newLine
-                + "2. 노선 삭제" + newLine
-                + "3. 노선 조회" + newLine
-                + "B. 돌아가기" + newLine);
+            + "1. 노선 등록" + newLine
+            + "2. 노선 삭제" + newLine
+            + "3. 노선 조회" + newLine
+            + "B. 돌아가기" + newLine);
         System.out.println("## 원하는 기능을 선택하세요.");
         String func = scanner.nextLine();
         if (func.equals("1")) {
@@ -174,8 +173,8 @@ public class Application {
             System.out.println("[INFO] 지하철 노선이 등록되었습니다.");
             // 테스트 출력 1개
             System.out.println(
-                    lineRepository.lines().get(lineRepository.lines().size() - 1)
-                            .getName());
+                lineRepository.lines().get(lineRepository.lines().size() - 1)
+                    .getName());
             List<String> lineStations = line.getLineStations();
             for (int i = 0; i < lineStations.size(); i++) {
                 System.out.println("[노선의 역] " + lineStations.get(i));
@@ -213,14 +212,15 @@ public class Application {
 
     /**
      * 3번째 구간 관리 화면
+     *
+     * @param lineRepository
      */
-    private static void lineSectionManagement(LineRepository lineRepository, Scanner scanner,
-                                              String newLine) {
+    private static void lineSectionManagement(LineRepository lineRepository, Scanner scanner) {
         List<Line> lines = lineRepository.lines();
         System.out.println(newLine + "## 구간 관리 화면" + newLine
-                + "1. 구간 등록" + newLine
-                + "2. 구간 삭제" + newLine
-                + "B. 돌아가기" + newLine);
+            + "1. 구간 등록" + newLine
+            + "2. 구간 삭제" + newLine
+            + "B. 돌아가기" + newLine);
         System.out.println("## 원하는 기능을 선택하세요.");
         String func = scanner.nextLine();
         if (func.equals("1")) {
@@ -236,6 +236,7 @@ public class Application {
 
     /**
      * 3번째 구간 관리 화면 - 1 구간 등록
+     *
      * @param lines
      */
     private static void addLineSection(Scanner scanner, List<Line> lines) {
@@ -259,6 +260,7 @@ public class Application {
 
     /**
      * 3번째 구간 관리 화면 - 2 구간 삭제
+     *
      * @param lines
      */
     private static void deleteLineSection(Scanner scanner, List<Line> lines) {
