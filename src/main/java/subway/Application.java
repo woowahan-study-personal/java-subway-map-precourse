@@ -209,43 +209,58 @@ public class Application {
         System.out.println("## 원하는 기능을 선택하세요.");
         String func = scanner.nextLine();
         if (func.equals("1")) {
-            System.out.println("## 노선을 입력하세요.");
-            String inputLineName = scanner.next();
-            System.out.println("## 역이름을 입력하세요.");
-            String inputStationName = scanner.next();
-            System.out.println("## 순서를 입력하세요.");
-            int inputIndex = scanner.nextInt();
-            for (Line line : lines) {
-                if (line.getName().equals(inputLineName)) {
-                    line.addLineStation(inputIndex - 1, inputStationName);
-                    // 해당 노선의 역 테스트 출력
-                    for (String station : line.getLineStations()) {
-                        System.out.println(station);
-                    }
-                }
-            }
-
-            System.out.println("[INFO] 구간이 등록되었습니다.");
+            addLineSection(scanner, lines);
         }
         if (func.equals("2")) {
-            System.out.println("## 삭제할 구간의 노선을 입력하세요.");
-            String deleteLineName = scanner.next();
-            System.out.println("## 삭제할 구간의 역을 입력하세요.");
-            String deleteStationName = scanner.next();
-            for (Line line : lines) {
-                if (line.getName().equals(deleteLineName)) {
-                    line.deleteLineStation(deleteStationName);
-                    // 해당 노선의 역 테스트 출력
-                    for (String station : line.getLineStations()) {
-                        System.out.println("[남은역]" + station);
-                    }
-                }
-            }
-            System.out.println("[INFO] 구간이 삭제되었습니다.");
+            deleteLineSection(scanner, lines);
         }
         if (func.equalsIgnoreCase("B")) {
             return;
         }
+    }
+
+    /**
+     * 3번째 구간 관리 화면 - 1 구간 등록
+     * @param lines
+     */
+    private static void addLineSection(Scanner scanner, List<Line> lines) {
+        System.out.println("## 노선을 입력하세요.");
+        String inputLineName = scanner.next();
+        System.out.println("## 역이름을 입력하세요.");
+        String inputStationName = scanner.next();
+        System.out.println("## 순서를 입력하세요.");
+        int inputIndex = scanner.nextInt();
+        for (Line line : lines) {
+            if (line.getName().equals(inputLineName)) {
+                line.addLineStation(inputIndex - 1, inputStationName);
+                // 해당 노선의 역 테스트 출력
+                for (String station : line.getLineStations()) {
+                    System.out.println(station);
+                }
+            }
+        }
+        System.out.println("[INFO] 구간이 등록되었습니다.");
+    }
+
+    /**
+     * 3번째 구간 관리 화면 - 2 구간 삭제
+     * @param lines
+     */
+    private static void deleteLineSection(Scanner scanner, List<Line> lines) {
+        System.out.println("## 삭제할 구간의 노선을 입력하세요.");
+        String deleteLineName = scanner.next();
+        System.out.println("## 삭제할 구간의 역을 입력하세요.");
+        String deleteStationName = scanner.next();
+        for (Line line : lines) {
+            if (line.getName().equals(deleteLineName)) {
+                line.deleteLineStation(deleteStationName);
+                // 해당 노선의 역 테스트 출력
+                for (String station : line.getLineStations()) {
+                    System.out.println("[남은역]" + station);
+                }
+            }
+        }
+        System.out.println("[INFO] 구간이 삭제되었습니다.");
     }
 
     /**
