@@ -105,7 +105,16 @@ public class Application {
             }
         }
         return null;
+    }
 
+    /**
+     * 입력 받은 이름 값이 유효한 길이 확인 여부
+     */
+    private static boolean validNameStr(String str) {
+        if (str.length() >= 2 && str.length() <= 5) {
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -153,6 +162,9 @@ public class Application {
     private static void addStation(StationRepository stationRepository, Scanner scanner) {
         System.out.println("## 등록할 역 이름을 입력하세요.");
         String inputStation = scanner.next();
+        if (!validNameStr(inputStation)) {
+            return;
+        }
         Station station = findByStation(stationRepository, inputStation);
         if (station != null) {
             System.out.println("[ERROR] 이미 등록된 역 이름입니다. ");
@@ -162,8 +174,7 @@ public class Application {
         System.out.println("[INFO] 지하철 역이 등록되었습니다.");
         // 테스트 출력
         System.out.println(
-            stationRepository.stations().get(stationRepository.stations().size() - 1)
-                .getName());
+            stationRepository.stations().get(stationRepository.stations().size() - 1).getName());
     }
 
     /**
