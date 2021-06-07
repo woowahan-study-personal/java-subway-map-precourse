@@ -20,20 +20,20 @@ public class Line {
 
     // 추가 기능 구현 - 노선의 역 CRD
     /**
-     * 노선의 역 TODO : Station of StationRepository 변경
+     * 노선의 역 : List<Station>
      */
-    private List<String> lineStations = new ArrayList<>();
+    private List<Station> lineStations = new ArrayList<>();
 
-    public List<String> getLineStations() {
+    public List<Station> getLineStations() {
         return Collections.unmodifiableList(lineStations);
     }
 
-    public void addLineStation(String name) {
-        lineStations.add(name);
+    public void addLineStation(Station station) {
+        lineStations.add(station);
     }
 
-    public void addLineStation(int index, String name) {
-        lineStations.add(index, name);
+    public void addLineStation(int index, Station station) {
+        lineStations.add(index, station);
     }
 
     public boolean deleteLineStation(String name) {

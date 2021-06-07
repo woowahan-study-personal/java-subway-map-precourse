@@ -13,36 +13,27 @@ public class Application {
 
     public static void main(String[] args) {
         final Scanner scanner = new Scanner(System.in);
-        // TODO: 프로그램 구현
-        // 초기 데이터 입력
+        /**
+         * 초기 데이터 입력
+         */
         StationRepository stationRepository = new StationRepository();
         LineRepository lineRepository = new LineRepository();
-
-        // System.out.println(stationRepository.stations());
-        stationRepository.addStation(new Station("교대역"));
-        stationRepository.addStation(new Station("강남역"));
-        stationRepository.addStation(new Station("역삼역"));
-        stationRepository.addStation(new Station("남부터미널역"));
-        stationRepository.addStation(new Station("양재역"));
-        stationRepository.addStation(new Station("양재시민의숲역"));
-        stationRepository.addStation(new Station("매봉역"));
-        // stationRepository.stations().forEach(System.out::println);
-        // TODO: str이 아닌 Station 객체로 더 잘 넣어보자
+        // 노선과 해당 노선의 역을 추가하기
         Line line_a = new Line("2호선");
-        line_a.addLineStation("교대역");
-        line_a.addLineStation("강남역");
-        line_a.addLineStation("역삼역");
+        initLineStation(stationRepository, line_a, "교대역");
+        initLineStation(stationRepository, line_a, "강남역");
+        initLineStation(stationRepository, line_a, "역삼역");
         lineRepository.addLine(line_a);
         Line line_b = new Line("3호선");
-        line_b.addLineStation("교대역");
-        line_b.addLineStation("남부터미널역");
-        line_b.addLineStation("양재역");
-        line_b.addLineStation("매봉역");
+        initLineStation(stationRepository, line_b, "교대역");
+        initLineStation(stationRepository, line_b, "남부터미널역");
+        initLineStation(stationRepository, line_b, "양재역");
+        initLineStation(stationRepository, line_b, "매봉역");
         lineRepository.addLine(line_b);
         Line line_c = new Line("신분당선");
-        line_c.addLineStation("강남역");
-        line_c.addLineStation("양재역");
-        line_c.addLineStation("양재시민의숲역");
+        initLineStation(stationRepository, line_c, "강남역");
+        initLineStation(stationRepository, line_c, "양재역");
+        initLineStation(stationRepository, line_c, "양재시민의숲역");
         lineRepository.addLine(line_c);
 
         /**
@@ -65,7 +56,7 @@ public class Application {
             }
             // B -2. 노선 관리
             if (main_func.equals("2")) {
-                lineManagement(lineRepository, scanner);
+                lineManagement(stationRepository, lineRepository, scanner);
             }
             // B -3. 구간 관리
             if (main_func.equals("3")) {
@@ -82,14 +73,46 @@ public class Application {
     }
 
     /**
+     * StationRepository 에서 역 찾기
+     *
+     * @param stationRepository 역저장소
+     * @param stationName       역이름
+     * @return 찾은 역 or null
+     */
+    private static Station findByStation(StationRepository stationRepository, String stationName) {
+        List<Station> stations = stationRepository.stations();
+        for (int i = 0; i < stations.size(); i++) {
+            if (stations.get(i).getName().equals(stationName)) {
+                System.out.println("[찾았다] " + stations.get(i).getName());
+                return stations.get(i);
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 초기 값으로 노선 구간에 역 추가하기 (초기는 StationRepository 에 등록 되지 않은 역은 자동으로 신규 추가)
+     */
+    private static void initLineStation(StationRepository stationRepository, Line line,
+        String inputStation) {
+        Station station = findByStation(stationRepository, inputStation);
+        if (station != null) {
+            line.addLineStation(station);
+            return;
+        }
+        Station newStation = new Station(inputStation);
+        stationRepository.addStation(newStation);
+        line.addLineStation(newStation);
+        return;
+    }
+
+    /**
      * 1번째 역 관리 화면
      */
     private static void stationManagement(StationRepository stationRepository, Scanner scanner) {
         System.out.println(newLine + "## 역 관리 화면" + newLine
-            + "1. 역 등록" + newLine
-            + "2. 역 삭제" + newLine
-            + "3. 역 조회" + newLine
-            + "B. 돌아가기" + newLine);
+            + "1. 역 등록" + newLine + "2. 역 삭제" + newLine
+            + "3. 역 조회" + newLine + "B. 돌아가기" + newLine);
         System.out.println("## 원하는 기능을 선택하세요.");
         String func = scanner.nextLine();
         if (func.equals("1")) {
@@ -111,7 +134,13 @@ public class Application {
      */
     private static void addStation(StationRepository stationRepository, Scanner scanner) {
         System.out.println("## 등록할 역 이름을 입력하세요.");
-        stationRepository.addStation(new Station(scanner.next()));
+        String inputStation = scanner.next();
+        Station station = findByStation(stationRepository, inputStation);
+        if (station != null) {
+            System.out.println("[ERROR] 이미 등록된 역 이름입니다. ");
+            return;
+        }
+        stationRepository.addStation(new Station(inputStation));
         System.out.println("[INFO] 지하철 역이 등록되었습니다.");
         // 테스트 출력
         System.out.println(
@@ -124,6 +153,7 @@ public class Application {
      */
     private static void deleteStation(StationRepository stationRepository, Scanner scanner) {
         System.out.println("## 삭제할 역 이름을 입력하세요.");
+        // todo : 노선에 등록된 역은 삭제할 수 없다
         stationRepository.deleteStation(scanner.next());
         System.out.println("[INFO] 지하철 역이 삭제되었습니다.");
         // 테스트 출력
@@ -146,7 +176,8 @@ public class Application {
      *
      * @param lineRepository
      */
-    private static void lineManagement(LineRepository lineRepository, Scanner scanner) {
+    private static void lineManagement(StationRepository stationRepository,
+        LineRepository lineRepository, Scanner scanner) {
         System.out.println(newLine + "## 노선 관리 화면" + newLine
             + "1. 노선 등록" + newLine
             + "2. 노선 삭제" + newLine
@@ -155,29 +186,43 @@ public class Application {
         System.out.println("## 원하는 기능을 선택하세요.");
         String func = scanner.nextLine();
         if (func.equals("1")) {
-            System.out.println();
-            System.out.println("## 등록할 노선 이름을 입력하세요.");
-            // TODO : 이미 등록된 노선이름 Err
-            Line line = new Line(scanner.next());
+            System.out.println(newLine + "## 등록할 노선 이름을 입력하세요.");
+            String inputLineName = scanner.next();
+            for (Line originLine : lineRepository.lines()) {
+                if (originLine.getName().equals(inputLineName)) {
+                    System.out.println("[ERROR] 이미 등록된 노선 이름입니다.");
+                    return;
+                }
+            }
+            // TODO : 등록된 역이름만 넣도록
+            System.out.println(newLine + "## 등록할 노선의 상행 종점역 이름을 입력하세요.");
+            String firstStationName = scanner.next();
+            Station firstStation = findByStation(stationRepository, firstStationName);
+            if (firstStation == null) {
+                System.out.println("[ERROR] 등록된 역만 노선의 구간에 넣을 수 있습니다.");
+                return;
+            }
+            // line.addLineStation(new Station(scanner.next())); // Temp
+            System.out.println(newLine + "## 등록할 노선의 하행 종점역 이름을 입력하세요.");
+//            line.addLineStation(new Station(scanner.next())); // Temp
+            String lastStationName = scanner.next();
+            Station lastStation = findByStation(stationRepository, lastStationName);
+            if (lastStation == null) {
+                System.out.println("[ERROR] 등록된 역만 노선의 구간에 넣을 수 있습니다.");
+                return;
+            }
+            Line line = new Line(inputLineName);
+            line.addLineStation(firstStation);
+            line.addLineStation(lastStation);
             lineRepository.addLine(line);
-            // TODO : 등록된 역이름만 넣도록 점검
-            System.out.println();
-            System.out.println("## 등록할 노선의 상행 종점역 이름을 입력하세요.");
-            line.addLineStation(scanner.next());
-
-            System.out.println();
-            System.out.println("## 등록할 노선의 하행 종점역 이름을 입력하세요.");
-            line.addLineStation(scanner.next());
-
-            System.out.println();
-            System.out.println("[INFO] 지하철 노선이 등록되었습니다.");
+            System.out.println(newLine + "[INFO] 지하철 노선이 등록되었습니다.");
             // 테스트 출력 1개
             System.out.println(
                 lineRepository.lines().get(lineRepository.lines().size() - 1)
                     .getName());
-            List<String> lineStations = line.getLineStations();
+            List<Station> lineStations = line.getLineStations();
             for (int i = 0; i < lineStations.size(); i++) {
-                System.out.println("[노선의 역] " + lineStations.get(i));
+                System.out.println("[노선의 역] " + lineStations.get(i).getName());
             }
             return;
             // ??? 메인두번반복???
@@ -186,7 +231,7 @@ public class Application {
             System.out.println();
             System.out.println("## 삭제할 노선 이름을 입력하세요.");
             lineRepository.deleteLineByName(scanner.next());
-            // ToDO : 삭제할 노선이 일치하지 않거나 없으면
+            // ToDO : 삭제할 노선이 일치하지 않거나 없으면 err
             System.out.println();
             System.out.println("[INFO] 지하철 노선이 삭제되었습니다.");
             // 테스트 출력
@@ -248,9 +293,9 @@ public class Application {
         int inputIndex = scanner.nextInt();
         for (Line line : lines) {
             if (line.getName().equals(inputLineName)) {
-                line.addLineStation(inputIndex - 1, inputStationName);
+                line.addLineStation(inputIndex - 1, new Station(inputStationName)); // Temp
                 // 해당 노선의 역 테스트 출력
-                for (String station : line.getLineStations()) {
+                for (Station station : line.getLineStations()) {
                     System.out.println(station);
                 }
             }
@@ -272,7 +317,7 @@ public class Application {
             if (line.getName().equals(deleteLineName)) {
                 line.deleteLineStation(deleteStationName);
                 // 해당 노선의 역 테스트 출력
-                for (String station : line.getLineStations()) {
+                for (Station station : line.getLineStations()) {
                     System.out.println("[남은역]" + station);
                 }
             }
@@ -292,9 +337,9 @@ public class Application {
         for (int i = 0; i < lines.size(); i++) {
             System.out.println("[INFO] " + lines.get(i).getName());
             System.out.println("[INFO] ---");
-            List<String> lineStations = lines.get(i).getLineStations();
+            List<Station> lineStations = lines.get(i).getLineStations();
             for (int j = 0; j < lineStations.size(); j++) {
-                System.out.println("[INFO] " + lineStations.get(j));
+                System.out.println("[INFO] " + lineStations.get(j).getName());
             }
             System.out.println();
         }
