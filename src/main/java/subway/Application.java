@@ -83,8 +83,6 @@ public class Application {
 
     /**
      * 1번째 역 관리 화면
-     *
-     * @param stationRepository
      */
     private static void stationManagement(StationRepository stationRepository, Scanner scanner,
                                           String newLine) {
@@ -96,33 +94,50 @@ public class Application {
         System.out.println("## 원하는 기능을 선택하세요.");
         String func = scanner.nextLine();
         if (func.equals("1")) {
-            System.out.println("## 등록할 역 이름을 입력하세요.");
-            stationRepository.addStation(new Station(scanner.next()));
-            System.out.println("[INFO] 지하철 역이 등록되었습니다.");
-            // 테스트 출력
-            System.out.println(
-                    stationRepository.stations().get(stationRepository.stations().size() - 1)
-                            .getName());
+            addStation(stationRepository, scanner);
         }
         if (func.equals("2")) {
-            System.out.println("## 삭제할 역 이름을 입력하세요.");
-            stationRepository.deleteStation(scanner.next());
-            System.out.println("[INFO] 지하철 역이 삭제되었습니다.");
-            // 테스트 출력
-            List<Station> stations = stationRepository.stations();
-            for (int i = 0; i < stations.size(); i++) {
-                System.out.println("[INFO] " + stations.get(i).getName());
-            }
+            deleteStation(stationRepository, scanner);
         }
         if (func.equals("3")) {
-            System.out.println("## 역 목록");
-            List<Station> stations = stationRepository.stations();
-            for (int i = 0; i < stations.size(); i++) {
-                System.out.println("[INFO] " + stations.get(i).getName());
-            }
+            printAllStation(stationRepository);
         }
         if (func.equalsIgnoreCase("B")) {
             return;
+        }
+    }
+
+    /**
+     * 1번째 역 관리 화면 - 1 역 등록
+     */
+    private static void addStation(StationRepository stationRepository, Scanner scanner) {
+        System.out.println("## 등록할 역 이름을 입력하세요.");
+        stationRepository.addStation(new Station(scanner.next()));
+        System.out.println("[INFO] 지하철 역이 등록되었습니다.");
+        // 테스트 출력
+        System.out.println(
+            stationRepository.stations().get(stationRepository.stations().size() - 1)
+                .getName());
+    }
+
+    /**
+     * 1번째 역 관리 화면 - 2 역 삭제
+     */
+    private static void deleteStation(StationRepository stationRepository, Scanner scanner) {
+        System.out.println("## 삭제할 역 이름을 입력하세요.");
+        stationRepository.deleteStation(scanner.next());
+        System.out.println( "[INFO] 지하철 역이 삭제되었습니다.");
+        // 테스트 출력
+        printAllStation(stationRepository);
+    }
+    /**
+     * 1번째 역 관리 화면 - 3 역 조회
+     */
+    private static void printAllStation(StationRepository stationRepository) {
+        System.out.println("## 역 목록");
+        List<Station> stations = stationRepository.stations();
+        for (int i = 0; i < stations.size(); i++) {
+            System.out.println("[INFO] " + stations.get(i).getName());
         }
     }
 
