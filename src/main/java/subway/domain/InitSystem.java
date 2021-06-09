@@ -2,23 +2,34 @@ package subway.domain;
 
 public class InitSystem {
 
-    private final StationRepository stationRepository = new StationRepository();
-    private final LineRepository lineRepository = new LineRepository();
+    private static Manager manager = new Manager();
 
-    private void initStations() {
-        stationRepository.addStation(new Station("교대역"));
-        stationRepository.addStation(new Station("강남역"));
-        stationRepository.addStation(new Station("역삼역"));
-        stationRepository.addStation(new Station("남부터미널역"));
-        stationRepository.addStation(new Station("양재역"));
-        stationRepository.addStation(new Station("양재시민의숲역"));
-        stationRepository.addStation(new Station("매봉역"));
+    private static void initStations() {
+        manager.addStation("교대역");
+        manager.addStation("강남역");
+        manager.addStation("역삼역");
+        manager.addStation("남부터미널역");
+        manager.addStation("양재역");
+        manager.addStation("양재시민의숲역");
+        manager.addStation("매봉역");
     }
 
-    private void initLines() {
-        LineRepository.addLine(new Line("2호선"));
-        LineRepository.addLine(new Line("3호선"));
-        LineRepository.addLine(new Line("신분당선"));
+    private static void initLines() {
+        manager.addNewLine("2호선", "교대역", "역삼역");
+        manager.addNewLine("3호선", "교대역", "매봉역");
+        manager.addNewLine("신분당선", "강남역", "양재시민의숲역");
     }
 
+    private static void initStationToLine() {
+        manager.addStationToLine("2호선", "강남역", 1);
+        manager.addStationToLine("3호선", "남부터미널역", 1);
+        manager.addStationToLine("3호선", "양재역", 2);
+        manager.addStationToLine("신분당선", "양재역", 1);
+    }
+
+    public static void init() {
+        initStations();
+        initLines();
+        initStationToLine();
+    }
 }
