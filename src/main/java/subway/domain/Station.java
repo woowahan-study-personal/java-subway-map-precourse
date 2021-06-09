@@ -1,7 +1,7 @@
 package subway.domain;
 
 public class Station {
-    private String name;
+    private final String name;
     private int usedCount;
 
     public Station(String name) {

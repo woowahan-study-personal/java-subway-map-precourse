@@ -6,7 +6,7 @@ import subway.domain.Line;
 
 public class LineView {
 
-    public static void printPathManage() {
+    public static void printLineManage() {
         List<String> texts = Arrays
             .asList("## 노선 관리 화면", "1. 노선 등록", "2. 노선 삭제", "3. 노선 조회", "B. 돌아가기");
         for (String text : texts) {

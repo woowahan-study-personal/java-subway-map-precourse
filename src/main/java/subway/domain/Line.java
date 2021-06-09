@@ -3,10 +3,11 @@ package subway.domain;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class Line {
-    private String name;
-    private List<Station> stationsOfLine = new ArrayList<>();
+    private final String name;
+    private final List<Station> stationsOfLine = new ArrayList<>();
 
     public Line(String name) {
         this.name = name;
@@ -37,11 +38,15 @@ public class Line {
 
     public static boolean isUnique(String lineName) {
         for (Line line : LineRepository.lines()) {
-            if (line.equals(lineName)) {
+            if (line.getName().equals(lineName)) {
                 return false;
             }
         }
         return true;
+    }
+
+    public boolean deletePathByName(String name) {
+        return stationsOfLine.removeIf(station -> Objects.equals(station.getName(), name));
     }
 
     // 추가 기능 구현

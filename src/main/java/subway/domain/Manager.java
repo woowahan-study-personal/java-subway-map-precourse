@@ -3,6 +3,7 @@ package subway.domain;
 import java.util.Scanner;
 import subway.view.CommonView;
 import subway.view.LineView;
+import subway.view.PathView;
 import subway.view.StationView;
 
 public class Manager {
@@ -14,14 +15,17 @@ public class Manager {
     private static final String TO_DELETE_STATION = "2";
     private static final String TO_GET_STATION_LIST = "3";
     private static final String BACK_TO_MAIN = "B";
-    private static final String TO_PATH_MANAGE_MODE = "2";
+    private static final String TO_LINE_MANAGE_MODE = "2";
+    private static final String TO_PATH_MANAGE_MODE = "3";
     private static final String TO_ENROLL_LINE = "1";
     private static final String TO_DELETE_LINE = "2";
     private static final String TO_GET_LINE_LIST = "3";
+    private static final String TO_ENROLL_PATH = "1";
+    private static final String TO_DELETE_PATH = "2";
+    private static final String TO_GET_PATH = "4";
 
-
-    private LineRepository lineRepository = new LineRepository();
-    private StationRepository stationRepository = new StationRepository();
+    private final LineRepository lineRepository = new LineRepository();
+    private final StationRepository stationRepository = new StationRepository();
 
     public void addNewLine(String lineName, String start, String end) {
         Line line = new Line(lineName);
@@ -53,8 +57,14 @@ public class Manager {
             if (option.equals(TO_STATION_MANAGE_MODE)) {
                 stationManageMode(scanner);
             }
-            if (option.equals(TO_PATH_MANAGE_MODE)) {
+            if (option.equals(TO_LINE_MANAGE_MODE)) {
                 lineManageMode(scanner);
+            }
+            if (option.equals(TO_PATH_MANAGE_MODE)) {
+                pathManageMode(scanner);
+            }
+            if (option.equals(TO_GET_PATH)) {
+                getAllPaths();
             }
             if (option.equals(QUIT)) {
                 return;
@@ -111,7 +121,7 @@ public class Manager {
 
     public void lineManageMode(Scanner scanner) {
         while (true) {
-            LineView.printPathManage();
+            LineView.printLineManage();
             CommonView.printRequireOption();
             String option = scanner.nextLine();
             if (option.equals(TO_ENROLL_LINE)) {
@@ -158,6 +168,59 @@ public class Manager {
     public void minusUsedStationInLine(Line line) {
         for (Station station : line.stationsOfLine()) {
             station.minusUsedCount();
+        }
+    }
+
+    public void pathManageMode(Scanner scanner) {
+        while (true) {
+            PathView.printPathManage();
+            CommonView.printRequireOption();
+            String option = scanner.nextLine();
+            if (option.equals(TO_ENROLL_PATH)) {
+                enrollPath(scanner);
+            }
+            if (option.equals(TO_DELETE_PATH)) {
+                deletePath(scanner);
+            }
+            if (option.equals(BACK_TO_MAIN)) {
+                return;
+            }
+        }
+    }
+
+    public void enrollPath(Scanner scanner) {
+        PathView.printEnrollPath();
+        String targetLine = scanner.nextLine();
+        PathView.printEnrollPathStation();
+        String enrollStation = scanner.nextLine();
+        PathView.printEnrollPathStationIndex();
+        int enrollStationIndex = scanner.nextInt();
+
+        Station targetStation = StationRepository.getStation(enrollStation);
+        LineRepository.getLine(targetLine).addStation(StationRepository.getStation(enrollStation), enrollStationIndex);
+        targetStation.plusUsedCount();
+        PathView.printSuccessEnrollPath();
+    }
+
+    public void deletePath(Scanner scanner) {
+        PathView.printDeletePathLine();
+        String targetLineName = scanner.nextLine();
+        PathView.printDeletePathStation();
+        String targetStationName = scanner.nextLine();
+        Station targetStation = StationRepository.getStation(targetStationName);
+        Line targetLine = LineRepository.getLine(targetLineName);
+        if (targetLine.stationsOfLine().size() <= 2) {
+            PathView.printFailDeletePath();
+            return;
+        }
+        targetLine.deletePathByName(targetStationName);
+        targetStation.minusUsedCount();
+        PathView.printSuccessDeletePath();
+    }
+
+    public void getAllPaths() {
+        for (Line line : LineRepository.lines()) {
+            PathView.printAllPaths(line);
         }
     }
 
