@@ -3,7 +3,6 @@ package subway;
 import java.util.Scanner;
 import subway.domain.InitSystem;
 import subway.domain.Manager;
-import subway.view.Common;
 
 public class Application {
 

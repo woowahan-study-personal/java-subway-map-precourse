@@ -3,7 +3,7 @@ package subway.view;
 import java.util.Arrays;
 import java.util.List;
 
-public class Common {
+public class CommonView {
 
     public static void printMain() {
         List<String> texts = Arrays

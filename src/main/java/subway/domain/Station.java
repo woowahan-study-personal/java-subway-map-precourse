@@ -18,11 +18,11 @@ public class Station {
     }
 
     public void plusUsedCount() {
-        usedCount++;
+        this.usedCount++;
     }
 
     public void minusUsedCount() {
-        usedCount--;
+        this.usedCount--;
     }
 
     // 추가 기능 구현

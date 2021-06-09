@@ -28,5 +28,21 @@ public class Line {
         stationsOfLine.add(index, station);
     }
 
+    public static boolean isValidName(String lineName) {
+        if (lineName.length() >=2 && lineName.length() <= 5) {
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean isUnique(String lineName) {
+        for (Line line : LineRepository.lines()) {
+            if (line.equals(lineName)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     // 추가 기능 구현
 }
