@@ -18,6 +18,9 @@ public class StationRepository {
     }
 
     public static void addStation(Station station) {
+        if (stations.containsKey(station.getName())) {
+            throw new SubwayException(StationException.DUPLICATE_STATION);
+        }
         stations.put(station.getName(), station);
     }
 
@@ -34,5 +37,9 @@ public class StationRepository {
             return stations.get(name);
         }
         throw new SubwayException(StationException.NOT_FOUND_STATION);
+    }
+
+    public static void clear() {
+        stations.clear();
     }
 }

@@ -17,9 +17,15 @@ public class Line {
         this.stations = new ArrayList<>(stations);
     }
 
+    public void removeStation(Station station) {
+
+    }
+
     public String getName() {
         return name.getName();
     }
 
-    // 추가 기능 구현
+    public List<Station> getStations() {
+        return new ArrayList<>(stations);
+    }
 }

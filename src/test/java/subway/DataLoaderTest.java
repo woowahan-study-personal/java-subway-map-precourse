@@ -22,5 +22,4 @@ class DataLoaderTest {
         assertThat(StationRepository.stations()).hasSize(7);
         assertThat(LineRepository.lines()).hasSize(3);
     }
-
 }
