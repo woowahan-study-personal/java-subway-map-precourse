@@ -56,9 +56,17 @@ public class Line {
     }
 
     private void validateDeleteSize() {
-        if (stations.size() <= MIN_STATION_SIZE) {
+        if (isNotDeleteSize()) {
             throw new SubwayException(LineException.INVALID_STATION_DELETE);
         }
+    }
+
+    public boolean isNotDeleteSize() {
+        return stations.size() <= MIN_STATION_SIZE;
+    }
+
+    public boolean isContainStation(Station station) {
+        return stations.contains(station);
     }
 
     public String getName() {
@@ -67,5 +75,9 @@ public class Line {
 
     public List<Station> getStations() {
         return new ArrayList<>(stations);
+    }
+
+    public void ifRemoveStation(Station station) {
+        stations.remove(station);
     }
 }

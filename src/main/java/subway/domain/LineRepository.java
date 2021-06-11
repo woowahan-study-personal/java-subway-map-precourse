@@ -32,4 +32,15 @@ public class LineRepository {
     public static void clear() {
         lines.clear();
     }
+
+    public static boolean isDeleteStation(Station station) {
+        return lines().stream().filter(line -> line.isContainStation(station))
+            .anyMatch(Line::isNotDeleteSize);
+    }
+
+    public static void deleteLineInStation(Station station) {
+        for (Line line : lines()) {
+            line.ifRemoveStation(station);
+        }
+    }
 }
