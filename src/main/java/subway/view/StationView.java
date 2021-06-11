@@ -38,7 +38,13 @@ public class StationView {
         System.out.println();
     }
 
-    public String getStationName() {
+    public String getAddStationName() {
+        System.out.println("## 등록할 역 이름을 입력하세요.");
+        return getNextLine();
+    }
+
+    public String getDeleteStationName() {
+        System.out.println("## 삭제할 역 이름을 입력하세요.");
         return getNextLine();
     }
 }

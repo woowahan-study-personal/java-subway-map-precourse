@@ -7,7 +7,6 @@ import subway.domain.StationRepository;
 import subway.dto.StationDto;
 import subway.exception.SubwayException;
 import subway.view.DefaultView;
-import subway.view.MainView;
 import subway.view.StationView;
 
 public class StationCommand extends AbstractCommand {
@@ -43,7 +42,7 @@ public class StationCommand extends AbstractCommand {
     }
 
     private void addStation() {
-        String name = stationView.getStationName();
+        String name = stationView.getAddStationName();
         try {
             StationRepository.addStation(new Station(name));
         } catch (SubwayException e) {
@@ -52,7 +51,7 @@ public class StationCommand extends AbstractCommand {
     }
 
     private void deleteStation() {
-        String name = stationView.getStationName();
+        String name = stationView.getDeleteStationName();
         try {
             StationRepository.deleteStation(name);
         } catch (SubwayException e) {
