@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Line {
 
-    private final String name;
+    private final Name name;
     private final List<Station> stations;
 
     public Line(String name) {
@@ -13,12 +13,12 @@ public class Line {
     }
 
     public Line(String name, List<Station> stations) {
-        this.name = name;
+        this.name = new Name(name);
         this.stations = new ArrayList<>(stations);
     }
 
     public String getName() {
-        return name;
+        return name.getName();
     }
 
     // 추가 기능 구현
