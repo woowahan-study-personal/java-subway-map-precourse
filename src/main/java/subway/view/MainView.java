@@ -21,17 +21,11 @@ public class MainView {
         System.out.println("4. 지하철 노선도 출력");
         System.out.println("Q. 종료");
 
-        choiceFunction();
-        return scanner.nextLine();
-    }
-
-    public static void choiceFunction() {
+        DefaultView.choiceFunction();
+        String value = scanner.nextLine();
         System.out.println();
-        System.out.println("## 원하는 기능을 선택하세요.");
-    }
 
-    public static void badChoiceInput() {
-        System.out.println("[ERROR] 선택할 수 없는 기능입니다.");
+        return value;
     }
 
     public void printSubway(List<LineDto> lineDtos) {

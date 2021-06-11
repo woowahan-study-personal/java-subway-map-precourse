@@ -5,6 +5,7 @@ import java.util.Scanner;
 import subway.domain.Line;
 import subway.domain.LineRepository;
 import subway.dto.LineDto;
+import subway.view.DefaultView;
 import subway.view.MainView;
 
 public class Main extends AbstractCommand {
@@ -19,8 +20,8 @@ public class Main extends AbstractCommand {
     private final Scanner scanner;
 
     public Main(Scanner scanner) {
-        this.mainView = new MainView(scanner);
         this.scanner = scanner;
+        mainView = new MainView(scanner);
     }
 
     @Override
@@ -42,7 +43,7 @@ public class Main extends AbstractCommand {
         if (QUIT.equals(userInput)) {
             return new Finish();
         }
-        MainView.badChoiceInput();
+        DefaultView.badChoiceInput();
         return this;
     }
 
