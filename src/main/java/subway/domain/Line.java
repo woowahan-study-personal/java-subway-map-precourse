@@ -1,6 +1,7 @@
 package subway.domain;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Line {
@@ -8,8 +9,8 @@ public class Line {
     private final Name name;
     private final List<Station> stations;
 
-    public Line(String name) {
-        this(name, new ArrayList<>());
+    public Line(String name, Station upStation, Station downStation) {
+        this(name, Arrays.asList(upStation, downStation));
     }
 
     public Line(String name, List<Station> stations) {

@@ -23,8 +23,9 @@ class StationRepositoryTest {
     void addStation() {
         // given
         Station station = new Station("강남역");
-        StationRepository.addStation(station);
+
         // when
+        StationRepository.addStation(station);
 
         // then
         assertThat(StationRepository.stations()).hasSize(1);
@@ -56,6 +57,7 @@ class StationRepositoryTest {
         // then
         assertThatCode(() -> StationRepository.deleteStation("강남역"))
             .doesNotThrowAnyException();
+        assertThat(StationRepository.stations()).hasSize(0);
     }
 
     @Test
