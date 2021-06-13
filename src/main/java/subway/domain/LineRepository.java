@@ -49,7 +49,7 @@ public class LineRepository {
         line.addStation(index, station);
     }
 
-    private static Line findByName(String name) {
+    public static Line findByName(String name) {
         if (!lines.containsKey(name)) {
             throw new SubwayException(LineException.NOT_FOUND_LINE);
         }

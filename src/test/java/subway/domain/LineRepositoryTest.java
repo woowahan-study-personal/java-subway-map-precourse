@@ -20,6 +20,7 @@ class LineRepositoryTest {
     @BeforeEach
     void setUp() {
         LineRepository.clear();
+        StationRepository.clear();
     }
 
     @Test
@@ -73,5 +74,41 @@ class LineRepositoryTest {
         assertThatThrownBy(() -> LineRepository.deleteLineByName(LINE2.getName()))
             .isInstanceOf(SubwayException.class)
             .hasMessage(LineException.NOT_FOUND_LINE.getMessage());
+    }
+
+    @Test
+    @DisplayName("노선에 구간을 추가한다.")
+    void addSection() {
+        // given
+        StationRepository.addStation(GANGNAME_STATION);
+        StationRepository.addStation(SINLIM_STATION);
+        LineRepository.addLine(LINE2);
+
+        // when
+        LineRepository.addSection(LINE2.getName(), new Station("잠실역"), 0);
+
+        // then
+        Line line = LineRepository.findByName(LINE2.getName());
+        assertThat(line.getStations()).hasSize(3);
+    }
+
+    @Test
+    @DisplayName("노선에 구간을 삭제한다.")
+    void deleteSection() {
+        // given
+        StationRepository.addStation(GANGNAME_STATION);
+        StationRepository.addStation(SINLIM_STATION);
+        LineRepository.addLine(new Line("2호선", GANGNAME_STATION, SINLIM_STATION));
+
+        Station station = new Station("잠실역");
+
+        LineRepository.addSection(LINE2.getName(), station, 0);
+
+        // when
+        LineRepository.deleteSection(LINE2.getName(), station);
+
+        // then
+        Line line = LineRepository.findByName(LINE2.getName());
+        assertThat(line.getStations()).hasSize(2);
     }
 }
