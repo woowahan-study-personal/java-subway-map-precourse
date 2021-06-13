@@ -45,6 +45,16 @@ public class LineView {
         return getNextLine();
     }
 
+    public void printAddLineOk() {
+        System.out.println("[INFO] 지하철 노선이 등록되었습니다.");
+        System.out.println();
+    }
+
+    public void printDeleteLineOk() {
+        System.out.println("[INFO] 지하철 노선이 삭제되었습니다.");
+        System.out.println();
+    }
+
     public void printLines(List<LineDto> lineDtos) {
         System.out.println("노선 목록");
         for (LineDto lineDto : lineDtos) {

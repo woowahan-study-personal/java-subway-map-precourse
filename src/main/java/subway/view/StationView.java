@@ -47,4 +47,14 @@ public class StationView {
         System.out.println("## 삭제할 역 이름을 입력하세요.");
         return getNextLine();
     }
+
+    public void printAddStationOk() {
+        System.out.println("[INFO] 지하철 역이 등록되었습니다.");
+        System.out.println();
+    }
+
+    public void printDeleteStationOk() {
+        System.out.println("[INFO] 지하철 역이 삭제되었습니다.");
+        System.out.println();
+    }
 }

@@ -18,7 +18,7 @@ public class DataLoader {
     private void initStation() {
         List<String> stationNames
             = Arrays.asList("교대역", "강남역", "역삼역", "남부터미널역", "양재역", "양재시민의숲역", "매봉역");
-        for (String stationName: stationNames) {
+        for (String stationName : stationNames) {
             StationRepository.addStation(new Station(stationName));
         }
     }
@@ -47,7 +47,7 @@ public class DataLoader {
 
     private Line createLine(String name, List<String> lineStationNames) {
         List<Station> line2Stations = new ArrayList<>();
-        for (String stationName: lineStationNames) {
+        for (String stationName : lineStationNames) {
             line2Stations.add(StationRepository.findByName(stationName));
         }
         return new Line(name, line2Stations);

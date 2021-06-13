@@ -3,7 +3,7 @@ package subway.view;
 public class DefaultView {
 
     public static void printError(String errorMessage) {
-        System.out.println("[ERROR] "+ errorMessage);
+        System.out.println("[ERROR] " + errorMessage);
         System.out.println();
     }
 

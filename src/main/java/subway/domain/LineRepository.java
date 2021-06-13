@@ -43,4 +43,21 @@ public class LineRepository {
             line.ifRemoveStation(station);
         }
     }
+
+    public static void addSection(String lineName, Station station, int index) {
+        Line line = findByName(lineName);
+        line.addStation(index, station);
+    }
+
+    private static Line findByName(String name) {
+        if (!lines.containsKey(name)) {
+            throw new SubwayException(LineException.NOT_FOUND_LINE);
+        }
+        return lines.get(name);
+    }
+
+    public static void deleteSection(String lineName, Station station) {
+        Line line = findByName(lineName);
+        line.removeStation(station);
+    }
 }

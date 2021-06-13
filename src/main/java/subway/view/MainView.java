@@ -7,6 +7,8 @@ import subway.dto.StationDto;
 
 public class MainView {
 
+    private static final String INFO = "[INFO] ";
+
     private final Scanner scanner;
 
     public MainView(Scanner scanner) {
@@ -37,10 +39,10 @@ public class MainView {
     }
 
     private void printLineInfo(LineDto lineDto) {
-        System.out.println(lineDto.getName());
-        System.out.println("---");
+        System.out.println(INFO + lineDto.getName());
+        System.out.println(INFO + "---");
         for (StationDto stationDto : lineDto.getStations()) {
-            System.out.println(stationDto.getName());
+            System.out.println(INFO + stationDto.getName());
         }
     }
 }

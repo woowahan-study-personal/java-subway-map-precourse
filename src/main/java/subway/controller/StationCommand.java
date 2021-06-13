@@ -11,6 +11,11 @@ import subway.view.StationView;
 
 public class StationCommand extends AbstractCommand {
 
+    private static final String ADD_STATION = "1";
+    private static final String DELETE_STATION = "2";
+    private static final String PRINT_STATION = "3";
+    private static final String BACK = "B";
+
     private final Scanner scanner;
     private final StationView stationView;
 
@@ -22,19 +27,19 @@ public class StationCommand extends AbstractCommand {
     @Override
     public Command execute() {
         String userInput = stationView.getUserMenuChoiceNumber();
-        if ("1".equals(userInput)) {
+        if (ADD_STATION.equals(userInput)) {
             addStation();
             return this;
         }
-        if ("2".equals(userInput)) {
+        if (DELETE_STATION.equals(userInput)) {
             deleteStation();
             return this;
         }
-        if ("3".equals(userInput)) {
+        if (PRINT_STATION.equals(userInput)) {
             printStations();
             return this;
         }
-        if ("B".equals(userInput)) {
+        if (BACK.equalsIgnoreCase(userInput)) {
             return new Main(scanner);
         }
         DefaultView.badChoiceInput();
@@ -45,6 +50,7 @@ public class StationCommand extends AbstractCommand {
         String name = stationView.getAddStationName();
         try {
             StationRepository.addStation(new Station(name));
+            stationView.printAddStationOk();
         } catch (SubwayException e) {
             DefaultView.printError(e.getMessage());
         }
@@ -54,6 +60,7 @@ public class StationCommand extends AbstractCommand {
         String name = stationView.getDeleteStationName();
         try {
             StationRepository.deleteStation(name);
+            stationView.printDeleteStationOk();
         } catch (SubwayException e) {
             DefaultView.printError(e.getMessage());
         }

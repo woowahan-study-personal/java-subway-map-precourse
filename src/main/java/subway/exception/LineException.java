@@ -10,7 +10,8 @@ public enum LineException implements SubwayMapException {
     private final String message;
 
     LineException(String message) {
-        this.message = message; }
+        this.message = message;
+    }
 
     @Override
     public String getMessage() {

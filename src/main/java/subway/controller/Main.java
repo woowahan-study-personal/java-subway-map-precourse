@@ -10,11 +10,11 @@ import subway.view.MainView;
 
 public class Main extends AbstractCommand {
 
-    private static final String QUIT = "Q";
     private static final String STATION_MENU = "1";
     private static final String LINE_MENU = "2";
     private static final String SECTION_MENU = "3";
     private static final String PRINT_SUBWAY = "4";
+    private static final String QUIT = "Q";
 
     private final MainView mainView;
     private final Scanner scanner;
@@ -40,7 +40,7 @@ public class Main extends AbstractCommand {
             printSubway();
             return this;
         }
-        if (QUIT.equals(userInput)) {
+        if (QUIT.equalsIgnoreCase(userInput)) {
             return new Finish();
         }
         DefaultView.badChoiceInput();

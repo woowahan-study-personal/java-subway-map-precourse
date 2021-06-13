@@ -12,6 +12,11 @@ import subway.view.LineView;
 
 public class LineCommand extends AbstractCommand {
 
+    private static final String ADD_LINE = "1";
+    private static final String DELETE_LINE = "2";
+    private static final String PRINT_LINE = "3";
+    private static final String BACK = "B";
+
     private final Scanner scanner;
     private final LineView lineView;
 
@@ -23,19 +28,19 @@ public class LineCommand extends AbstractCommand {
     @Override
     public Command execute() {
         String userInput = lineView.getUserMenuChoiceNumber();
-        if ("1".equals(userInput)) {
+        if (ADD_LINE.equals(userInput)) {
             addLine();
             return this;
         }
-        if ("2".equals(userInput)) {
+        if (DELETE_LINE.equals(userInput)) {
             deleteLine();
             return this;
         }
-        if ("3".equals(userInput)) {
+        if (PRINT_LINE.equals(userInput)) {
             printLines();
             return this;
         }
-        if ("B".equals(userInput)) {
+        if (BACK.equalsIgnoreCase(userInput)) {
             return new Main(scanner);
         }
         DefaultView.badChoiceInput();
@@ -44,16 +49,27 @@ public class LineCommand extends AbstractCommand {
 
     private void addLine() {
         String lineName = lineView.getLineName();
-        Station upStation = StationRepository.findByName(lineView.getUpStationName());
-        Station downStation = StationRepository.findByName(lineView.getDownStationName());
 
-        Line line = new Line(lineName, upStation, downStation);
-        LineRepository.addLine(line);
+        try {
+            Station upStation = StationRepository.findByName(lineView.getUpStationName());
+            Station downStation = StationRepository.findByName(lineView.getDownStationName());
+
+            Line line = new Line(lineName, upStation, downStation);
+            LineRepository.addLine(line);
+            lineView.printAddLineOk();
+        } catch (Exception e) {
+            DefaultView.printError(e.getMessage());
+        }
     }
 
     private void deleteLine() {
         String lineName = lineView.getLineName();
-        LineRepository.deleteLineByName(lineName);
+        try {
+            LineRepository.deleteLineByName(lineName);
+            lineView.printDeleteLineOk();
+        } catch (Exception e) {
+            DefaultView.printError(e.getMessage());
+        }
     }
 
     private void printLines() {
