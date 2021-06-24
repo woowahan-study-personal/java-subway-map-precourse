@@ -73,31 +73,16 @@ public class Application {
         }
     }
 
-    /**
-     * StationRepository 에서 역 찾기
-     *
-     * @param StationRepository 역저장소
-     * @param stationName       역이름
-     * @return 찾은 역 or null
-     */
     private static Optional<Station> findByStation(String stationName) {
         List<Station> stations = StationRepository.stations();
         for (int i = 0; i < stations.size(); i++) {
             if (stations.get(i).getName().equals(stationName)) {
-//                System.out.println("[찾았다] " + stations.get(i).getName());
                 return Optional.of(stations.get(i));
             }
         }
         return Optional.empty();
     }
 
-    /**
-     * LineRepository 에서 노선 찾기
-     *
-     * @param LineRepository 노선저장소
-     * @param lineName       노선이름
-     * @return 찾는 노선 or null
-     */
     private static Optional<Line> findByLine(String lineName) {
         List<Line> lines = LineRepository.lines();
         for (Line line : lines) {
@@ -150,7 +135,6 @@ public class Application {
         }
     }
 
-
     /**
      * 1번째 역 관리 화면 - 1 역 등록
      */
@@ -185,13 +169,7 @@ public class Application {
     }
 
     /**
-     * 1번째 역 관리 화면 - 3 역 조회
-     */
-
-    /**
      * 2번째 노선 관리 화면
-     *
-     * @param LineRepository
      */
     private static void lineManagement(Scanner scanner) {
         View.lineManagementView();
@@ -275,8 +253,6 @@ public class Application {
 
     /**
      * 3번째 구간 관리 화면
-     *
-     * @param LineRepository
      */
     private static void lineSectionManagement(Scanner scanner) {
         List<Line> lines = LineRepository.lines();
@@ -295,8 +271,6 @@ public class Application {
 
     /**
      * 3번째 구간 관리 화면 - 1 구간 등록
-     *
-     * @param lines
      */
     private static void addLineSection(Scanner scanner, List<Line> lines) {
         System.out.println("## 노선을 입력하세요.");
@@ -319,8 +293,6 @@ public class Application {
 
     /**
      * 3번째 구간 관리 화면 - 2 구간 삭제
-     *
-     * @param lines
      */
     private static void deleteLineSection(Scanner scanner, List<Line> lines) {
         System.out.println("## 삭제할 구간의 노선을 입력하세요.");
