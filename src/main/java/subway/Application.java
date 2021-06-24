@@ -9,6 +9,14 @@ import subway.domain.StationRepository;
 
 public class Application {
 
+    public static final String FIRST = "1";
+    public static final String SECOND = "2";
+    public static final String THIRD = "3";
+    public static final String FOURTH = "4";
+    public static final String QUIT = "Q";
+    public static final int MIN_NAME_LENGTH = 2;
+    public static final int MAX_NAME_LENGTH = 5;
+    public static final String BACK = "B";
     public static String newLine = System.lineSeparator();
 
     public static void main(String[] args) {
@@ -49,22 +57,22 @@ public class Application {
             System.out.println("## 원하는 기능을 선택하세요.");
             String main_func = scanner.nextLine();
             // B -1. 역관리
-            if (main_func.equals("1")) {
+            if (FIRST.equals(main_func)) {
                 stationManagement(scanner);
             }
             // B -2. 노선 관리
-            if (main_func.equals("2")) {
+            if (SECOND.equals(main_func)) {
                 lineManagement(scanner);
             }
             // B -3. 구간 관리
-            if (main_func.equals("3")) {
+            if (THIRD.equals(main_func)) {
                 lineSectionManagement(scanner);
             }
             // B -4. 지하철 노선도 출력
-            if (main_func.equals("4")) {
+            if (FOURTH.equals(main_func)) {
                 printAllSubwayMap();
             }
-            if (main_func.equalsIgnoreCase("Q")) {
+            if (QUIT.equalsIgnoreCase(main_func)) {
                 flag = false;
             }
         }
@@ -109,7 +117,7 @@ public class Application {
      * 입력 받은 이름 값이 유효한 길이 확인 여부
      */
     private static boolean validNameStr(String str) {
-        if (str.length() >= 2 && str.length() <= 5) {
+        if (str.length() >= MIN_NAME_LENGTH && str.length() <= MAX_NAME_LENGTH) {
             return true;
         }
         return false;
@@ -140,16 +148,16 @@ public class Application {
             + "3. 역 조회" + newLine + "B. 돌아가기" + newLine);
         System.out.println("## 원하는 기능을 선택하세요.");
         String func = scanner.nextLine();
-        if (func.equals("1")) {
+        if (FIRST.equals(func)) {
             addStation(scanner);
         }
-        if (func.equals("2")) {
+        if (SECOND.equals(func)) {
             deleteStation(scanner);
         }
-        if (func.equals("3")) {
+        if (THIRD.equals(func)) {
             printAllStation();
         }
-        if (func.equalsIgnoreCase("B")) {
+        if (BACK.equalsIgnoreCase(func)) {
             return;
         }
     }
@@ -209,16 +217,16 @@ public class Application {
             + "3. 노선 조회" + newLine + "B. 돌아가기" + newLine);
         System.out.println("## 원하는 기능을 선택하세요.");
         String func = scanner.nextLine();
-        if (func.equals("1")) {
+        if (FIRST.equals(func)) {
             addCheckLineAndInitStation(scanner);
         }
-        if (func.equals("2")) {
+        if (SECOND.equals(func)) {
             deleteLine(scanner);
         }
-        if (func.equals("3")) {
+        if (THIRD.equals(func)) {
             printAllLine();
         }
-        if (func.equalsIgnoreCase("B")) {
+        if (BACK.equalsIgnoreCase(func)) {
             return;
         }
     }
@@ -306,13 +314,13 @@ public class Application {
             + "B. 돌아가기" + newLine);
         System.out.println("## 원하는 기능을 선택하세요.");
         String func = scanner.nextLine();
-        if (func.equals("1")) {
+        if (FIRST.equals(func)) {
             addLineSection(scanner, lines);
         }
-        if (func.equals("2")) {
+        if (SECOND.equals(func)) {
             deleteLineSection(scanner, lines);
         }
-        if (func.equalsIgnoreCase("B")) {
+        if (BACK.equalsIgnoreCase(func)) {
             return;
         }
     }
