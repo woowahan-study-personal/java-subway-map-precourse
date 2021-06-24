@@ -111,11 +111,8 @@ public class Application {
     /**
      * 입력 받은 이름 값이 유효한 길이 확인 여부
      */
-    private static boolean validNameStr(String str) {
-        if (str.length() >= MIN_NAME_LENGTH && str.length() <= MAX_NAME_LENGTH) {
-            return true;
-        }
-        return false;
+    private static boolean validNameStr(String validName) {
+        return validName.length() >= MIN_NAME_LENGTH && validName.length() <= MAX_NAME_LENGTH;
     }
 
     /**
