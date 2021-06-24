@@ -1,6 +1,7 @@
 package subway;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 import subway.domain.Line;
 import subway.domain.LineRepository;
@@ -79,15 +80,15 @@ public class Application {
      * @param stationName       역이름
      * @return 찾은 역 or null
      */
-    private static Station findByStation(String stationName) {
+    private static Optional<Station> findByStation(String stationName) {
         List<Station> stations = StationRepository.stations();
         for (int i = 0; i < stations.size(); i++) {
             if (stations.get(i).getName().equals(stationName)) {
 //                System.out.println("[찾았다] " + stations.get(i).getName());
-                return stations.get(i);
+                return Optional.of(stations.get(i));
             }
         }
-        return null;
+        return Optional.empty();
     }
 
     /**
@@ -97,14 +98,14 @@ public class Application {
      * @param lineName       노선이름
      * @return 찾는 노선 or null
      */
-    private static Line findByLine(String lineName) {
+    private static Optional<Line> findByLine(String lineName) {
         List<Line> lines = LineRepository.lines();
-        for (int i = 0; i < lines.size(); i++) {
-            if (lines.get(i).getName().equals(lineName)) {
-                return lines.get(i);
+        for (Line line : lines) {
+            if (line.getName().equals(lineName)) {
+                return Optional.of(line);
             }
         }
-        return null;
+        return Optional.empty();
     }
 
     /**
@@ -122,15 +123,14 @@ public class Application {
      */
     private static void initLineStation(Line line,
         String inputStation) {
-        Station station = findByStation(inputStation);
-        if (station != null) {
-            line.addLineStation(station);
+        Optional<Station> station = findByStation(inputStation);
+        if (station.isEmpty()) {
+            line.addLineStation(station.get());
             return;
         }
         Station newStation = new Station(inputStation);
         StationRepository.addStation(newStation);
         line.addLineStation(newStation);
-        return;
     }
 
     /**
@@ -163,8 +163,8 @@ public class Application {
         if (!validNameStr(inputStation)) {
             return;
         }
-        Station station = findByStation(inputStation);
-        if (station != null) {
+        Optional<Station> station = findByStation(inputStation);
+        if (station.isEmpty()) {
             View.errMsg("이미 등록된 역 이름입니다. ");
             return;
         }
@@ -219,40 +219,32 @@ public class Application {
     private static void addCheckLineAndInitStation(Scanner scanner) {
         System.out.println(newLine + "## 등록할 노선 이름을 입력하세요.");
         String inputLineName = scanner.next();
-        Line byLine = findByLine(inputLineName);
-        if (byLine != null) {
+        Optional<Line> byLine = findByLine(inputLineName);
+        if (byLine.isEmpty()) {
             View.errMsg("이미 등록된 노선 이름입니다.");
             return;
         }
         System.out.println(newLine + "## 등록할 노선의 상행 종점역 이름을 입력하세요.");
-        Station firstStation = findByStation(scanner.next());
+        Optional<Station> firstStation = findByStation(scanner.next());
         System.out.println(newLine + "## 등록할 노선의 하행 종점역 이름을 입력하세요.");
-        Station lastStation = findByStation(scanner.next());
-        if (firstStation == null || lastStation == null) {
+        Optional<Station> lastStation = findByStation(scanner.next());
+        if (firstStation.isEmpty() || lastStation.isEmpty()) {
             View.errMsg("등록된 역만 노선의 구간에 넣을 수 있습니다.");
             return;
         }
-        addLine(inputLineName, firstStation, lastStation);
+        addLine(inputLineName, firstStation.get(), lastStation.get());
         View.infoMsg("지하철 노선이 등록되었습니다.");
-        // 테스트 출력 1개
-//        Line line = addLine(LineRepository, inputLineName, firstStation, lastStation);
-//        System.out.println(LineRepository.lines().get(LineRepository.lines().size() - 1).getName());
-//        List<Station> lineStations = line.getLineStations();
-//        for (int i = 0; i < lineStations.size(); i++) {
-//            System.out.println("[노선의 역] " + lineStations.get(i).getName());
-//        }
     }
 
     /**
      * 2번째 노선 관리 화면 - 1 노선 등록 - 최종 등록
      */
-    private static Line addLine(String inputLineName,
+    private static void addLine(String inputLineName,
         Station firstStation, Station lastStation) {
         Line line = new Line(inputLineName);
         line.addLineStation(firstStation);
         line.addLineStation(lastStation);
         LineRepository.addLine(line);
-        return line;
     }
 
     /**
@@ -349,11 +341,5 @@ public class Application {
         }
         View.infoMsg("구간이 삭제되었습니다.");
     }
-
-    /**
-     * 4번째 지하철 노선도 출력
-     *
-     * @param LineRepository
-     */
 
 }
