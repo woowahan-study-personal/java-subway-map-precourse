@@ -15,9 +15,10 @@ public class Application {
     private static final String THIRD = "3";
     private static final String FOURTH = "4";
     private static final String QUIT = "Q";
+    private static final String BACK = "B";
+    private static final String MAIN_INFO_MSG = "## 원하는 기능을 선택하세요.";
     private static final int MIN_NAME_LENGTH = 2;
     private static final int MAX_NAME_LENGTH = 5;
-    private static final String BACK = "B";
     private static String newLine = System.lineSeparator();
 
     public static void main(String[] args) {
@@ -50,7 +51,7 @@ public class Application {
         while (flag) {
             // A 메인화면
             View.mainView();
-            String main_func = View.getSelectNumber(scanner);
+            String main_func = View.getScanMsg(scanner, MAIN_INFO_MSG);
             // B -1. 역관리
             if (FIRST.equals(main_func)) {
                 stationManagement(scanner);
@@ -103,8 +104,7 @@ public class Application {
     /**
      * 초기 값으로 노선 구간에 역 추가하기 (StationRepository 에 등록 되지 않은 역은 자동으로 신규 추가)
      */
-    private static void initLineStation(Line line,
-        String inputStation) {
+    private static void initLineStation(Line line, String inputStation) {
         Optional<Station> station = findByStation(inputStation);
         if (station.isEmpty()) {
             line.addLineStation(station.get());
@@ -120,7 +120,7 @@ public class Application {
      */
     private static void stationManagement(Scanner scanner) {
         View.stationManagementView();
-        String func = View.getSelectNumber(scanner);
+        String func = View.getScanMsg(scanner, MAIN_INFO_MSG);
         if (FIRST.equals(func)) {
             addStation(scanner);
         }
@@ -139,8 +139,7 @@ public class Application {
      * 1번째 역 관리 화면 - 1 역 등록
      */
     private static void addStation(Scanner scanner) {
-        System.out.println("## 등록할 역 이름을 입력하세요.");
-        String inputStation = scanner.next();
+        String inputStation = View.getScanMsg(scanner, "## 등록할 역 이름을 입력하세요.");
         if (!validNameStr(inputStation)) {
             return;
         }
@@ -160,9 +159,9 @@ public class Application {
      * 1번째 역 관리 화면 - 2 역 삭제
      */
     private static void deleteStation(Scanner scanner) {
-        System.out.println("## 삭제할 역 이름을 입력하세요.");
+        String inputStation = View.getScanMsg(scanner, "## 삭제할 역 이름을 입력하세요.");
         // todo : 노선에 등록된 역은 삭제할 수 없다
-        StationRepository.deleteStation(scanner.next());
+        StationRepository.deleteStation(inputStation);
         View.infoMsg("지하철 역이 삭제되었습니다.");
         // 테스트 출력
         View.printAllStation();
@@ -173,7 +172,7 @@ public class Application {
      */
     private static void lineManagement(Scanner scanner) {
         View.lineManagementView();
-        String func = View.getSelectNumber(scanner);
+        String func = View.getScanMsg(scanner, MAIN_INFO_MSG);
         if (FIRST.equals(func)) {
             addCheckLineAndInitStation(scanner);
         }
@@ -192,17 +191,16 @@ public class Application {
      * 2번째 노선 관리 화면 - 1 노선 등록 - 이름 입력과 점검 하기
      */
     private static void addCheckLineAndInitStation(Scanner scanner) {
-        System.out.println(newLine + "## 등록할 노선 이름을 입력하세요.");
-        String inputLineName = scanner.next();
+        String inputLineName = View.getScanMsg(scanner, newLine + "## 등록할 노선 이름을 입력하세요.");
         Optional<Line> byLine = findByLine(inputLineName);
         if (byLine.isEmpty()) {
             View.errMsg("이미 등록된 노선 이름입니다.");
             return;
         }
-        System.out.println(newLine + "## 등록할 노선의 상행 종점역 이름을 입력하세요.");
-        Optional<Station> firstStation = findByStation(scanner.next());
-        System.out.println(newLine + "## 등록할 노선의 하행 종점역 이름을 입력하세요.");
-        Optional<Station> lastStation = findByStation(scanner.next());
+        String inputFirstStationName = View.getScanMsg(scanner, newLine + "## 등록할 노선의 상행 종점역 이름을 입력하세요.");
+        Optional<Station> firstStation = findByStation(inputFirstStationName);
+        String inputLastStationName = View.getScanMsg(scanner, newLine + "## 등록할 노선의 하행 종점역 이름을 입력하세요.");
+        Optional<Station> lastStation = findByStation(inputLastStationName);
         if (firstStation.isEmpty() || lastStation.isEmpty()) {
             View.errMsg("등록된 역만 노선의 구간에 넣을 수 있습니다.");
             return;
@@ -215,7 +213,7 @@ public class Application {
      * 2번째 노선 관리 화면 - 1 노선 등록 - 최종 등록
      */
     private static void addLine(String inputLineName,
-        Station firstStation, Station lastStation) {
+                                Station firstStation, Station lastStation) {
         Line line = new Line(inputLineName);
         line.addLineStation(firstStation);
         line.addLineStation(lastStation);
@@ -226,8 +224,8 @@ public class Application {
      * 2번째 노선 관리 화면 - 2 노선 삭제
      */
     private static void deleteLine(Scanner scanner) {
-        System.out.println(newLine + "## 삭제할 노선 이름을 입력하세요.");
-        LineRepository.deleteLineByName(scanner.next());
+        String inputLineName = View.getScanMsg(scanner, newLine + "## 삭제할 노선 이름을 입력하세요.");
+        LineRepository.deleteLineByName(inputLineName);
         // todo : 삭제할 노선이 일치하지 않거나 없으면 err
         View.infoMsg("지하철 노선이 삭제되었습니다.");
         // 테스트 출력
@@ -242,10 +240,9 @@ public class Application {
      * 2번째 노선 관리 화면 - 3 노선 조회
      */
     private static void printAllLine() {
-        System.out.println(newLine + "## 노선 목록");
+        View.printMessage(newLine + "## 노선 목록");
         List<Line> lines = LineRepository.lines();
         for (int i = 0; i < lines.size(); i++) {
-            System.out.println("[INFO] " + lines.get(i).getName());
             View.infoMsg(lines.get(i).getName());
         }
         return;
@@ -257,7 +254,7 @@ public class Application {
     private static void lineSectionManagement(Scanner scanner) {
         List<Line> lines = LineRepository.lines();
         View.lineSectionManagementView();
-        String func = View.getSelectNumber(scanner);
+        String func = View.getScanMsg(scanner, MAIN_INFO_MSG);
         if (FIRST.equals(func)) {
             addLineSection(scanner, lines);
         }
@@ -273,12 +270,9 @@ public class Application {
      * 3번째 구간 관리 화면 - 1 구간 등록
      */
     private static void addLineSection(Scanner scanner, List<Line> lines) {
-        System.out.println("## 노선을 입력하세요.");
-        String inputLineName = scanner.next();
-        System.out.println("## 역이름을 입력하세요.");
-        String inputStationName = scanner.next();
-        System.out.println("## 순서를 입력하세요.");
-        int inputIndex = scanner.nextInt();
+        String inputLineName = View.getScanMsg(scanner, "## 노선을 입력하세요.");
+        String inputStationName = View.getScanMsg(scanner, "## 역이름을 입력하세요.");
+        int inputIndex = View.getIndex(scanner, "## 순서를 입력하세요.");
         for (Line line : lines) {
             if (line.getName().equals(inputLineName)) {
                 line.addLineStation(inputIndex - 1, new Station(inputStationName)); // Temp
@@ -295,10 +289,8 @@ public class Application {
      * 3번째 구간 관리 화면 - 2 구간 삭제
      */
     private static void deleteLineSection(Scanner scanner, List<Line> lines) {
-        System.out.println("## 삭제할 구간의 노선을 입력하세요.");
-        String deleteLineName = scanner.next();
-        System.out.println("## 삭제할 구간의 역을 입력하세요.");
-        String deleteStationName = scanner.next();
+        String deleteLineName = View.getScanMsg(scanner, "## 삭제할 구간의 노선을 입력하세요.");
+        String deleteStationName = View.getScanMsg(scanner, "## 삭제할 구간의 역을 입력하세요.");
         for (Line line : lines) {
             if (line.getName().equals(deleteLineName)) {
                 line.deleteLineStation(deleteStationName);

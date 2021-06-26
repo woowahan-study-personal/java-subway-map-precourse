@@ -12,10 +12,20 @@ public class View {
 
     public static String newLine = System.lineSeparator();
 
-    static String getSelectNumber(Scanner scanner) {
-        System.out.println("## 원하는 기능을 선택하세요.");
-        return scanner.nextLine();
+    static String getScanMsg(Scanner scanner, String printMsg) {
+        printMessage(printMsg);
+        return scanner.next();
     }
+
+    static int getIndex(Scanner scanner, String printMsg) {
+        printMessage(printMsg);
+        return scanner.nextInt();
+    }
+
+    static void printMessage(String printMsg) {
+        System.out.println(printMsg);
+    }
+
     static void mainView() {
         System.out.println(newLine + "## 메인 화면" + newLine
                 + "1. 역 관리" + newLine
@@ -51,8 +61,7 @@ public class View {
         }
     }
     static void printAllSubwayMap() {
-        System.out.println();
-        System.out.println("## 지하철 노선도");
+        System.out.println(newLine + "## 지하철 노선도");
         List<Line> lines = LineRepository.lines();
         for (int i = 0; i < lines.size(); i++) {
             System.out.println("[INFO] " + lines.get(i).getName());
