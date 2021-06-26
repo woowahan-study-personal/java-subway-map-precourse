@@ -26,7 +26,7 @@ public class StationView {
         System.out.println("## 삭제할 역 이름을 입력하세요.");
     }
 
-    public static void printSucessDelete() {
+    public static void printSuccessDelete() {
         System.out.println("[INFO] 지하철 역이 삭제되었습니다.");
     }
 

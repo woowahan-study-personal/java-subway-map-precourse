@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class LineRepository {
+
     private static final List<Line> lines = new ArrayList<>();
 
     public static List<Line> lines() {
@@ -16,16 +17,16 @@ public class LineRepository {
         lines.add(line);
     }
 
-    public static boolean deleteLineByName(String name) {
-        return lines.removeIf(line -> Objects.equals(line.getName(), name));
+    public static void deleteLineByName(String name) {
+        lines.removeIf(line -> Objects.equals(line.getName(), name));
     }
 
-    public static Line getLine(String lineName) {
+    public static Line getLine(String lineName) throws Exception {
         for (Line line : lines) {
             if (line.getName().equals(lineName)) {
                 return line;
             }
         }
-        return null;
+        throw new Exception("[ERROR] 해당호선은 존재하지 않습니다.");
     }
 }

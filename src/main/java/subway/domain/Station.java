@@ -1,6 +1,9 @@
 package subway.domain;
 
 public class Station {
+
+    private static final int MIN_STATION_NAME_LENGTH = 2;
+    private static final int MAX_STATION_NAME_LENGTH = 5;
     private final String name;
     private int usedCount;
 
@@ -25,12 +28,8 @@ public class Station {
         this.usedCount--;
     }
 
-    // 추가 기능 구현
     public static boolean isValidName(String name) {
-        if (name.length() >= 2 && name.length() < 5) {
-            return true;
-        }
-        return false;
+        return name.length() >= MIN_STATION_NAME_LENGTH && name.length() < MAX_STATION_NAME_LENGTH;
     }
 
     public static boolean isUnique(String name) {

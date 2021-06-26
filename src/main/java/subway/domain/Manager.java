@@ -24,29 +24,36 @@ public class Manager {
     private static final String TO_DELETE_PATH = "2";
     private static final String TO_GET_PATH = "4";
 
-    private final LineRepository lineRepository = new LineRepository();
-    private final StationRepository stationRepository = new StationRepository();
-
     public void addNewLine(String lineName, String start, String end) {
         Line line = new Line(lineName);
-        Station startStation = stationRepository.getStation(start);
-        Station endStation = stationRepository.getStation(end);
-        line.addStation(startStation);
-        line.addStation(endStation);
-        startStation.plusUsedCount();
-        endStation.plusUsedCount();
-        lineRepository.addLine(line);
+        try {
+            Station startStation = StationRepository.getStation(start);
+            Station endStation = StationRepository.getStation(end);
+            line.addStation(startStation);
+            line.addStation(endStation);
+            startStation.plusUsedCount();
+            endStation.plusUsedCount();
+            LineRepository.addLine(line);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
     }
 
     public void addStation(String stationName) {
-        stationRepository.addStation(new Station(stationName));
+        StationRepository.addStation(new Station(stationName));
     }
 
     public void addStationToLine(String lineName, String stationName, int index) {
-        Line line = LineRepository.getLine(lineName);
-        Station station = StationRepository.getStation(stationName);
-        station.plusUsedCount();
-        line.addStation(station, index);
+        try {
+            Line line = LineRepository.getLine(lineName);
+            Station station = StationRepository.getStation(stationName);
+            station.plusUsedCount();
+            line.addStation(station, index);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
     }
 
     public void mainMode(Scanner scanner) {
@@ -111,12 +118,16 @@ public class Manager {
     public void deleteStation(Scanner scanner) {
         StationView.printDeleteStation();
         String stationName = scanner.nextLine();
-        if (StationRepository.getStation(stationName).getUsedCount() == NOT_USED) {
-            StationRepository.deleteStation(stationName);
-            StationView.printSucessDelete();
-            return;
+        try {
+            if (StationRepository.getStation(stationName).getUsedCount() == NOT_USED) {
+                StationRepository.deleteStation(stationName);
+                StationView.printSuccessDelete();
+                return;
+            }
+            StationView.printStationUsedInPath();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
-        StationView.printStationUsedInPath();
     }
 
     public void lineManageMode(Scanner scanner) {
@@ -138,6 +149,7 @@ public class Manager {
             }
         }
     }
+
     public void enrollLine(Scanner scanner) {
         LineView.printEnrollLine();
         String targetLine = scanner.nextLine();
@@ -153,16 +165,20 @@ public class Manager {
             LineView.printNotUnique();
             return;
         }
-        addNewLine(targetLine,targetLineStart, targetLineEnd);
+        addNewLine(targetLine, targetLineStart, targetLineEnd);
         LineView.printSuccessEnroll();
     }
 
     public void deleteLine(Scanner scanner) {
-        LineView.printDeleteLine();
-        String targetLine = scanner.nextLine();
-        minusUsedStationInLine(LineRepository.getLine(targetLine));
-        LineRepository.deleteLineByName(targetLine);
-        LineView.printSuccessDelete();
+        try {
+            LineView.printDeleteLine();
+            String targetLine = scanner.nextLine();
+            minusUsedStationInLine(LineRepository.getLine(targetLine));
+            LineRepository.deleteLineByName(targetLine);
+            LineView.printSuccessDelete();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public void minusUsedStationInLine(Line line) {
@@ -195,27 +211,35 @@ public class Manager {
         String enrollStation = scanner.nextLine();
         PathView.printEnrollPathStationIndex();
         int enrollStationIndex = scanner.nextInt();
-
-        Station targetStation = StationRepository.getStation(enrollStation);
-        LineRepository.getLine(targetLine).addStation(StationRepository.getStation(enrollStation), enrollStationIndex);
-        targetStation.plusUsedCount();
-        PathView.printSuccessEnrollPath();
+        try {
+            Station targetStation = StationRepository.getStation(enrollStation);
+            LineRepository.getLine(targetLine)
+                .addStation(StationRepository.getStation(enrollStation), enrollStationIndex);
+            targetStation.plusUsedCount();
+            PathView.printSuccessEnrollPath();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public void deletePath(Scanner scanner) {
-        PathView.printDeletePathLine();
-        String targetLineName = scanner.nextLine();
-        PathView.printDeletePathStation();
-        String targetStationName = scanner.nextLine();
-        Station targetStation = StationRepository.getStation(targetStationName);
-        Line targetLine = LineRepository.getLine(targetLineName);
-        if (targetLine.stationsOfLine().size() <= 2) {
-            PathView.printFailDeletePath();
-            return;
+        try {
+            PathView.printDeletePathLine();
+            String targetLineName = scanner.nextLine();
+            PathView.printDeletePathStation();
+            String targetStationName = scanner.nextLine();
+            Station targetStation = StationRepository.getStation(targetStationName);
+            Line targetLine = LineRepository.getLine(targetLineName);
+            if (targetLine.stationsOfLine().size() <= 2) {
+                PathView.printFailDeletePath();
+                return;
+            }
+            targetLine.deletePathByName(targetStationName);
+            targetStation.minusUsedCount();
+            PathView.printSuccessDeletePath();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
-        targetLine.deletePathByName(targetStationName);
-        targetStation.minusUsedCount();
-        PathView.printSuccessDeletePath();
     }
 
     public void getAllPaths() {

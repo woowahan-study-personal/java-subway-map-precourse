@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Objects;
 
 public class Line {
+
+    private static final int MIN_LINE_NAME_LENGTH = 2;
+    private static final int MAX_LINE_NAME_LENGTH = 5;
     private final String name;
     private final List<Station> stationsOfLine = new ArrayList<>();
 
@@ -30,10 +33,7 @@ public class Line {
     }
 
     public static boolean isValidName(String lineName) {
-        if (lineName.length() >=2 && lineName.length() <= 5) {
-            return true;
-        }
-        return false;
+        return lineName.length() >= MIN_LINE_NAME_LENGTH && lineName.length() <= MAX_LINE_NAME_LENGTH;
     }
 
     public static boolean isUnique(String lineName) {
@@ -45,9 +45,7 @@ public class Line {
         return true;
     }
 
-    public boolean deletePathByName(String name) {
-        return stationsOfLine.removeIf(station -> Objects.equals(station.getName(), name));
+    public void deletePathByName(String name) {
+        stationsOfLine.removeIf(station -> Objects.equals(station.getName(), name));
     }
-
-    // 추가 기능 구현
 }

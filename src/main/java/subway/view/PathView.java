@@ -6,6 +6,7 @@ import subway.domain.Line;
 import subway.domain.Station;
 
 public class PathView {
+
     public static void printPathManage() {
         List<String> texts = Arrays
             .asList("## 구간 관리 화면", "1. 구간 등록", "2. 구간 삭제", "B. 돌아가기");
