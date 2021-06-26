@@ -20,28 +20,12 @@ public class Application {
     private static final int MIN_NAME_LENGTH = 2;
     private static final int MAX_NAME_LENGTH = 5;
     private static String newLine = System.lineSeparator();
+    private static boolean FLAG = true;
 
     public static void main(String[] args) {
         final Scanner scanner = new Scanner(System.in);
-        Line line_a = new Line("2호선");
-        initLineStation(line_a, "교대역");
-        initLineStation(line_a, "강남역");
-        initLineStation(line_a, "역삼역");
-        LineRepository.addLine(line_a);
-        Line line_b = new Line("3호선");
-        initLineStation(line_b, "교대역");
-        initLineStation(line_b, "남부터미널역");
-        initLineStation(line_b, "양재역");
-        initLineStation(line_b, "매봉역");
-        LineRepository.addLine(line_b);
-        Line line_c = new Line("신분당선");
-        initLineStation(line_c, "강남역");
-        initLineStation(line_c, "양재역");
-        initLineStation(line_c, "양재시민의숲역");
-        LineRepository.addLine(line_c);
-
-        boolean flag = true;
-        while (flag) {
+        initSubwayInfo();
+        while (FLAG) {
             View.mainView();
             String main_func = View.getScanMsg(scanner, MAIN_INFO_MSG);
             if (FIRST.equals(main_func)) {
@@ -57,9 +41,45 @@ public class Application {
                 View.printAllSubwayMap();
             }
             if (QUIT.equalsIgnoreCase(main_func)) {
-                flag = false;
+                FLAG = false;
             }
         }
+    }
+
+    private static void initSubwayInfo() {
+        initLineInfo("2호선", "교대역", "강남역", "역삼역");
+        initLineInfo("3호선", "교대역", "남부터미널역", "양재역", "매봉역");
+        initLineInfo("신분당선", "강남역", "양재역", "양재시민의숲역");
+    }
+
+    private static void initLineInfo(String newLine, String station1, String station2,
+        String station3) {
+        Line line = new Line(newLine);
+        initLineStation(line, station1);
+        initLineStation(line, station2);
+        initLineStation(line, station3);
+        LineRepository.addLine(line);
+    }
+
+    private static void initLineInfo(String newLine, String station1, String station2,
+        String station3, String station4) {
+        Line line = new Line(newLine);
+        initLineStation(line, station1);
+        initLineStation(line, station2);
+        initLineStation(line, station3);
+        initLineStation(line, station4);
+        LineRepository.addLine(line);
+    }
+
+    private static void initLineStation(Line line, String inputStation) {
+        Optional<Station> station = findByStation(inputStation);
+        if (station.isPresent()) {
+            line.addLineStation(station.get());
+            return;
+        }
+        Station newStation = new Station(inputStation);
+        StationRepository.addStation(newStation);
+        line.addLineStation(newStation);
     }
 
     private static Optional<Station> findByStation(String stationName) {
@@ -84,17 +104,6 @@ public class Application {
 
     private static boolean validNameStr(String validName) {
         return validName.length() >= MIN_NAME_LENGTH && validName.length() <= MAX_NAME_LENGTH;
-    }
-
-    private static void initLineStation(Line line, String inputStation) {
-        Optional<Station> station = findByStation(inputStation);
-        if (station.isPresent()) {
-            line.addLineStation(station.get());
-            return;
-        }
-        Station newStation = new Station(inputStation);
-        StationRepository.addStation(newStation);
-        line.addLineStation(newStation);
     }
 
     private static void stationManagement(Scanner scanner) {
