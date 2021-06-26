@@ -106,7 +106,7 @@ public class Application {
      */
     private static void initLineStation(Line line, String inputStation) {
         Optional<Station> station = findByStation(inputStation);
-        if (station.isEmpty()) {
+        if (station.isPresent()) {
             line.addLineStation(station.get());
             return;
         }
@@ -144,7 +144,7 @@ public class Application {
             return;
         }
         Optional<Station> station = findByStation(inputStation);
-        if (station.isEmpty()) {
+        if (station.isPresent()) {
             View.errMsg("이미 등록된 역 이름입니다. ");
             return;
         }
@@ -193,7 +193,7 @@ public class Application {
     private static void addCheckLineAndInitStation(Scanner scanner) {
         String inputLineName = View.getScanMsg(scanner, newLine + "## 등록할 노선 이름을 입력하세요.");
         Optional<Line> byLine = findByLine(inputLineName);
-        if (byLine.isEmpty()) {
+        if (byLine.isPresent()) {
             View.errMsg("이미 등록된 노선 이름입니다.");
             return;
         }
