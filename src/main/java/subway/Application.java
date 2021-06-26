@@ -24,9 +24,8 @@ public class Application {
     public static void main(String[] args) {
         final Scanner scanner = new Scanner(System.in);
         /**
-         * 초기 데이터 입력
+         * 초기 데이터 입력 (노선과 해당 노선의 역을 추가하기)
          */
-        // 노선과 해당 노선의 역을 추가하기
         Line line_a = new Line("2호선");
         initLineStation(line_a, "교대역");
         initLineStation(line_a, "강남역");
@@ -150,9 +149,6 @@ public class Application {
         }
         StationRepository.addStation(new Station(inputStation));
         View.infoMsg("지하철 역이 등록되었습니다.");
-        // 테스트 출력
-        System.out.println(
-            StationRepository.stations().get(StationRepository.stations().size() - 1).getName());
     }
 
     /**
@@ -163,8 +159,6 @@ public class Application {
         // todo : 노선에 등록된 역은 삭제할 수 없다
         StationRepository.deleteStation(inputStation);
         View.infoMsg("지하철 역이 삭제되었습니다.");
-        // 테스트 출력
-        View.printAllStation();
     }
 
     /**
@@ -228,11 +222,6 @@ public class Application {
         LineRepository.deleteLineByName(inputLineName);
         // todo : 삭제할 노선이 일치하지 않거나 없으면 err
         View.infoMsg("지하철 노선이 삭제되었습니다.");
-        // 테스트 출력
-        List<Line> lines = LineRepository.lines();
-        for (int i = 0; i < lines.size(); i++) {
-            System.out.println("[INFO] " + lines.get(i).getName());
-        }
         return;
     }
 
@@ -276,10 +265,6 @@ public class Application {
         for (Line line : lines) {
             if (line.getName().equals(inputLineName)) {
                 line.addLineStation(inputIndex - 1, new Station(inputStationName)); // Temp
-                // 해당 노선의 역 테스트 출력
-                for (Station station : line.getLineStations()) {
-                    System.out.println(station);
-                }
             }
         }
         View.infoMsg("구간이 등록되었습니다.");
@@ -294,10 +279,6 @@ public class Application {
         for (Line line : lines) {
             if (line.getName().equals(deleteLineName)) {
                 line.deleteLineStation(deleteStationName);
-                // 해당 노선의 역 테스트 출력
-                for (Station station : line.getLineStations()) {
-                    System.out.println("[남은역]" + station);
-                }
             }
         }
         View.infoMsg("구간이 삭제되었습니다.");
