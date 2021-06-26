@@ -93,8 +93,7 @@ public class Application {
     }
 
     private static Optional<Line> findByLine(String lineName) {
-        List<Line> lines = LineRepository.lines();
-        for (Line line : lines) {
+        for (Line line : LineRepository.lines()) {
             if (line.getName().equals(lineName)) {
                 return Optional.of(line);
             }
@@ -199,32 +198,30 @@ public class Application {
 
     private static void printAllLine() {
         View.printMessage(newLine + "## 노선 목록");
-        List<Line> lines = LineRepository.lines();
         for (Line line : LineRepository.lines()) {
             View.infoMsg(line.getName());
         }
     }
 
     private static void lineSectionManagement(Scanner scanner) {
-        List<Line> lines = LineRepository.lines();
         View.lineSectionManagementView();
         String func = View.getScanMsg(scanner, MAIN_INFO_MSG);
         if (FIRST.equals(func)) {
-            addLineSection(scanner, lines);
+            addLineSection(scanner);
         }
         if (SECOND.equals(func)) {
-            deleteLineSection(scanner, lines);
+            deleteLineSection(scanner);
         }
         if (BACK.equalsIgnoreCase(func)) {
             return;
         }
     }
 
-    private static void addLineSection(Scanner scanner, List<Line> lines) {
+    private static void addLineSection(Scanner scanner) {
         String inputLineName = View.getScanMsg(scanner, "## 노선을 입력하세요.");
         String inputStationName = View.getScanMsg(scanner, "## 역이름을 입력하세요.");
         int inputIndex = View.getIndex(scanner, "## 순서를 입력하세요.");
-        for (Line line : lines) {
+        for (Line line : LineRepository.lines()) {
             if (line.getName().equals(inputLineName)) {
                 line.addLineStation(inputIndex - 1, new Station(inputStationName)); // Temp
             }
@@ -232,10 +229,10 @@ public class Application {
         View.infoMsg("구간이 등록되었습니다.");
     }
 
-    private static void deleteLineSection(Scanner scanner, List<Line> lines) {
+    private static void deleteLineSection(Scanner scanner) {
         String deleteLineName = View.getScanMsg(scanner, "## 삭제할 구간의 노선을 입력하세요.");
         String deleteStationName = View.getScanMsg(scanner, "## 삭제할 구간의 역을 입력하세요.");
-        for (Line line : lines) {
+        for (Line line : LineRepository.lines()) {
             if (line.getName().equals(deleteLineName)) {
                 line.deleteLineStation(deleteStationName);
             }
