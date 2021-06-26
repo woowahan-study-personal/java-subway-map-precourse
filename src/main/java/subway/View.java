@@ -54,22 +54,22 @@ public class View {
     }
 
     static void printAllStation() {
-        System.out.println("## 역 목록");
+        printMessage("## 역 목록");
         List<Station> stations = StationRepository.stations();
-        for (int i = 0; i < stations.size(); i++) {
-            System.out.println("[INFO] " + stations.get(i).getName());
+        for (Station station : stations) {
+            infoMsg(station.getName());
         }
     }
 
     static void printAllSubwayMap() {
-        System.out.println(newLine + "## 지하철 노선도");
+        printMessage(newLine + "## 지하철 노선도");
         List<Line> lines = LineRepository.lines();
-        for (int i = 0; i < lines.size(); i++) {
-            System.out.println("[INFO] " + lines.get(i).getName());
-            System.out.println("[INFO] ---");
-            List<Station> lineStations = lines.get(i).getLineStations();
-            for (int j = 0; j < lineStations.size(); j++) {
-                System.out.println("[INFO] " + lineStations.get(j).getName());
+        for (Line line : lines) {
+            infoMsg(line.getName());
+            infoMsg("---");
+            List<Station> lineStations = line.getLineStations();
+            for (Station lineStation : lineStations) {
+                infoMsg(lineStation.getName());
             }
             System.out.println();
         }

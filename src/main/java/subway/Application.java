@@ -84,9 +84,9 @@ public class Application {
 
     private static Optional<Station> findByStation(String stationName) {
         List<Station> stations = StationRepository.stations();
-        for (int i = 0; i < stations.size(); i++) {
-            if (stations.get(i).getName().equals(stationName)) {
-                return Optional.of(stations.get(i));
+        for (Station station : stations) {
+            if (station.getName().equals(stationName)) {
+                return Optional.of(station);
             }
         }
         return Optional.empty();
@@ -195,16 +195,14 @@ public class Application {
         LineRepository.deleteLineByName(inputLineName);
         // todo : 삭제할 노선이 일치하지 않거나 없으면 err
         View.infoMsg("지하철 노선이 삭제되었습니다.");
-        return;
     }
 
     private static void printAllLine() {
         View.printMessage(newLine + "## 노선 목록");
         List<Line> lines = LineRepository.lines();
-        for (int i = 0; i < lines.size(); i++) {
-            View.infoMsg(lines.get(i).getName());
+        for (Line line : LineRepository.lines()) {
+            View.infoMsg(line.getName());
         }
-        return;
     }
 
     private static void lineSectionManagement(Scanner scanner) {
@@ -244,5 +242,4 @@ public class Application {
         }
         View.infoMsg("구간이 삭제되었습니다.");
     }
-
 }
