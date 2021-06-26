@@ -10,15 +10,15 @@ import subway.domain.StationRepository;
 
 public class Application {
 
-    public static final String FIRST = "1";
-    public static final String SECOND = "2";
-    public static final String THIRD = "3";
-    public static final String FOURTH = "4";
-    public static final String QUIT = "Q";
-    public static final int MIN_NAME_LENGTH = 2;
-    public static final int MAX_NAME_LENGTH = 5;
-    public static final String BACK = "B";
-    public static String newLine = System.lineSeparator();
+    private static final String FIRST = "1";
+    private static final String SECOND = "2";
+    private static final String THIRD = "3";
+    private static final String FOURTH = "4";
+    private static final String QUIT = "Q";
+    private static final int MIN_NAME_LENGTH = 2;
+    private static final int MAX_NAME_LENGTH = 5;
+    private static final String BACK = "B";
+    private static String newLine = System.lineSeparator();
 
     public static void main(String[] args) {
         final Scanner scanner = new Scanner(System.in);
