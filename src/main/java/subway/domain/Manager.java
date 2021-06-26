@@ -23,6 +23,7 @@ public class Manager {
     private static final String TO_ENROLL_PATH = "1";
     private static final String TO_DELETE_PATH = "2";
     private static final String TO_GET_PATH = "4";
+    private static final int MIN_STATIONS_OF_LINE = 2;
 
     public void addNewLine(String lineName, String start, String end) {
         Line line = new Line(lineName);
@@ -230,7 +231,7 @@ public class Manager {
             String targetStationName = scanner.nextLine();
             Station targetStation = StationRepository.getStation(targetStationName);
             Line targetLine = LineRepository.getLine(targetLineName);
-            if (targetLine.stationsOfLine().size() <= 2) {
+            if (targetLine.stationsOfLine().size() <= MIN_STATIONS_OF_LINE) {
                 PathView.printFailDeletePath();
                 return;
             }
