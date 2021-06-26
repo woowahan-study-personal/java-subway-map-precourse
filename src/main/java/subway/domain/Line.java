@@ -19,9 +19,6 @@ public class Line {
     }
 
     // 추가 기능 구현 - 노선의 역 CRD
-    /**
-     * 노선의 역 : List<Station>
-     */
     private List<Station> lineStations = new ArrayList<>();
 
     public List<Station> getLineStations() {

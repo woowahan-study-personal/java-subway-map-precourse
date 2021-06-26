@@ -23,9 +23,6 @@ public class Application {
 
     public static void main(String[] args) {
         final Scanner scanner = new Scanner(System.in);
-        /**
-         * 초기 데이터 입력 (노선과 해당 노선의 역을 추가하기)
-         */
         Line line_a = new Line("2호선");
         initLineStation(line_a, "교대역");
         initLineStation(line_a, "강남역");
@@ -43,9 +40,6 @@ public class Application {
         initLineStation(line_c, "양재시민의숲역");
         LineRepository.addLine(line_c);
 
-        /**
-         * 메인 화면
-         */
         boolean flag = true;
         while (flag) {
             View.mainView();
@@ -88,16 +82,10 @@ public class Application {
         return Optional.empty();
     }
 
-    /**
-     * 입력 받은 이름 값이 유효한 길이 확인 여부
-     */
     private static boolean validNameStr(String validName) {
         return validName.length() >= MIN_NAME_LENGTH && validName.length() <= MAX_NAME_LENGTH;
     }
 
-    /**
-     * 초기 값으로 노선 구간에 역 추가하기 (StationRepository 에 등록 되지 않은 역은 자동으로 신규 추가)
-     */
     private static void initLineStation(Line line, String inputStation) {
         Optional<Station> station = findByStation(inputStation);
         if (station.isPresent()) {
@@ -171,9 +159,11 @@ public class Application {
             View.errMsg("이미 등록된 노선 이름입니다.");
             return;
         }
-        String inputFirstStationName = View.getScanMsg(scanner, newLine + "## 등록할 노선의 상행 종점역 이름을 입력하세요.");
+        String inputFirstStationName = View
+            .getScanMsg(scanner, newLine + "## 등록할 노선의 상행 종점역 이름을 입력하세요.");
         Optional<Station> firstStation = findByStation(inputFirstStationName);
-        String inputLastStationName = View.getScanMsg(scanner, newLine + "## 등록할 노선의 하행 종점역 이름을 입력하세요.");
+        String inputLastStationName = View
+            .getScanMsg(scanner, newLine + "## 등록할 노선의 하행 종점역 이름을 입력하세요.");
         Optional<Station> lastStation = findByStation(inputLastStationName);
         if (firstStation.isEmpty() || lastStation.isEmpty()) {
             View.errMsg("등록된 역만 노선의 구간에 넣을 수 있습니다.");
@@ -184,7 +174,7 @@ public class Application {
     }
 
     private static void addLine(String inputLineName,
-                                Station firstStation, Station lastStation) {
+        Station firstStation, Station lastStation) {
         Line line = new Line(inputLineName);
         line.addLineStation(firstStation);
         line.addLineStation(lastStation);
