@@ -34,7 +34,7 @@ public class Init {
     }
 
     public static void initLineStation(Line line, String inputStation) {
-        Optional<Station> station = Check.findByStation(inputStation);
+        Optional<Station> station = StationRepository.findByStation(inputStation);
         if (station.isPresent()) {
             line.addLineStation(station.get());
             return;

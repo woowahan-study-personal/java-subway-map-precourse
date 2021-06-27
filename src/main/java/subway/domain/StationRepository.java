@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 public class StationRepository {
 
@@ -19,5 +20,16 @@ public class StationRepository {
 
     public static boolean deleteStation(String name) {
         return stations.removeIf(station -> Objects.equals(station.getName(), name));
+    }
+
+    public static Optional<Station> findByStation(String stationName) {
+        //return stations.stream().filter(it -> it.getName().equals(stationName)).findFirst();
+
+        for (Station station : stations) {
+            if (station.getName().equals(stationName)) {
+                return Optional.of(station);
+            }
+        }
+        return Optional.empty();
     }
 }

@@ -10,13 +10,18 @@ import subway.domain.StationRepository;
 public class View {
 
     public static String newLine = System.lineSeparator();
+    private static Scanner scanner;
 
-    public static String getScanMsg(Scanner scanner, String printMsg) {
+    public static void setScanner(Scanner scanner) {
+        View.scanner = scanner;
+    }
+
+    public static String getScanMsg(String printMsg) {
         printMessage(printMsg);
         return scanner.next();
     }
 
-    public static int getIndex(Scanner scanner, String printMsg) {
+    public static int getIndex(String printMsg) {
         printMessage(printMsg);
         return scanner.nextInt();
     }
