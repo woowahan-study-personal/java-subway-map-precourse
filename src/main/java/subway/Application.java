@@ -14,7 +14,6 @@ public class Application {
     private static final String QUIT = "Q";
     private static final String BACK = "B";
     private static final String MAIN_INFO_MSG = "## 원하는 기능을 선택하세요.";
-    private static String newLine = System.lineSeparator();
     private static boolean FLAG = true;
 
     public static void main(String[] args) {
@@ -42,50 +41,67 @@ public class Application {
     }
 
     private static void stationManagement(Scanner scanner) {
-        View.stationManagementView();
-        String func = View.getScanMsg(scanner, MAIN_INFO_MSG);
-        if (FIRST.equals(func)) {
-            ManageStation.addStation(scanner);
-        }
-        if (SECOND.equals(func)) {
-            ManageStation.deleteStation(scanner);
-        }
-        if (THIRD.equals(func)) {
-            View.printAllStation();
-        }
-        if (BACK.equalsIgnoreCase(func)) {
-            return;
+        while (true) {
+            View.stationManagementView();
+            String func = View.getScanMsg(scanner, MAIN_INFO_MSG);
+            if (FIRST.equals(func)) {
+                ManageStation.addStation(scanner);
+                return;
+            }
+            if (SECOND.equals(func)) {
+                ManageStation.deleteStation(scanner);
+                return;
+            }
+            if (THIRD.equals(func)) {
+                View.printAllStation();
+                return;
+            }
+            if (BACK.equalsIgnoreCase(func)) {
+                return;
+            }
+            View.errMsg("선택할 수 없는 기능입니다.");
         }
     }
 
     private static void lineManagement(Scanner scanner) {
-        View.lineManagementView();
-        String func = View.getScanMsg(scanner, MAIN_INFO_MSG);
-        if (FIRST.equals(func)) {
-            ManageLine.addCheckLineAndInitStation(scanner);
-        }
-        if (SECOND.equals(func)) {
-            ManageLine.deleteLine(scanner);
-        }
-        if (THIRD.equals(func)) {
-            ManageLine.printAllLine();
-        }
-        if (BACK.equalsIgnoreCase(func)) {
-            return;
+        while (true) {
+            View.lineManagementView();
+            String func = View.getScanMsg(scanner, MAIN_INFO_MSG);
+            if (FIRST.equals(func)) {
+                ManageLine.addCheckLineAndInitStation(scanner);
+                return;
+            }
+            if (SECOND.equals(func)) {
+                ManageLine.deleteLine(scanner);
+                return;
+            }
+            if (THIRD.equals(func)) {
+                ManageLine.printAllLine();
+                return;
+            }
+            if (BACK.equalsIgnoreCase(func)) {
+                return;
+            }
+            View.errMsg("선택할 수 없는 기능입니다.");
         }
     }
 
     private static void lineSectionManagement(Scanner scanner) {
-        View.lineSectionManagementView();
-        String func = View.getScanMsg(scanner, MAIN_INFO_MSG);
-        if (FIRST.equals(func)) {
-            ManageSection.addLineSection(scanner);
-        }
-        if (SECOND.equals(func)) {
-            ManageSection.deleteLineSection(scanner);
-        }
-        if (BACK.equalsIgnoreCase(func)) {
-            return;
+        while (true) {
+            View.lineSectionManagementView();
+            String func = View.getScanMsg(scanner, MAIN_INFO_MSG);
+            if (FIRST.equals(func)) {
+                ManageSection.addLineSection(scanner);
+                return;
+            }
+            if (SECOND.equals(func)) {
+                ManageSection.deleteLineSection(scanner);
+                return;
+            }
+            if (BACK.equalsIgnoreCase(func)) {
+                return;
+            }
+            View.errMsg("선택할 수 없는 기능입니다.");
         }
     }
 
