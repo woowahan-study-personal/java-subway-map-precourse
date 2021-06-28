@@ -1,6 +1,7 @@
 package subway;
 
 import java.util.Scanner;
+
 import subway.management.ManageLine;
 import subway.management.ManageSection;
 import subway.management.ManageStation;
@@ -47,79 +48,94 @@ public class Application {
 
     private void stationManagement() {
         while (true) {
-            try {
-                View.stationManagementView();
-                String func = View.getScanMsg(MAIN_INFO_MSG);
-                if (FIRST.equals(func)) {
-                    ManageStation.instance.addStation();
-                    return;
-                }
-                if (SECOND.equals(func)) {
-                    ManageStation.instance.deleteStation();
-                    return;
-                }
-                if (THIRD.equals(func)) {
-                    View.printAllStation();
-                    return;
-                }
-                if (BACK.equalsIgnoreCase(func)) {
-                    return;
-                }
-                throw new IllegalArgumentException("선택할 수 없는 기능입니다.");
-            } catch (IllegalArgumentException e) {
-                View.errMsg(e.getMessage());
-            }
+            if (stationView()) return;
         }
+    }
+
+    private boolean stationView() {
+        try {
+            View.stationManagementView();
+            String func = View.getScanMsg(MAIN_INFO_MSG);
+            if (FIRST.equals(func)) {
+                ManageStation.instance.addStation();
+                return true;
+            }
+            if (SECOND.equals(func)) {
+                ManageStation.instance.deleteStation();
+                return true;
+            }
+            if (THIRD.equals(func)) {
+                View.printAllStation();
+                return true;
+            }
+            if (BACK.equalsIgnoreCase(func)) {
+                return true;
+            }
+            throw new IllegalArgumentException("선택할 수 없는 기능입니다.");
+        } catch (IllegalArgumentException e) {
+            View.errMsg(e.getMessage());
+        }
+        return false;
     }
 
     private void lineManagement() {
         while (true) {
-            try {
-                View.lineManagementView();
-                String func = View.getScanMsg(MAIN_INFO_MSG);
-                if (FIRST.equals(func)) {
-                    ManageLine.instance.addCheckLineAndInitStation();
-                    return;
-                }
-                if (SECOND.equals(func)) {
-                    ManageLine.instance.deleteLine();
-                    return;
-                }
-                if (THIRD.equals(func)) {
-                    ManageLine.instance.printAllLine();
-                    return;
-                }
-                if (BACK.equalsIgnoreCase(func)) {
-                    return;
-                }
-                View.errMsg("선택할 수 없는 기능입니다.");
-            } catch (IllegalArgumentException e) {
-                View.errMsg(e.getMessage());
-            }
+            if (lineView()) return;
         }
+    }
+
+    private boolean lineView() {
+        try {
+            View.lineManagementView();
+            String func = View.getScanMsg(MAIN_INFO_MSG);
+            if (FIRST.equals(func)) {
+                ManageLine.instance.addCheckLineAndInitStation();
+                return true;
+            }
+            if (SECOND.equals(func)) {
+                ManageLine.instance.deleteLine();
+                return true;
+            }
+            if (THIRD.equals(func)) {
+                ManageLine.instance.printAllLine();
+                return true;
+            }
+            if (BACK.equalsIgnoreCase(func)) {
+                return true;
+            }
+            View.errMsg("선택할 수 없는 기능입니다.");
+        } catch (IllegalArgumentException e) {
+            View.errMsg(e.getMessage());
+        }
+        return false;
     }
 
     private void lineSectionManagement() {
         while (true) {
-            try {
-                View.lineSectionManagementView();
-                String func = View.getScanMsg(MAIN_INFO_MSG);
-                if (FIRST.equals(func)) {
-                    ManageSection.instance.addLineSection();
-                    return;
-                }
-                if (SECOND.equals(func)) {
-                    ManageSection.instance.deleteLineSection();
-                    return;
-                }
-                if (BACK.equalsIgnoreCase(func)) {
-                    return;
-                }
-                View.errMsg("선택할 수 없는 기능입니다.");
-            } catch (IllegalArgumentException e) {
-                View.errMsg(e.getMessage());
-            }
+            if (lineSectionView()) return;
         }
+    }
+
+    private boolean lineSectionView() {
+        try {
+            View.lineSectionManagementView();
+            String func = View.getScanMsg(MAIN_INFO_MSG);
+            if (FIRST.equals(func)) {
+                ManageSection.instance.addLineSection();
+                return true;
+            }
+            if (SECOND.equals(func)) {
+                ManageSection.instance.deleteLineSection();
+                return true;
+            }
+            if (BACK.equalsIgnoreCase(func)) {
+                return true;
+            }
+            View.errMsg("선택할 수 없는 기능입니다.");
+        } catch (IllegalArgumentException e) {
+            View.errMsg(e.getMessage());
+        }
+        return false;
     }
 
 }
